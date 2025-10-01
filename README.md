@@ -36,6 +36,7 @@ In addition, you need to set the following environment variables to set up for f
 - `SEATABLE_SERVER`: URL for our FlyTable instance
 - `SEATABLE_TOKEN`: API token for FlyTable
 - `DVID_SERVER`, `DVID_NODE`: URL and UUID for DVID for accessing meshes for generating thumbnails
+These variables are only required for the first step of the build, when the `.md` pages are built from the gatherered data. They are not required for the `mkdocs` step that builds the `.html` files from the `.md` files.
 
 To build the website locally, run:
 
@@ -71,6 +72,8 @@ uv run mkdocs serve
 On Github the website is built and deployed using a Github actions
 workflow that is triggered on every push to the `main` branch. It
 can also be triggered manually using the workflow dispatch feature.
+
+GitHub Actions are not enabled in the Janelia Fly EM repo, and the necessary secrets are not configured there.
 
 To manually deploy the website to GitHub pages, run:
 

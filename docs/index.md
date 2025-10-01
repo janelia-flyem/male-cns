@@ -56,9 +56,9 @@ icon: material/home
 
     ---
 
-    Read the publication describing the dataset on `bioRxiv`
+    Read the publication describing the dataset on `bioRxiv` (coming soon).
 
-    [:octicons-arrow-right-24: Preprint](#)
+    [:octicons-arrow-right-24: Preprint]
 
 </div>
 
