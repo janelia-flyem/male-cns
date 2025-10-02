@@ -498,7 +498,7 @@ def extract_type_data(mcns_meta, fw_meta):
 
         # Get a neuroglancer scene to populate
         scene = prep_scene(table)
-        scene.layers[1]["segments"] = table["bodyId"].values
+        scene.layers["cns-seg"]["segments"] = table["bodyId"].values
 
         # Grab the corresponding type in FlyWire
         table_fw = fw_meta_grp.get(t, pd.DataFrame([]))
@@ -524,7 +524,7 @@ def extract_type_data(mcns_meta, fw_meta):
             dimorphic_meta[-1]["n_fwr"] = counts.get("right", 0)
             dimorphic_meta[-1]["n_fwl"] = counts.get("left", 0)
 
-            scene.layers[2]["segments"] = table_fw["root_id"].values
+            scene.layers["flywire-meshes"]["segments"] = table_fw["root_id"].values
 
         dimorphic_meta[-1]["url"] = scene.url
 
@@ -592,7 +592,7 @@ def extract_type_data(mcns_meta, fw_meta):
 
         # Get a neuroglancer scene to populate
         scene = prep_scene(table)
-        scene.layers[1]["segments"] = table["bodyId"].values
+        scene.layers["cns-seg"]["segments"] = table["bodyId"].values
         male_meta[-1]["url"] = scene.url
 
         # For male-specific neurons we should always have a `type`
@@ -641,7 +641,7 @@ def extract_type_data(mcns_meta, fw_meta):
 
         # Get a neuroglancer scene to populate
         scene = prep_scene(table_fw)
-        scene.layers[2]["segments"] = table_fw["root_id"].values
+        scene.layers["flywire-meshes"]["segments"] = table_fw["root_id"].values
 
         female_meta[-1]["url"] = scene.url
 
@@ -698,7 +698,7 @@ def extract_type_data(mcns_meta, fw_meta):
 
         # Get a neuroglancer scene to populate
         scene = prep_scene(table)
-        scene.layers[1]["segments"] = table["bodyId"].values
+        scene.layers["cns-seg"]["segments"] = table["bodyId"].values
 
         # Grab the corresponding type in FlyWire
         table_fw = fw_meta_grp.get(t, pd.DataFrame([]))
@@ -724,7 +724,7 @@ def extract_type_data(mcns_meta, fw_meta):
             iso_meta[-1]["n_fwr"] = counts.get("right", 0)
             iso_meta[-1]["n_fwl"] = counts.get("left", 0)
 
-            scene.layers[2]["segments"] = table_fw["root_id"].values
+            scene.layers["flywire-meshes"]["segments"] = table_fw["root_id"].values
 
         iso_meta[-1]["url"] = scene.url
 
@@ -1138,8 +1138,8 @@ def group_by_synonyms(
             if len(syn["body_ids"]) > 0
             else fw_meta[fw_meta.root_id.isin(syn["root_ids"])]
         )
-        scene.layers[1]["segments"] = syn["body_ids"]
-        scene.layers[2]["segments"] = syn["root_ids"]
+        scene.layers["cns-seg"]["segments"] = syn["body_ids"]
+        scene.layers["flywire-meshes"]["segments"] = syn["root_ids"]
         syn["url"] = scene.url
 
     return by_synonyms
@@ -1253,8 +1253,8 @@ def group_by_hemilineage(
 
         # Generate a neuroglancer URL
         scene = prep_scene(hl_mcns)
-        scene.layers[1]["segments"] = hl_mcns["bodyId"].values
-        scene.layers[2]["segments"] = hl_fw["root_id"].values
+        scene.layers["cns-seg"]["segments"] = hl_mcns["bodyId"].values
+        scene.layers["flywire-meshes"]["segments"] = hl_fw["root_id"].values
 
         # Add the URL to the hemilineage
         by_hemilineage[hl]["url"] = scene.url
@@ -1348,8 +1348,8 @@ def make_supertype_pages(
 
         # Get a neuroglancer scene to populate
         scene = prep_scene(table_mcns if not table_mcns.empty else table_fw)
-        scene.layers[1]["segments"] = table_mcns["bodyId"].values
-        scene.layers[2]["segments"] = table_fw["root_id"].values
+        scene.layers["cns-seg"]["segments"] = table_mcns["bodyId"].values
+        scene.layers["flywire-meshes"]["segments"] = table_fw["root_id"].values
 
         supertypes_meta[-1]["url"] = scene.url
 
@@ -1536,8 +1536,8 @@ def make_synonyms_pages(
             if len(syn["body_ids"]) > 0
             else fw_meta[fw_meta.root_id.isin(syn["root_ids"])]
         )
-        scene.layers[1]["segments"] = syn["body_ids"]
-        scene.layers[2]["segments"] = syn["root_ids"]
+        scene.layers["cns-seg"]["segments"] = syn["body_ids"]
+        scene.layers["flywire-meshes"]["segments"] = syn["root_ids"]
         syn["url"] = scene.url
 
         # Get the dimorphic types for this synonym
@@ -1635,7 +1635,7 @@ def make_hemilineage_pages(mcns_meta, fw_meta, random_pages: int | None) -> None
 
             # Get a neuroglancer scene to populate
             scene = prep_scene(table)
-            scene.layers[1]["segments"] = table["bodyId"].values
+            scene.layers["cns-seg"]["segments"] = table["bodyId"].values
 
             # Grab the corresponding hemilineage in FlyWire
             table_fw = fw_meta[fw_meta.ito_lee_hemilineage == t]
@@ -1653,7 +1653,7 @@ def make_hemilineage_pages(mcns_meta, fw_meta, random_pages: int | None) -> None
                 hemilineages_meta[-1]["n_types_fwr"] = type_counts.get("right", 0)
                 hemilineages_meta[-1]["n_types_fwl"] = type_counts.get("left", 0)
 
-                scene.layers[2]["segments"] = table_fw["root_id"].values
+                scene.layers["flywire-meshes"]["segments"] = table_fw["root_id"].values
                 scene.layers[2]["segmentDefaultColor"] = "#e511d0"
 
             hemilineages_meta[-1]["url"] = scene.url
@@ -1662,7 +1662,9 @@ def make_hemilineage_pages(mcns_meta, fw_meta, random_pages: int | None) -> None
 
     # Loop through each super type and generate a page for it
     if random_pages is not None:
-        hemilineages_meta = random.sample(hemilineages_meta, k=min(random_pages, len(hemilineages_meta)))
+        hemilineages_meta = random.sample(
+            hemilineages_meta, k=min(random_pages, len(hemilineages_meta))
+        )
     for record in hemilineages_meta:
         print(
             f"  Generating summary page for hemilineage '{record['hemilineage']}'...",
