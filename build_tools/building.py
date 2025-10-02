@@ -2196,8 +2196,9 @@ def prep_scene(table):
     if not has_descending and not has_ascending and not has_vnc:
         scene.layers["vnc-neuropil-shell"]["visible"] = False
 
-    scene.layers[1]["segmentDefaultColor"] = "#00e9e7"
-    scene.layers[2]["segmentDefaultColor"] = "#e511d0"
+    # Set colors for male and female neurons
+    scene.layers['cns-seg']["segmentDefaultColor"] = "#00e9e7"  # cyan
+    scene.layers['flywire-meshes']["segmentDefaultColor"] = "#e511d0"  # magenta
 
     return scene
 
