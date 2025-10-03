@@ -89,10 +89,16 @@ NGL_BASE_SCENE_VNC = SceneWithArchived.from_url(NGL_BASE_URL_VNC)
 NGL_BASE_URL_TOP = "https://neuroglancer-demo.appspot.com/#!gs://flyem-user-links/short/MaleCNS-v0.9-brain+vnc.json"
 NGL_BASE_SCENE_TOP = SceneWithArchived.from_url(NGL_BASE_URL_TOP)
 
-# Make sure the segmentation layers are empty
+# Make sure the segmentation layers are empty and visible
 for scene in (NGL_BASE_SCENE, NGL_BASE_SCENE_VNC, NGL_BASE_SCENE_TOP):
-    for i in range(2):
-        scene.layers[i]['segments'] = []
+    for l in ("cns-seg", "flywire-meshes"):
+        # Remove any selected segments
+        scene.layers[l]["segments"] = []
+        # Make sure the layer is visible (and not archived)
+        if scene.layers[l].get("visible", True) is False:
+            scene.layers[l]["visible"] = True
+        if scene.layers[l].get("archived", False) is True:
+            scene.layers[l]["archived"] = False
 
 # Make backgrounds white
 # for scene in (NGL_BASE_SCENE, NGL_BASE_SCENE_VNC, NGL_BASE_SCENE_TOP):
