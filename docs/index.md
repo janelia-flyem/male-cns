@@ -27,15 +27,25 @@ icon: material/home
 
     [:octicons-arrow-right-24: Overview](https://www.janelia.org/project-team/flyem/male-cns-connectome)
 
--   :material-feather:{ .lg .middle } __Manuscript__
+-   :material-compass-outline:{ .lg .middle } __Explore__
 
     ---
 
-    Read the publication describing the dataset on `bioRxiv` (coming soon).
+    Browse cell types, connectivity, and eyemaps for the full male CNS.
 
-    [:octicons-arrow-right-24: Preprint](#)
+    [:octicons-arrow-right-24: Male CNS Cell Type Explorer](https://reiserlab.github.io/celltype-explorer-drosophila-male-cns)
+ 
+-   :fontawesome-solid-circle-nodes:{ .lg .middle } __Query__
 
--   :material-gender-male-female:{ .lg .middle } __Dimorphism__
+    ---
+
+    Interactively search cell-to-cell connectivity using neuPrint.  Or try Clio's annotation-focused view of the data to conveniently filter cells by type, hemilinege, etc.
+
+    [:octicons-arrow-right-24: NeuPrint](https://neuprint.janelia.org/?dataset=male-cns%3Av0.9&qt=findneurons)
+
+    [:octicons-arrow-right-24: Clio](https://clio.janelia.org/ws/annotate?dataset=male-cns:v0.9&tab=bodies)
+
+-   :material-gender-male-female:{ .lg .middle } __Compare__
 
     ---
 
@@ -44,30 +54,21 @@ icon: material/home
 
     [:octicons-arrow-right-24: Dimorphism explorer](build/dimorphism_overview.md)
 
--   :fontawesome-brands-wpexplorer:{ .lg .middle } __Explore__
-
-    ---
-
-    Interactively explore the dataset using neuPrint.
-
-    [:octicons-arrow-right-24: NeuPrint](https://neuprint.janelia.org/?dataset=male-cns%3Av0.9&qt=findneurons)
-
--   :material-compass-outline:{ .lg .middle } __Cell Type Explorer__
-
-    ---
-
-    Explore cell types for the full male CNS and female brain. 
-
-    [:octicons-arrow-right-24: Male CNS Cell Type Explorer](https://reiserlab.github.io/celltype-explorer-drosophila-male-cns)
- 
 -   :material-cloud-download-outline:{ .lg .middle } __Download__
 
     ---
 
-    Download the data: annotations, edges, skeletons, etc.
+    Download the data: images, annotations, synapses, skeletons, etc.
 
     [:octicons-arrow-right-24: Downloads](download.md)
 
+-   :fontawesome-solid-images:{ .lg .middle } __Gallery__
+
+    ---
+
+    Browse videos and images about the Male CNS.
+
+    [:octicons-arrow-right-24: Media Gallery](media.md)
 
 </div>
 
