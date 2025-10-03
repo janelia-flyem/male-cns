@@ -52,15 +52,13 @@ icon: material/home
 
     [:octicons-arrow-right-24: NeuPrint](https://neuprint.janelia.org/?dataset=male-cns%3Av0.9&qt=findneurons)
 
--   :material-compass-outline:{ .lg .middle } __Cell Type Explorers__
+-   :material-compass-outline:{ .lg .middle } __Cell Type Explorer__
 
     ---
 
     Explore cell types for the full male CNS and female brain. 
 
     [:octicons-arrow-right-24: Male CNS Cell Type Explorer](https://reiserlab.github.io/celltype-explorer-drosophila-male-cns)
-    
-    [:octicons-arrow-right-24: FAFB Cell Type Explorer](https://reiserlab.github.io/celltype-explorer-drosophila-female-adult-fly-brain)
  
 -   :material-cloud-download-outline:{ .lg .middle } __Download__
 
