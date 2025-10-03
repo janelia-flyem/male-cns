@@ -11,6 +11,8 @@ You have multiple options to interactively explore the dataset:
 
 === "NeuPrint"
 
+    ![](../_static/neuprint_screenshot.png){ width=70%}
+
     [NeuPrint](https://neuprint.janelia.org/) is a web-based platform for
     interactively exploring connectome data. You can search for neurons,
     visualize their morphology, and analyze their connectivity.
@@ -18,6 +20,8 @@ You have multiple options to interactively explore the dataset:
     [Go to NeuPrint](https://neuprint.janelia.org/?dataset=male-cns%3Av0.9&qt=findneurons){ .md-button }
 
 === "Neuroglancer"
+
+    ![](../_static/neuroglancer_screenshot.png){ width=70% }
 
     [Neuroglancer](https://neuroglancer-demo.appspot.com/) is a web-based
     platform for visualizing large-scale 3D data. You can explore the

@@ -7,6 +7,7 @@ site_url: https://janelia-flyem.github.io/male-cns/
 plugins:
   - tags
   - search
+  - glightbox
 
 extra:
   generator: false
@@ -26,6 +27,7 @@ nav:
       - Overview: explore/index.md
   - Dimorphism: build/dimorphism_overview.md
   - Download: download.md
+  - Gallery: media.md
 
 theme:
   name: material
@@ -58,6 +60,7 @@ markdown_extensions:
   - tables
   - pymdownx.superfences
   - footnotes
+  - admonition
   - pymdownx.tabbed:
       alternate_style: true
   - pymdownx.emoji:

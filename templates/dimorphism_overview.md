@@ -12,6 +12,9 @@ By comparing the male CNS to the previously published female "FlyWire" connectom
 (_see the accompanying publication for details_). Below you can browse the list of dimorphic and sex-specific cell types grouped by either
 their cell types, their light-level clone, their hemi-lineage, or their synonym.
 
+??? tip "Finding a specific cell type, synonym, etc."
+    You can search for a specific cell type, synonym, etc. using the search box at the top right of the page (click the magnifying glass icon if the box is not visible).
+
 === "By Terminal Type"
 
     Here we present the list of dimorphic neurons grouped by their terminal cell type.

@@ -2198,8 +2198,16 @@ def prep_scene(table):
     has_descending = ("descending_neuron" in table[sc_col].values) or (
         "descending" in table[sc_col].values
     )
-    has_central = ("cb_intrinsic" in table[sc_col].values) or (
-        "central" in table[sc_col].values
+    has_central = any(
+        c in table[sc_col].values
+        for c in [
+            "cb_intrinsic",
+            "central",
+            "ol_intrinsic",
+            "optic",
+            "visual_projection",
+            "visual_centrifugal",
+        ]
     )
     has_vnc = "vnc_intrinsic" in table[sc_col].values
 
