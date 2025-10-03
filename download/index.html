@@ -10,7 +10,7 @@
       
       
       
-        <link rel="canonical" href="https://janelia-flyem.github.io/dimorphism-explorer/download/">
+        <link rel="canonical" href="https://male-cns.janelia.org/download/">
       
       
         <link rel="prev" href="../build/dimorphism_overview/">
@@ -543,16 +543,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#bulk-download" class="md-nav__link">
-    <span class="md-ellipsis">
-      Bulk download
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Bulk download">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
   <a href="#image-data" class="md-nav__link">
     <span class="md-ellipsis">
       Image data
@@ -560,29 +550,21 @@
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
-  <a href="#segmentation" class="md-nav__link">
+      
+        <li class="md-nav__item">
+  <a href="#data-tables" class="md-nav__link">
     <span class="md-ellipsis">
-      Segmentation
+      Data tables
     </span>
   </a>
   
-</li>
+    <nav class="md-nav" aria-label="Data tables">
+      <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#neuron-annotations" class="md-nav__link">
+  <a href="#neuron-properties" class="md-nav__link">
     <span class="md-ellipsis">
-      Neuron annotations
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#skeletons" class="md-nav__link">
-    <span class="md-ellipsis">
-      Skeletons
+      Neuron properties
     </span>
   </a>
   
@@ -598,9 +580,18 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#synapse-data" class="md-nav__link">
+  <a href="#neuprint-database" class="md-nav__link">
     <span class="md-ellipsis">
-      Synapse data
+      Neuprint Database
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#skeletons" class="md-nav__link">
+    <span class="md-ellipsis">
+      Skeletons
     </span>
   </a>
   
@@ -657,16 +648,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#bulk-download" class="md-nav__link">
-    <span class="md-ellipsis">
-      Bulk download
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Bulk download">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
   <a href="#image-data" class="md-nav__link">
     <span class="md-ellipsis">
       Image data
@@ -674,29 +655,21 @@
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
-  <a href="#segmentation" class="md-nav__link">
+      
+        <li class="md-nav__item">
+  <a href="#data-tables" class="md-nav__link">
     <span class="md-ellipsis">
-      Segmentation
+      Data tables
     </span>
   </a>
   
-</li>
+    <nav class="md-nav" aria-label="Data tables">
+      <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#neuron-annotations" class="md-nav__link">
+  <a href="#neuron-properties" class="md-nav__link">
     <span class="md-ellipsis">
-      Neuron annotations
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#skeletons" class="md-nav__link">
-    <span class="md-ellipsis">
-      Skeletons
+      Neuron properties
     </span>
   </a>
   
@@ -712,9 +685,18 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#synapse-data" class="md-nav__link">
+  <a href="#neuprint-database" class="md-nav__link">
     <span class="md-ellipsis">
-      Synapse data
+      Neuprint Database
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#skeletons" class="md-nav__link">
+    <span class="md-ellipsis">
+      Skeletons
     </span>
   </a>
   
@@ -757,15 +739,17 @@ interface to the neuPrint API.</p>
 <p>Next, go to <a href="https://neuprint.janelia.org/">neuPrint</a> and create an account. Follow
 <a href="https://connectome-neuprint.github.io/neuprint-python/docs/quickstart.html#client-and-authorization-token">these instructions</a>
 for getting your API token.</p>
-<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">neuprint</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">neu</span>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">neuprint</span><span class="w"> </span><span class="kn">import</span> <span class="n">Client</span>
 <span class="n">client</span> <span class="o">=</span> <span class="n">Client</span><span class="p">(</span><span class="s2">&quot;https://neuprint.janelia.org&quot;</span><span class="p">,</span> <span class="n">api_token</span><span class="o">=</span><span class="s2">&quot;&lt;your_token&gt;&quot;</span><span class="p">)</span>
 
-<span class="c1"># Get neuron annotations</span>
-<span class="n">criteria</span> <span class="o">=</span> <span class="n">neu</span><span class="o">.</span><span class="n">NeuronCriteria</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="s2">&quot;DA1_ORN&quot;</span><span class="p">)</span>
-<span class="n">meta</span><span class="p">,</span> <span class="n">roi_info</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">fetch_neurons</span><span class="p">(</span><span class="n">criteria</span><span class="p">)</span>
+<span class="c1"># Get neuron annotations and neuropil innervation</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">neuprint</span><span class="w"> </span><span class="kn">import</span> <span class="n">fetch_neurons</span>
+<span class="n">neurons</span><span class="p">,</span> <span class="n">syndist</span> <span class="o">=</span> <span class="n">fetch_neurons</span><span class="p">(</span><span class="s2">&quot;DNge104&quot;</span><span class="p">)</span>
 
 <span class="c1"># Get connectivity</span>
-<span class="n">edges</span><span class="p">,</span> <span class="n">neuron_info</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">fetch_adjacencies</span><span class="p">(</span><span class="n">criteria</span><span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">neuprint</span><span class="w"> </span><span class="kn">import</span> <span class="n">fetch_adjacencies</span>
+<span class="n">outgoing_edges</span><span class="p">,</span> <span class="n">neuron_info</span> <span class="o">=</span> <span class="n">fetch_adjacencies</span><span class="p">(</span><span class="s2">&quot;DNge104&quot;</span><span class="p">)</span>
+<span class="n">incoming_edges</span><span class="p">,</span> <span class="n">neuron_info2</span> <span class="o">=</span> <span class="n">fetch_adjacencies</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="s2">&quot;DNge104&quot;</span><span class="p">)</span>
 </code></pre></div>
 <p>For more examples, please see the maleCNS Github repository.</p>
 <p><div style="text-align: center;">
@@ -795,26 +779,140 @@ for getting your API token.</p>
 </div>
 </div>
 </div>
-<h2 id="bulk-download">Bulk download</h2>
-<p>Alternatively, you can also bulk download the individual data products. Data tables are provided in <a href="https://arrow.apache.org/docs/python/feather.html">Apache Arrow Feather</a> file format, which can be read using <code>pyarrow</code> or <code>pandas</code>.</p>
-<h3 id="image-data">Image data</h3>
-<h3 id="segmentation">Segmentation</h3>
-<h3 id="neuron-annotations">Neuron annotations</h3>
+<h2 id="image-data">Image data</h2>
+<p>Selected image volumes are described below.  Please inspect the data source URLs in the MaleCNS <a href="https://neuroglancer-demo.appspot.com/#!gs://flyem-male-cns/v0.9/male-cns-v0.9.json">neuroglancer scene</a> for related volumes.</p>
+<p>Except where noted, the image data is available in <a href="https://github.com/google/neuroglancer/tree/master/src/datasource/precomputed">neuroglancer precomputed format</a>, readable with <a href="https://google.github.io/tensorstore/index.html"><code>tensorstore</code></a> or <a href="https://github.com/seung-lab/cloud-volume"><code>cloud-volume</code></a>.  Links beginning with <code>gs://</code> refer to Google Storage Bucket locations.</p>
 <ul>
-<li>table of neuron properties (20 MB): <a href="https://storage.googleapis.com/flyem-male-cns/v0.9/connectome-data/flat-connectome/body-annotations-male-cns-v0.9-minconf-0.5.feather">body-annotations-male-cns-v0.9-minconf-0.5.feather</a></li>
-<li>table of neurotransmitter information for each neuron (44 MB): <a href="https://storage.googleapis.com/flyem-male-cns/v0.9/connectome-data/flat-connectome/body-neurotransmitters-male-cns-v0.9.feather">body-neurotransmitters-male-cns-v0.9.feather</a></li>
+<li><code>gs://flyem_cns_z0720_07m_dvidcoords_n5</code><ul>
+<li>The aligned EM volume, uncompressed and without CLAHE normalization, in <a href="https://github.com/saalfeldlab/n5">N5 format</a> (supported by tensorstore).</li>
+<li>8nm isotropic resolution.</li>
+<li>Data type <code>uint8</code></li>
+<li><a href="https://neuroglancer-demo.appspot.com/#!gs://flyem-user-links/short/male-cns-aligned-em-uncompressed-n5.json">Neuroglancer view</a></li>
 </ul>
-<h3 id="skeletons">Skeletons</h3>
+</li>
+<li><code>gs://flyem-male-cns/em/em-clahe-jpeg</code><ul>
+<li>The aligned EM volume, contrast-adjusted with CLAHE normalization and JPEG-encoded.</li>
+<li>Ideal for interactive browsing.</li>
+<li>Data type <code>uint8</code></li>
+</ul>
+</li>
+<li><code>gs://flyem-male-cns/v0.9/segmentation</code><ul>
+<li>The <code>v0.9</code> proofread neuron segmentation.</li>
+<li>8nm isotropic resolution.</li>
+<li>Voxels are stored as <code>uint64</code>, but the upper 32 bits are never used.</li>
+</ul>
+</li>
+<li><code>gs://flyem-male-cns/v0.9/malecns-v0.9-nuclei-seg-16nm</code><ul>
+<li>The <code>v0.9</code> nuclear segmentation.  Not filtered to exclude glia, noise, etc.  These served as the basis for our cell body annotations, which were manually reviewed.</li>
+<li>16nm isotropic resolution.</li>
+<li>Voxel datatype is <code>uint64</code>.</li>
+</ul>
+</li>
+<li><code>gs://flyem-male-cns/rois/fullbrain-roi-v4</code><ul>
+<li>Brain neuropil compartment segmentation, initialized via transfer from ROIs in JRC2018M and refined manually.</li>
+<li>256nm isotropic resolution</li>
+<li>Voxels are stored as <code>uint64</code>, but max value is <code>96</code>.</li>
+</ul>
+</li>
+<li><code>gs://flyem-male-cns/rois/malecns-vnc-neuropil-roi-v0</code><ul>
+<li>VNC neuropil compartment segmentation, refined manually.</li>
+<li>256nm isotropic resolution</li>
+<li>Voxels are stored as <code>uint64</code>, but max value is <code>27</code>.</li>
+</ul>
+</li>
+</ul>
+<h2 id="data-tables">Data tables</h2>
+<p>All connectome data is available for bulk download, suitable for ingestion into alternative databases.
+The following files are stored under <code>gs://flyem-male-cns/v0.9/connectome-data/flat-connectome/</code>.
+Data tables are provided in <a href="https://arrow.apache.org/docs/python/feather.html">Apache Arrow Feather</a> file format, which can be read using <a href="https://arrow.apache.org/docs/python/index.html"><code>pyarrow</code></a> or <a href="https://pandas.pydata.org"><code>pandas</code></a>.</p>
+<h3 id="neuron-properties">Neuron properties</h3>
+<ul>
+<li><a href="https://storage.googleapis.com/flyem-male-cns/v0.9/connectome-data/flat-connectome/body-annotations-male-cns-v0.9-minconf-0.5.feather">body-annotations-male-cns-v0.9-minconf-0.5.feather</a><ul>
+<li>Curated neuron annotations, excluding neurotransmitter properties.</li>
+<li>13 MB</li>
+</ul>
+</li>
+<li><a href="https://storage.googleapis.com/flyem-male-cns/v0.9/connectome-data/flat-connectome/body-neurotransmitters-male-cns-v0.9.feather">body-neurotransmitters-male-cns-v0.9.feather</a><ul>
+<li>Aggregate neurotransmitter predictions for each neuron.  See manuscript methods section for details.</li>
+<li>42 MB</li>
+</ul>
+</li>
+<li><a href="https://storage.googleapis.com/flyem-male-cns/v0.9/connectome-data/flat-connectome/body-stats-male-cns-v0.9-minconf-0.5.feather">body-stats-male-cns-v0.9-minconf-0.5.feather</a><ul>
+<li>summary statistics (synapse counts) of all segments in the dataset (excluding those with no synapses)</li>
+<li>780 MB</li>
+</ul>
+</li>
+</ul>
 <h3 id="connectivity">Connectivity</h3>
 <ul>
-<li>table of neuron-to-neuron connections and their strengths; this is the full connection graph (1.1 GB): <a href="https://storage.googleapis.com/flyem-male-cns/v0.9/connectome-data/flat-connectome/connectome-weights-male-cns-v0.9-minconf-0.5.feather">connectome-weights-male-cns-v0.9-minconf-0.5.feather</a></li>
-<li>table of neurons with overall connection strengths (780 MB): <a href="https://storage.googleapis.com/flyem-male-cns/v0.9/connectome-data/flat-connectome/body-stats-male-cns-v0.9-minconf-0.5.feather">body-stats-male-cns-v0.9-minconf-0.5.feather</a></li>
+<li><a href="https://storage.googleapis.com/flyem-male-cns/v0.9/connectome-data/flat-connectome/connectome-weights-male-cns-v0.9-minconf-0.5.feather">connectome-weights-male-cns-v0.9-minconf-0.5.feather</a><ul>
+<li>segment-to-segment connection strengths for all segments in the dataset (excluding those with no synapses)</li>
+<li>This is the full connection graph.</li>
+<li>1.1 GB</li>
 </ul>
-<h3 id="synapse-data">Synapse data</h3>
+</li>
+<li><a href="https://storage.googleapis.com/flyem-male-cns/v0.9/connectome-data/flat-connectome/syn-points-male-cns-v0.9-minconf-0.5.feather">syn-points-male-cns-v0.9-minconf-0.5.feather</a><ul>
+<li>Pre-synapse and post-synapse locations, body (segment) ID, and encompassing ROIs</li>
+<li>Pre-synapses and post-synapses are listed in separate rows.  The 'kind' column indicates whether the point is <code>PreSyn</code> or <code>PostSyn</code>.</li>
+<li>Pre-synapses and post-synapses are uniquely identified by their <code>x,y,z</code> locations (expressed in voxel units, i.e. 8nm).</li>
+<li>In the partner table (below), a single pre-synapse may connect to multiple post-synapses.  In this table, each unique pre-synaptic location is listed only once.</li>
+<li>12.7 GB</li>
+</ul>
+</li>
+<li><a href="https://storage.googleapis.com/flyem-male-cns/v0.9/connectome-data/flat-connectome/syn-partners-male-cns-v0.9-minconf-0.5.feather">syn-partners-male-cns-v0.9-minconf-0.5.feather</a><ul>
+<li>Synaptic partner pairs, along with their associated body IDs and primary neuropil.</li>
+<li>Columns: <code>'x_pre', 'y_pre', 'z_pre', 'body_pre', 'conf_pre', 'x_post', 'y_post', 'z_post', 'body_post', 'conf_post', 'primary_post'</code></li>
+<li>6.8 GB</li>
+</ul>
+</li>
+<li><a href="https://storage.googleapis.com/flyem-male-cns/v0.9/connectome-data/flat-connectome/tbar-neurotransmitters-male-cns-v0.9.feather">tbar-neurotransmitters-male-cns-v0.9.feather</a><ul>
+<li>Neurotransmitter prediction probabilities for each pre-synapse</li>
+<li>2.7 GB</li>
+</ul>
+</li>
+</ul>
+<h3 id="neuprint-database">Neuprint Database</h3>
 <ul>
-<li>table of each synapse, with neurons and confidences (6.8 GB): <a href="https://storage.googleapis.com/flyem-male-cns/v0.9/connectome-data/flat-connectome/syn-partners-male-cns-v0.9-minconf-0.5.feather">syn-partners-male-cns-v0.9-minconf-0.5.feather</a></li>
-<li>table of each synapse location, neuron, and compartment (12.7 GB): <a href="https://storage.googleapis.com/flyem-male-cns/v0.9/connectome-data/flat-connectome/syn-points-male-cns-v0.9-minconf-0.5.feather">syn-points-male-cns-v0.9-minconf-0.5.feather</a></li>
-<li>table of each synapse with all neurotransmitter confidences (2.7 GB): <a href="https://storage.googleapis.com/flyem-male-cns/v0.9/connectome-data/flat-connectome/tbar-neurotransmitters-male-cns-v0.9.feather">tbar-neurotransmitters-male-cns-v0.9.feather</a></li>
+<li><code>gs://flyem-male-cns/v0.9/database/neo4j</code><ul>
+<li>The complete neo4j database backing the <code>male-cns:v0.9</code> neuprint dataset hosted on neuprint.janelia.org</li>
+<li>Built for neo4j v4.4.16</li>
+<li>Constructed using <a href="https://github.com/janelia-flyem/flyem-snapshot/"><code>flyem-snapshot</code></a></li>
+</ul>
+</li>
+<li><code>gs://flyem-male-cns/v0.9/database/neuprint-inputs</code><ul>
+<li>The input CSV files used to construct the neo4j database.</li>
+</ul>
+</li>
+</ul>
+<h3 id="skeletons">Skeletons</h3>
+<ul>
+<li><code>gs://flyem-male-cns/v0.9/segmentation/skeletons-malecns/skeletons-swc/</code><ul>
+<li>Directory of neuron skeletons in <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC10654402">SWC format</a>, with names such as <code>12781.swc</code>.</li>
+<li>Male CNS EM coordinate space, with coordinates specified in 8nm units.</li>
+</ul>
+</li>
+<li><code>gs://flyem-male-cns/v0.9/segmentation/skeletons-malecns/skeletons-precomputed/</code><ul>
+<li>Same as above, but in <a href="https://github.com/google/neuroglancer/blob/master/src/datasource/precomputed/skeletons.md">neuroglancer's <code>precomputed</code> skeleton format</a> (unsharded).</li>
+<li>Male CNS EM coordinate space, coordinates in 1 nm units.</li>
+</ul>
+</li>
+<li><code>gs//flyem-male-cns/v0.9/segmentation/skeletons-malecns-mirrored/skeletons-swc/</code><ul>
+<li>Directory of <strong>mirrored</strong> neuron skeletons in <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC10654402">SWC format</a>, with names such as <code>12781.swc</code>.</li>
+<li>Mirrored using a transform available via <a href="https://github.com/navis-org/navis-flybrains"><code>navis-flybrains</code></a>.</li>
+<li>8nm units</li>
+</ul>
+</li>
+<li><code>gs//flyem-male-cns/v0.9/segmentation/skeletons-malecns-mirrored/skeletons-precomputed/</code><ul>
+<li>Same as above, but in <a href="https://github.com/google/neuroglancer/blob/master/src/datasource/precomputed/skeletons.md">neuroglancer's <code>precomputed</code> skeleton format</a> (unsharded).</li>
+<li>1nm units</li>
+</ul>
+</li>
+<li><code>gs://flyem-male-cns/v0.9/segmentation/skeletons-unisex-template/</code><ul>
+<li>Directory of MaleCNS neurons transformed to JRC2018 unisex template space.</li>
+<li>Transform available via <a href="https://github.com/navis-org/navis-flybrains"><code>navis-flybrains</code></a>.</li>
+<li>1um (micron) units</li>
+</ul>
+</li>
 </ul>
 <div style="text-align: center;">
     <p>The Male CNS is <a href="https://creativecommons.org/licenses/by/4.0/">licensed under CC-BY</a>.</p>
