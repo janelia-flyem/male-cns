@@ -1075,17 +1075,24 @@ def group_by_synonyms(
                 author_year, syn = syn.split(":")
             except ValueError:
                 # replace this with a warning for now
-                print(f"  WARNING: Failed to parse synonym: {syn} in type {record['type']}", flush=True)
+                print(
+                    f"  WARNING: Failed to parse synonym: {syn} in type {record['type']}",
+                    flush=True,
+                )
                 continue
                 # raise ValueError(f"  Failed to parse synonym: {syn}")
             author_year = author_year.strip()
             syn = syn.strip()
             # We might have multiple authors/years, "Author1 Year1, Author2 Year2: Synonym"
             author_year_parsed = []
-            for ay in author_year.split(";"):
+            for ay in author_year.split(","):
                 ay = ay.strip()
+
+                if ay[-1] in ("a", "b"):
+                    ay = ay[:-1].strip()
+
                 # Check that we have author + year
-                if not re.match(r"^[A-Za-z ]+ \d{4}$", ay):
+                if not re.match(r"^[A-Za-z ]+ \d{4}$", ay.replace("-", " ").replace("&", " ")):
                     print(f"  Invalid author/year format: {ay}", flush=True)
                     continue
                 author_year_parsed.append(ay)
