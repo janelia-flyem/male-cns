@@ -1476,11 +1476,20 @@ def make_synonyms_pages(
                 author_year, syn = author_year.strip(), syn.strip()
                 # We might have multiple authors/years, "Author1 Year1, Author2 Year2: Synonym"
                 author_year_parsed = []
-                for ay in author_year.split(";"):
+                for ay in author_year.split(","):
                     ay = ay.strip()
-                    # Check that we have author + year
-                    if not re.match(r"^[A-Za-z ]+ \d{4}$", ay):
-                        print(f"  Invalid author/year format: {ay}", flush=True)
+
+                    # There are one or two cases where the year is "2020a" or "2020b", so we just remove
+                    # the trailing letter for now
+                    if ay[-1] in ("a", "b"):
+                        ay = ay[:-1]
+
+                    # Check that we have author + year (note that we're temporarily replacing & and - with spaces
+                    # to make the regex easier)
+                    if not re.match(
+                        r"^[A-Za-z ]+ \d{4}$", ay.replace("&", " ").replace("-", " ")
+                    ):
+                        print(f"  Invalid author/year format: {ay} ({syn})", flush=True)
                         continue
                     author_year_parsed.append(ay)
                 if not author_year_parsed:
@@ -1488,7 +1497,10 @@ def make_synonyms_pages(
                     continue
                 author_year_str = ", ".join(author_year_parsed)
             except ValueError as e:
-                print(f"  WARNING: Failed to parse synonym: {string} in {synonyms}", flush=True)
+                print(
+                    f"  WARNING: Failed to parse synonym: {string} in {synonyms}",
+                    flush=True,
+                )
                 author_year_str = ""
                 continue
 
