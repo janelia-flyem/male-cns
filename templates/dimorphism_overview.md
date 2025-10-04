@@ -1,16 +1,19 @@
 ---
-title: Dimorphism
+title: Dimorphism Explorer
 hide:
   - navigation
   - toc
   - tags
 ---
 
-# :material-gender-male-female: Dimorphism Overview
+# :material-gender-male-female: Dimorphism Explorer
 
-By comparing the male CNS to the previously published female "FlyWire" connectome[^1], we identified a number of sexually dimorphic neurons.
-Below you can browse the list of dimorphic and sex-specific cell types grouped by either their cell types, their light-level clone, their
-hemi-lineage, or their synonym.
+By comparing the male CNS to the previously published female "FlyWire" connectome[^1], we identified a number of sexually dimorphic neurons
+(_see the accompanying publication for details_). Below you can browse the list of dimorphic and sex-specific cell types grouped by either
+their cell types, their light-level clone, their hemi-lineage, or their synonym.
+
+??? tip "Finding a specific cell type, synonym, etc."
+    You can search for a specific cell type, synonym, etc. using the search box at the top right of the page (click the magnifying glass icon if the box is not visible).
 
 === "By Terminal Type"
 

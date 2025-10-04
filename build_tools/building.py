@@ -498,7 +498,7 @@ def extract_type_data(mcns_meta, fw_meta):
 
         # Get a neuroglancer scene to populate
         scene = prep_scene(table)
-        scene.layers[1]["segments"] = table["bodyId"].values
+        scene.layers["cns-seg"]["segments"] = table["bodyId"].values
 
         # Grab the corresponding type in FlyWire
         table_fw = fw_meta_grp.get(t, pd.DataFrame([]))
@@ -524,7 +524,7 @@ def extract_type_data(mcns_meta, fw_meta):
             dimorphic_meta[-1]["n_fwr"] = counts.get("right", 0)
             dimorphic_meta[-1]["n_fwl"] = counts.get("left", 0)
 
-            scene.layers[2]["segments"] = table_fw["root_id"].values
+            scene.layers["flywire-meshes"]["segments"] = table_fw["root_id"].values
 
         dimorphic_meta[-1]["url"] = scene.url
 
@@ -592,7 +592,7 @@ def extract_type_data(mcns_meta, fw_meta):
 
         # Get a neuroglancer scene to populate
         scene = prep_scene(table)
-        scene.layers[1]["segments"] = table["bodyId"].values
+        scene.layers["cns-seg"]["segments"] = table["bodyId"].values
         male_meta[-1]["url"] = scene.url
 
         # For male-specific neurons we should always have a `type`
@@ -641,7 +641,7 @@ def extract_type_data(mcns_meta, fw_meta):
 
         # Get a neuroglancer scene to populate
         scene = prep_scene(table_fw)
-        scene.layers[2]["segments"] = table_fw["root_id"].values
+        scene.layers["flywire-meshes"]["segments"] = table_fw["root_id"].values
 
         female_meta[-1]["url"] = scene.url
 
@@ -698,7 +698,7 @@ def extract_type_data(mcns_meta, fw_meta):
 
         # Get a neuroglancer scene to populate
         scene = prep_scene(table)
-        scene.layers[1]["segments"] = table["bodyId"].values
+        scene.layers["cns-seg"]["segments"] = table["bodyId"].values
 
         # Grab the corresponding type in FlyWire
         table_fw = fw_meta_grp.get(t, pd.DataFrame([]))
@@ -724,7 +724,7 @@ def extract_type_data(mcns_meta, fw_meta):
             iso_meta[-1]["n_fwr"] = counts.get("right", 0)
             iso_meta[-1]["n_fwl"] = counts.get("left", 0)
 
-            scene.layers[2]["segments"] = table_fw["root_id"].values
+            scene.layers["flywire-meshes"]["segments"] = table_fw["root_id"].values
 
         iso_meta[-1]["url"] = scene.url
 
@@ -1075,17 +1075,24 @@ def group_by_synonyms(
                 author_year, syn = syn.split(":")
             except ValueError:
                 # replace this with a warning for now
-                print(f"  WARNING: Failed to parse synonym: {syn} in type {record['type']}", flush=True)
+                print(
+                    f"  WARNING: Failed to parse synonym: {syn} in type {record['type']}",
+                    flush=True,
+                )
                 continue
                 # raise ValueError(f"  Failed to parse synonym: {syn}")
             author_year = author_year.strip()
             syn = syn.strip()
             # We might have multiple authors/years, "Author1 Year1, Author2 Year2: Synonym"
             author_year_parsed = []
-            for ay in author_year.split(";"):
+            for ay in author_year.split(","):
                 ay = ay.strip()
+
+                if ay[-1] in ("a", "b"):
+                    ay = ay[:-1].strip()
+
                 # Check that we have author + year
-                if not re.match(r"^[A-Za-z ]+ \d{4}$", ay):
+                if not re.match(r"^[A-Za-z ]+ \d{4}$", ay.replace("-", " ").replace("&", " ")):
                     print(f"  Invalid author/year format: {ay}", flush=True)
                     continue
                 author_year_parsed.append(ay)
@@ -1138,8 +1145,8 @@ def group_by_synonyms(
             if len(syn["body_ids"]) > 0
             else fw_meta[fw_meta.root_id.isin(syn["root_ids"])]
         )
-        scene.layers[1]["segments"] = syn["body_ids"]
-        scene.layers[2]["segments"] = syn["root_ids"]
+        scene.layers["cns-seg"]["segments"] = syn["body_ids"]
+        scene.layers["flywire-meshes"]["segments"] = syn["root_ids"]
         syn["url"] = scene.url
 
     return by_synonyms
@@ -1253,8 +1260,8 @@ def group_by_hemilineage(
 
         # Generate a neuroglancer URL
         scene = prep_scene(hl_mcns)
-        scene.layers[1]["segments"] = hl_mcns["bodyId"].values
-        scene.layers[2]["segments"] = hl_fw["root_id"].values
+        scene.layers["cns-seg"]["segments"] = hl_mcns["bodyId"].values
+        scene.layers["flywire-meshes"]["segments"] = hl_fw["root_id"].values
 
         # Add the URL to the hemilineage
         by_hemilineage[hl]["url"] = scene.url
@@ -1348,8 +1355,8 @@ def make_supertype_pages(
 
         # Get a neuroglancer scene to populate
         scene = prep_scene(table_mcns if not table_mcns.empty else table_fw)
-        scene.layers[1]["segments"] = table_mcns["bodyId"].values
-        scene.layers[2]["segments"] = table_fw["root_id"].values
+        scene.layers["cns-seg"]["segments"] = table_mcns["bodyId"].values
+        scene.layers["flywire-meshes"]["segments"] = table_fw["root_id"].values
 
         supertypes_meta[-1]["url"] = scene.url
 
@@ -1476,11 +1483,20 @@ def make_synonyms_pages(
                 author_year, syn = author_year.strip(), syn.strip()
                 # We might have multiple authors/years, "Author1 Year1, Author2 Year2: Synonym"
                 author_year_parsed = []
-                for ay in author_year.split(";"):
+                for ay in author_year.split(","):
                     ay = ay.strip()
-                    # Check that we have author + year
-                    if not re.match(r"^[A-Za-z ]+ \d{4}$", ay):
-                        print(f"  Invalid author/year format: {ay}", flush=True)
+
+                    # There are one or two cases where the year is "2020a" or "2020b", so we just remove
+                    # the trailing letter for now
+                    if ay[-1] in ("a", "b"):
+                        ay = ay[:-1]
+
+                    # Check that we have author + year (note that we're temporarily replacing & and - with spaces
+                    # to make the regex easier)
+                    if not re.match(
+                        r"^[A-Za-z ]+ \d{4}$", ay.replace("&", " ").replace("-", " ")
+                    ):
+                        print(f"  Invalid author/year format: {ay} ({syn})", flush=True)
                         continue
                     author_year_parsed.append(ay)
                 if not author_year_parsed:
@@ -1488,7 +1504,10 @@ def make_synonyms_pages(
                     continue
                 author_year_str = ", ".join(author_year_parsed)
             except ValueError as e:
-                print(f"  WARNING: Failed to parse synonym: {string} in {synonyms}", flush=True)
+                print(
+                    f"  WARNING: Failed to parse synonym: {string} in {synonyms}",
+                    flush=True,
+                )
                 author_year_str = ""
                 continue
 
@@ -1536,8 +1555,8 @@ def make_synonyms_pages(
             if len(syn["body_ids"]) > 0
             else fw_meta[fw_meta.root_id.isin(syn["root_ids"])]
         )
-        scene.layers[1]["segments"] = syn["body_ids"]
-        scene.layers[2]["segments"] = syn["root_ids"]
+        scene.layers["cns-seg"]["segments"] = syn["body_ids"]
+        scene.layers["flywire-meshes"]["segments"] = syn["root_ids"]
         syn["url"] = scene.url
 
         # Get the dimorphic types for this synonym
@@ -1635,7 +1654,7 @@ def make_hemilineage_pages(mcns_meta, fw_meta, random_pages: int | None) -> None
 
             # Get a neuroglancer scene to populate
             scene = prep_scene(table)
-            scene.layers[1]["segments"] = table["bodyId"].values
+            scene.layers["cns-seg"]["segments"] = table["bodyId"].values
 
             # Grab the corresponding hemilineage in FlyWire
             table_fw = fw_meta[fw_meta.ito_lee_hemilineage == t]
@@ -1653,7 +1672,7 @@ def make_hemilineage_pages(mcns_meta, fw_meta, random_pages: int | None) -> None
                 hemilineages_meta[-1]["n_types_fwr"] = type_counts.get("right", 0)
                 hemilineages_meta[-1]["n_types_fwl"] = type_counts.get("left", 0)
 
-                scene.layers[2]["segments"] = table_fw["root_id"].values
+                scene.layers["flywire-meshes"]["segments"] = table_fw["root_id"].values
                 scene.layers[2]["segmentDefaultColor"] = "#e511d0"
 
             hemilineages_meta[-1]["url"] = scene.url
@@ -1662,7 +1681,9 @@ def make_hemilineage_pages(mcns_meta, fw_meta, random_pages: int | None) -> None
 
     # Loop through each super type and generate a page for it
     if random_pages is not None:
-        hemilineages_meta = random.sample(hemilineages_meta, k=min(random_pages, len(hemilineages_meta)))
+        hemilineages_meta = random.sample(
+            hemilineages_meta, k=min(random_pages, len(hemilineages_meta))
+        )
     for record in hemilineages_meta:
         print(
             f"  Generating summary page for hemilineage '{record['hemilineage']}'...",
@@ -2177,8 +2198,16 @@ def prep_scene(table):
     has_descending = ("descending_neuron" in table[sc_col].values) or (
         "descending" in table[sc_col].values
     )
-    has_central = ("cb_intrinsic" in table[sc_col].values) or (
-        "central" in table[sc_col].values
+    has_central = any(
+        c in table[sc_col].values
+        for c in [
+            "cb_intrinsic",
+            "central",
+            "ol_intrinsic",
+            "optic",
+            "visual_projection",
+            "visual_centrifugal",
+        ]
     )
     has_vnc = "vnc_intrinsic" in table[sc_col].values
 
@@ -2196,8 +2225,9 @@ def prep_scene(table):
     if not has_descending and not has_ascending and not has_vnc:
         scene.layers["vnc-neuropil-shell"]["visible"] = False
 
-    scene.layers[1]["segmentDefaultColor"] = "#00e9e7"
-    scene.layers[2]["segmentDefaultColor"] = "#e511d0"
+    # Set colors for male and female neurons
+    scene.layers['cns-seg']["segmentDefaultColor"] = "#00e9e7"  # cyan
+    scene.layers['flywire-meshes']["segmentDefaultColor"] = "#e511d0"  # magenta
 
     return scene
 

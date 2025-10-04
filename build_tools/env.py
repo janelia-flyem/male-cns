@@ -89,10 +89,16 @@ NGL_BASE_SCENE_VNC = SceneWithArchived.from_url(NGL_BASE_URL_VNC)
 NGL_BASE_URL_TOP = "https://neuroglancer-demo.appspot.com/#!gs://flyem-user-links/short/MaleCNS-v0.9-brain+vnc.json"
 NGL_BASE_SCENE_TOP = SceneWithArchived.from_url(NGL_BASE_URL_TOP)
 
-# Make sure the segmentation layers are empty
+# Make sure the segmentation layers are empty and visible
 for scene in (NGL_BASE_SCENE, NGL_BASE_SCENE_VNC, NGL_BASE_SCENE_TOP):
-    for i in range(2):
-        scene.layers[i]['segments'] = []
+    for l in ("cns-seg", "flywire-meshes"):
+        # Remove any selected segments
+        scene.layers[l]["segments"] = []
+        # Make sure the layer is visible (and not archived)
+        if scene.layers[l].get("visible", True) is False:
+            scene.layers[l]["visible"] = True
+        if scene.layers[l].get("archived", False) is True:
+            scene.layers[l]["archived"] = False
 
 # Make backgrounds white
 # for scene in (NGL_BASE_SCENE, NGL_BASE_SCENE_VNC, NGL_BASE_SCENE_TOP):
@@ -193,16 +199,16 @@ JINJA_ENV = Environment(
 #####
 # A global neuprint client
 #####
-NEUPRINT_CLIENT = neu.Client(server="https://neuprint-cns.janelia.org", dataset="cns")
+NEUPRINT_CLIENT = neu.Client(
+    server="https://neuprint.janelia.org", dataset="male-cns:v0.9"
+)
 
 #####
 # Some BASE URLs for neuPrint
 #####
 
 # Basic neuPrint search
-NEUPRINT_SEARCH_URL = "https://neuprint-cns.janelia.org/results?dataset=cns&qt=findneurons&q=1&qr%5B0%5D%5Bcode%5D=fn&qr%5B0%5D%5Bds%5D=cns&qr%5B0%5D%5Bpm%5D%5Bdataset%5D=cns&qr%5B0%5D%5Bpm%5D%5BinputMatchAny%5D=false&qr%5B0%5D%5Bpm%5D%5BoutputMatchAny%5D=false&qr%5B0%5D%5Bpm%5D%5Ball_segments%5D=false&qr%5B0%5D%5Bpm%5D%5Benable_contains%5D=true&qr%5B0%5D%5Bpm%5D%5Bneuron_name%5D={neuron_name}&qr%5B0%5D%5BvisProps%5D%5BrowsPerPage%5D=25&tab=0"
+NEUPRINT_SEARCH_URL = "https://neuprint.janelia.org/results?dataset=male-cns%3Av0.9&qt=findneurons&q=1&qr%5B0%5D%5Bcode%5D=fn&qr%5B0%5D%5Bds%5D=male-cns%3Av0.9&qr%5B0%5D%5Bpm%5D%5Bdataset%5D=male-cns%3Av0.9&qr%5B0%5D%5Bpm%5D%5BinputMatchAny%5D=false&qr%5B0%5D%5Bpm%5D%5BoutputMatchAny%5D=false&qr%5B0%5D%5Bpm%5D%5Ball_segments%5D=false&qr%5B0%5D%5Bpm%5D%5Benable_contains%5D=true&qr%5B0%5D%5Bpm%5D%5Bneuron_name%5D={neuron_name}&qr%5B0%5D%5BvisProps%5D%5BrowsPerPage%5D=25&tab=0"
 
 # Connectivity search
-NEUPRINT_CONNECTIVITY_URL = "https://neuprint-cns.janelia.org/results?dataset=cns&qt=simpleconnection&q=1&qr%5B0%5D%5Bcode%5D=sc&qr%5B0%5D%5Bds%5D=cns&qr%5B0%5D%5Bpm%5D%5Bdataset%5D=cns&qr%5B0%5D%5Bpm%5D%5Benable_contains%5D=true&qr%5B0%5D%5Bpm%5D%5Bneuron_name%5D={neuron_name}&qr%5B0%5D%5Bpm%5D%5Bfind_inputs%5D=false&qr%5B0%5D%5BvisProps%5D%5BpaginateExpansion%5D=true&tab=0"
-
-
+NEUPRINT_CONNECTIVITY_URL = "https://neuprint.janelia.org/results?dataset=male-cns%3Av0.9&qt=simpleconnection&q=1&qr%5B0%5D%5Bcode%5D=sc&qr%5B0%5D%5Bds%5D=male-cns%3Av0.9&qr%5B0%5D%5Bpm%5D%5Bdataset%5D=male-cns%3Av0.9&qr%5B0%5D%5Bpm%5D%5Benable_contains%5D=true&qr%5B0%5D%5Bpm%5D%5Bneuron_name%5D={neuron_name}&qr%5B0%5D%5Bpm%5D%5Bfind_inputs%5D=false&qr%5B0%5D%5BvisProps%5D%5BpaginateExpansion%5D=true&tab=0"
