@@ -102,12 +102,12 @@ hide:
 
 === "Download raw data"
 
-    All connectome data is available for bulk download, suitable for ingestion into alternative databases.
+    All connectome data is available for bulk download, suitable for analyses or ingestion into alternative databases.
     The following files are stored under `gs://flyem-male-cns/v0.9/connectome-data/flat-connectome/`.
 
-    === "Image data"
+    === "Volumes"
 
-        Selected image volumes are described below.  Please inspect the data source URLs in the MaleCNS [neuroglancer scene][scene] for related volumes.
+        Selected image and segmentation volumes are described below. Please inspect the data source URLs in the MaleCNS [neuroglancer scene][scene] for related volumes.
 
         Except where noted, the image data is available in [neuroglancer precomputed format][precomputed], readable with [`tensorstore`][tensorstore] or [`cloud-volume`][cloud-volume]. Links beginning with `gs://` refer to Google Storage Bucket locations.
 
@@ -144,6 +144,25 @@ hide:
 
         [n5]: https://github.com/saalfeldlab/n5
         [em-raw]: https://neuroglancer-demo.appspot.com/#!gs://flyem-user-links/short/male-cns-aligned-em-uncompressed-n5.json
+
+        Example code for reading the EM image data using Python and [`cloud-volume`][cloud-volume]:
+
+        ```python
+        >>> from cloudvolume import CloudVolume
+
+        >>> # Initialize a CloudVolume for the EM image data
+        >>> vol = CloudVolume('precomputed://gs://flyem-male-cns/em/em-clahe-jpeg', use_https=True)
+        >>> vol.shape
+        (94088, 78317, 134576, 1)
+        >>> # Grab a 500x500 voxels cutout
+        >>> cutout = vol[40000:40500, 40000:40500, 20000, 0]
+
+        >>> # Plot a single slice using matplotlib
+        >>> import matplotlib.pyplot as plt
+        >>> plt.imshow(cutout[:, :, 0, 0], cmap='gray')
+        ```
+
+        ![](../_static/em_cutout.png){ width=50% }
 
     === "Annotations"
 
