@@ -679,7 +679,7 @@ The following files are stored under <code>gs://flyem-male-cns/v0.9/connectome-d
 <div class="tabbed-content">
 <div class="tabbed-block">
 <p>Selected image and segmentation volumes are described below. Please inspect the data source URLs in the MaleCNS <a href="https://neuroglancer-demo.appspot.com/#!gs://flyem-male-cns/v0.9/male-cns-v0.9.json">neuroglancer scene</a> for related volumes.</p>
-<p>Except where noted, the image data is available in <a href="https://github.com/google/neuroglancer/tree/master/src/datasource/precomputed">neuroglancer precomputed format</a>, readable with <a href="https://google.github.io/tensorstore/index.html"><code>tensorstore</code></a> or <a href="https://github.com/seung-lab/cloud-volume"><code>cloud-volume</code></a>. Links beginning with <code>gs://</code> refer to Google Storage Bucket locations.</p>
+<p>Except where noted, the data is available in <a href="https://github.com/google/neuroglancer/tree/master/src/datasource/precomputed">neuroglancer precomputed format</a>, readable with <a href="https://google.github.io/tensorstore/index.html"><code>tensorstore</code></a> or <a href="https://github.com/seung-lab/cloud-volume"><code>cloud-volume</code></a>. Links beginning with <code>gs://</code> refer to Google Storage Bucket locations.</p>
 <ul>
 <li><code>gs://flyem_cns_z0720_07m_dvidcoords_n5</code><ul>
 <li>The aligned EM volume, uncompressed and without CLAHE normalization, in <a href="https://github.com/saalfeldlab/n5">N5 format</a> (supported by tensorstore).</li>
@@ -755,6 +755,7 @@ using e.g. <a href="https://arrow.apache.org/docs/python/index.html"><code>pyarr
 </ul>
 </li>
 </ul>
+<p>For updated annotations for the female brain "FlyWire" connectome, please see the <a href="https://github.com/flyconnectome/flywire_annotations">flyconnectome/flywire_annotations</a> Github repository.</p>
 </div>
 <div class="tabbed-block">
 <p>We provide several tables describing synaptic connectivity in the MaleCNS dataset:</p>
@@ -799,19 +800,19 @@ using e.g. <a href="https://arrow.apache.org/docs/python/index.html"><code>pyarr
 <li>Male CNS EM coordinate space, coordinates in 1 nm units.</li>
 </ul>
 </li>
-<li><code>gs//flyem-male-cns/v0.9/segmentation/skeletons-malecns-mirrored/skeletons-swc/</code><ul>
+<li><code>gs://flyem-male-cns/v0.9/segmentation/skeletons-malecns-mirrored/skeletons-swc/</code><ul>
 <li>Directory of <strong>mirrored</strong> neuron skeletons in <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC10654402">SWC format</a>, with names such as <code>12781.swc</code>.</li>
 <li>Mirrored using a transform available via <a href="https://github.com/navis-org/navis-flybrains"><code>navis-flybrains</code></a>.</li>
 <li>8nm units</li>
 </ul>
 </li>
-<li><code>gs//flyem-male-cns/v0.9/segmentation/skeletons-malecns-mirrored/skeletons-precomputed/</code><ul>
+<li><code>gs://flyem-male-cns/v0.9/segmentation/skeletons-malecns-mirrored/skeletons-precomputed/</code><ul>
 <li>Same as above, but in <a href="https://github.com/google/neuroglancer/blob/master/src/datasource/precomputed/skeletons.md">neuroglancer's <code>precomputed</code> skeleton format</a> (unsharded).</li>
 <li>1nm units</li>
 </ul>
 </li>
 <li><code>gs://flyem-male-cns/v0.9/segmentation/skeletons-unisex-template/</code><ul>
-<li>Directory of MaleCNS neurons transformed to JRC2018 unisex template space.</li>
+<li>Directory of MaleCNS skeletons transformed to JRC2018 unisex template space.</li>
 <li>Transform available via <a href="https://github.com/navis-org/navis-flybrains"><code>navis-flybrains</code></a>.</li>
 <li>1um (micron) units</li>
 </ul>
