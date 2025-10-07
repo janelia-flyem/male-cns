@@ -21,22 +21,31 @@ You have multiple options to interactively explore the dataset:
 
 === "Neuroglancer"
 
-    ![](../_static/neuroglancer_screenshot.png){ width=70% }
+    <!-- This is the container for the neuroglancer frame -->
+    <div style="text-align: center; flex: .7; min-width: 300px;">
+        <div style="text-align: center;">
+            <iframe src="https://neuroglancer-demo.appspot.com/#!gs://flyem-user-links/short/2025-10-07.053121.364023.json" width="100%" height="500px" style="border:none;"></iframe>
+            <br>
+            <a href="https://neuroglancer-demo.appspot.com/#!gs://flyem-user-links/short/2025-10-07.053121.364023.json" target="_blank">Open in new tab</a>
+        </div>
+    </div>
 
-    [Neuroglancer](https://neuroglancer-demo.appspot.com/) is a web-based
-    platform for visualizing large-scale 3D data. You can explore the
-    image data, segmentation and synapse detection in 3D.
+    Neuroglancer is a web-based platform for visualizing large-scale 3D data. You can explore the
+    image data, segmentation and synapse detection in 3D. The above neuroglancer scene contains the following layers:
 
-    Clicking on the button below will open a neuroglancer scene with:
+     - `em-clahe`: the EM image data; try pressing _space_ to toggle the view
+     - `cns-seg`: the neuron segmentation; this layer is currently active - try changing the current search term from "DNa01" to e.g. "DP1m"
+     - `brain/vnc-neuropil-shell`: layers for the neuropil outlines
+     - `presyn`/`postsyn`: toggle the layers by clicking on them to show pre- and postsynaptic sites for the currently selected neurons
 
-     - layers for the male CNS connectome data (image data, segmentation), including searchable annotations
-     - a layer with overall brain outlines
-     - a layer for individual neuropils
-     - layers for pre- and postsynaptic sites
-     - layers with neuron meshes from the hemibrain and FlyWire connnectomes transformed into maleCNS space
-       for co-visualization (see archived layers in the layer panel)
+    In addition to the above visible layers, the scene contains a number of "archived" layers that you can enable by clicking on the little
+    stack button in the top right corner where it says "6/37". Among others you will find:
 
-    [Go to Neuroglancer](https://neuroglancer-demo.appspot.com/#!gs://flyem-user-links/short/MaleCNS-v0.9-brain.json){ .md-button }
+     - `flywire-meshes`: neuron meshes from the FlyWire connectome (v783) transformed into maleCNS space
+       for co-visualization
+     - `hemibrain-meshes`: neuron meshes from the hemibrain (v1.2.1) connectome transformed into maleCNS space
+       for co-visualization
+     - `brain-/vnc-defects`: these layers show areas with known data defects/artefacts
 
 === "Dimorphism Explorer"
 
