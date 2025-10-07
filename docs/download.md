@@ -109,7 +109,7 @@ hide:
 
         Selected image and segmentation volumes are described below. Please inspect the data source URLs in the MaleCNS [neuroglancer scene][scene] for related volumes.
 
-        Except where noted, the image data is available in [neuroglancer precomputed format][precomputed], readable with [`tensorstore`][tensorstore] or [`cloud-volume`][cloud-volume]. Links beginning with `gs://` refer to Google Storage Bucket locations.
+        Except where noted, the data is available in [neuroglancer precomputed format][precomputed], readable with [`tensorstore`][tensorstore] or [`cloud-volume`][cloud-volume]. Links beginning with `gs://` refer to Google Storage Bucket locations.
 
         [precomputed]: https://github.com/google/neuroglancer/tree/master/src/datasource/precomputed
         [tensorstore]: https://google.github.io/tensorstore/index.html
@@ -188,6 +188,8 @@ hide:
         [body-nt]: https://storage.googleapis.com/flyem-male-cns/v0.9/connectome-data/flat-connectome/body-neurotransmitters-male-cns-v0.9.feather
         [body-stats]: https://storage.googleapis.com/flyem-male-cns/v0.9/connectome-data/flat-connectome/body-stats-male-cns-v0.9-minconf-0.5.feather
 
+        For updated annotations for the female brain "FlyWire" connectome, please see the [flyconnectome/flywire_annotations](https://github.com/flyconnectome/flywire_annotations) Github repository.
+
     === "Connectivity"
 
         We provide several tables describing synaptic connectivity in the MaleCNS dataset:
@@ -225,15 +227,15 @@ hide:
         - `gs://flyem-male-cns/v0.9/segmentation/skeletons-malecns/skeletons-precomputed/`
             - Same as above, but in [neuroglancer's `precomputed` skeleton format][ng-skeleton] (unsharded).
             - Male CNS EM coordinate space, coordinates in 1 nm units.
-        - `gs//flyem-male-cns/v0.9/segmentation/skeletons-malecns-mirrored/skeletons-swc/`
+        - `gs://flyem-male-cns/v0.9/segmentation/skeletons-malecns-mirrored/skeletons-swc/`
             - Directory of **mirrored** neuron skeletons in [SWC format][swc], with names such as `12781.swc`.
             - Mirrored using a transform available via [`navis-flybrains`][flybrains].
             - 8nm units
-        - `gs//flyem-male-cns/v0.9/segmentation/skeletons-malecns-mirrored/skeletons-precomputed/`
+        - `gs://flyem-male-cns/v0.9/segmentation/skeletons-malecns-mirrored/skeletons-precomputed/`
             - Same as above, but in [neuroglancer's `precomputed` skeleton format][ng-skeleton] (unsharded).
             - 1nm units
         - `gs://flyem-male-cns/v0.9/segmentation/skeletons-unisex-template/`
-            - Directory of MaleCNS neurons transformed to JRC2018 unisex template space.
+            - Directory of MaleCNS skeletons transformed to JRC2018 unisex template space.
             - Transform available via [`navis-flybrains`][flybrains].
             - 1um (micron) units
 

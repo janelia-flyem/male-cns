@@ -34,7 +34,7 @@ icon: material/home
     Browse cell types, connectivity, and eyemaps for the full male CNS.
 
     [:octicons-arrow-right-24: Male CNS Cell Type Explorer](https://reiserlab.github.io/celltype-explorer-drosophila-male-cns)
- 
+
 -   :fontawesome-solid-circle-nodes:{ .lg .middle } __Query__
 
     ---
@@ -52,7 +52,7 @@ icon: material/home
     Inspect differences between the male and female fly brain in the
     dimorphic neurons catalogue.
 
-    [:octicons-arrow-right-24: Dimorphism explorer](build/dimorphism_overview.md)
+    [:octicons-arrow-right-24: Dimorphism Explorer](build/dimorphism_overview.md)
 
 -   :material-cloud-download-outline:{ .lg .middle } __Download__
 
