@@ -118,7 +118,6 @@ Except where noted, the image data is available in [neuroglancer precomputed for
 ## Data tables
 
 All connectome data is available for bulk download, suitable for ingestion into alternative databases.
-The following files are stored under `gs://flyem-male-cns/v0.9/connectome-data/flat-connectome/`.
 Data tables are provided in [Apache Arrow Feather][feather] file format, which can be read using [`pyarrow`][pyarrow] or [`pandas`][pandas].
 
 [feather]: https://arrow.apache.org/docs/python/feather.html
