@@ -52,5 +52,22 @@ You have multiple options to interactively explore the dataset:
     For a summary of dimorphic neurons, including their morphology and connectivity,
     please visit our Dimorphism Explorer.
 
-    [Go to Dimorphism Explorer](../build/dimorphism_overview.md){ .md-button }.
+    [Go to Dimorphism Explorer](../build/dimorphism_overview.md){ .md-button }
 
+------------------------------------------------------------------
+
+<div style="text-align: center;">
+    <p>This project is a collaboration between FlyEM (HHMI Janelia), the University of Cambridge (Dept. of Zoology) and the MRC Laboratory of Molecular Biology.</p>
+</div>
+
+<div style="display: flex; justify-content: center; align-items: center; gap: 32px; flex-wrap: nowrap;">
+    <img src="../assets/flyem_logo_black.svg#only-light" alt="FlyEM Logo" style="height: 60px;">
+    <img src="../assets/flyem_logo_white.svg#only-dark" alt="FlyEM Logo" style="height: 60px;">
+    <img src="../assets/ucam-logo-white-text-colour-coat-of-arms.png#only-dark" alt="Cambridge Logo" style="height: 60px;">
+    <img src="../assets/ucam-logo-colour-preferred.png#only-light" alt="Cambridge Logo" style="height: 60px;">
+    <img src="../assets/MRC_LMB.png" alt="MRC LMB Logo" style="height: 60px;">
+</div>
+
+<div style="text-align: center;">
+    <p>The Male CNS dataset is <a href="https://creativecommons.org/licenses/by/4.0/">licensed under CC-BY.</a></p>
+</div>
