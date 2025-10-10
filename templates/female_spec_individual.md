@@ -43,7 +43,7 @@ tags:
                 {% if meta.supertype != "N/A" %}
                 <div style="display: table-cell;"> <a href="../../supertypes/{{ meta.supertype }}">{{ meta.supertype }}</a> </div>
                 {% else %}
-                <div style="display: table-cell;">{{ meta.supertype }}</div> 
+                <div style="display: table-cell;">{{ meta.supertype }}</div>
                 {% endif %}
             </div>
             <hr style="margin: 0;">
@@ -117,7 +117,7 @@ tags:
 
 <div style="align-items: center; gap: 8px;">
     <h2>Connectivity</h2>
-    <p style="text-align: left; margin-top: 10px;"><b>Note:</b> In the table below, cell count, synapse weight percentage, and cumulative percentage are calculated per source and for input and output (pre/post) separately.</p> 
+    <p style="text-align: left; margin-top: 10px;"><b>Note:</b> In the table below, cell count, synapse weight percentage, and cumulative percentage are calculated per source and for input and output (pre/post) separately.</p>
 </div>
 
 <!-- script for tooltips -->
@@ -133,7 +133,7 @@ tags:
 </script>
 
 <div style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 20px;">
-    <embed type="text/html" src="{{ meta.connections_file_rel }}" width="100%" height="4000px" style="border:none;"></embed>
+    <embed type="text/html" src="{{ meta.connections_file_rel }}" width="100%" height="1000px" style="border:none;"></embed>
 </div>
 
 
