@@ -3,6 +3,7 @@ title: Media
 hide:
   - navigation
   - toc
+glightbox: true
 ---
 
 # :fontawesome-solid-images: Media Gallery

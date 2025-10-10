@@ -7,7 +7,9 @@ site_url: http://male-cns.janelia.org
 plugins:
   - tags
   - search
-  - glightbox
+  - glightbox:
+      auto_themed: true
+      manual: true
 
 extra:
   generator: false

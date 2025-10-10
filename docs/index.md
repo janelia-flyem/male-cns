@@ -4,6 +4,7 @@ hide:
     - navigation
     - toc
 icon: material/home
+glightbox: true
 ---
 
 <div style="text-align: center;">
@@ -40,7 +41,7 @@ icon: material/home
 
     ---
 
-    Interactively search cell-to-cell connectivity using neuPrint.  Or try Clio's annotation-focused view of the data to conveniently filter cells by type, hemilinege, etc.
+    Interactively search cell-to-cell connectivity using neuPrint.  Or try Clio's annotation-focused view of the data to conveniently filter cells by type, hemilineage, etc.
 
     [:octicons-arrow-right-24: NeuPrint](https://neuprint.janelia.org/?dataset=male-cns%3Av0.9&qt=findneurons)
 
@@ -59,7 +60,7 @@ icon: material/home
 
     ---
 
-    Download the data: images, annotations, synapses, skeletons, etc.
+    Download or programmatically query the data: images, annotations, synapses, skeletons, etc.
 
     [:octicons-arrow-right-24: Downloads](download.md)
 

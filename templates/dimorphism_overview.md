@@ -4,6 +4,7 @@ hide:
   - navigation
   - toc
   - tags
+glightbox: false
 ---
 
 # :material-gender-male-female: Dimorphism Explorer

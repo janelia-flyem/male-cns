@@ -3,6 +3,7 @@ title: Explore
 hide:
   - navigation
   - toc
+glightbox: true
 ---
 
 # :fontawesome-brands-wpexplorer: Explore the dataset

@@ -2,7 +2,7 @@
 title: Download
 hide:
   - navigation
-
+glightbox: true
 ---
 
 # :fontawesome-solid-download: Download the dataset
