@@ -140,6 +140,7 @@ if __name__ == "__main__":
     building.make_dimorphism_pages(
         mcns_meta,
         fw_meta,
+        mcns_edges,
         fw_edges,
         mcns_roi_info,
         fw_roi_info,
