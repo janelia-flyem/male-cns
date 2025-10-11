@@ -171,7 +171,9 @@ def make_dimorphism_pages(
     # Loop through each dimorphic cell type and generate a page for it
     individual_template = JINJA_ENV.get_template("dimorphism_individual.md")
     if random_pages is not None:
-        dimorphic_meta = random.sample(dimorphic_meta, k=min(random_pages, len(dimorphic_meta)))
+        dimorphic_meta = random.sample(
+            dimorphic_meta, k=min(random_pages, len(dimorphic_meta))
+        )
     for record in dimorphic_meta:
         print(
             f"  Generating summary page for type {record['type']} (dimorphic)...",
@@ -210,8 +212,13 @@ def make_dimorphism_pages(
                     mcns_edges,
                 )
             except Exception as e:
-                print(f"  Failed to generate connections table for {record['type']}: {e}", flush=True)
-        record["connections_file_rel"] = f"../../tables/{record['type']}_connections.html"
+                print(
+                    f"  Failed to generate connections table for {record['type']}: {e}",
+                    flush=True,
+                )
+        record["connections_file_rel"] = (
+            f"../../tables/{record['type']}_connections.html"
+        )
 
         if not skip_thumbnails:
             # Generate the thumbnail
@@ -275,8 +282,13 @@ def make_dimorphism_pages(
                     mcns_edges,
                 )
             except Exception as e:
-                print(f"  Failed to generate connections table for {record['type']}: {e}", flush=True)
-        record["connections_file_rel"] = f"../../tables/{record['type']}_connections.html"
+                print(
+                    f"  Failed to generate connections table for {record['type']}: {e}",
+                    flush=True,
+                )
+        record["connections_file_rel"] = (
+            f"../../tables/{record['type']}_connections.html"
+        )
 
         if not skip_thumbnails:
             # Generate the thumbnail
@@ -338,8 +350,13 @@ def make_dimorphism_pages(
                     mcns_edges,
                 )
             except Exception as e:
-                print(f"  Failed to generate connections table for {record['type']}: {e}", flush=True)
-        record["connections_file_rel"] = f"../../tables/{record['type']}_connections.html"
+                print(
+                    f"  Failed to generate connections table for {record['type']}: {e}",
+                    flush=True,
+                )
+        record["connections_file_rel"] = (
+            f"../../tables/{record['type']}_connections.html"
+        )
 
         if not skip_thumbnails:
             # Generate the thumbnail
@@ -365,7 +382,11 @@ def make_dimorphism_pages(
     # Loop through each isomorphic cell type that contributes to a synonym
     individual_template = JINJA_ENV.get_template("isomorphism_individual.md")
     if random_pages is not None:
-        by_synonyms = dict(random.sample(list(by_synonyms.items()), k=min(random_pages, len(by_synonyms))))
+        by_synonyms = dict(
+            random.sample(
+                list(by_synonyms.items()), k=min(random_pages, len(by_synonyms))
+            )
+        )
     for name, syn in by_synonyms.items():
         for record in syn["types_iso"]:
             print(
@@ -386,7 +407,8 @@ def make_dimorphism_pages(
                     )
                 except Exception as e:
                     print(
-                        f"  Failed to generate graph for {record['type']}: {e}", flush=True
+                        f"  Failed to generate graph for {record['type']}: {e}",
+                        flush=True,
                     )
 
             record["graph_file_fw"] = (
@@ -769,7 +791,10 @@ def extract_type_data(mcns_meta, fw_meta):
                 author_year, syn = syn.split(":")
             except ValueError:
                 # replace this with a warning for now
-                print(f"  WARNING: Failed to parse synonym: {syn} in type {record['type']}", flush=True)
+                print(
+                    f"  WARNING: Failed to parse synonym: {syn} in type {record['type']}",
+                    flush=True,
+                )
                 continue
                 # raise ValueError(f"  Failed to parse synonym: {syn} in type {record['type']}")
             author_year, syn = author_year.strip(), syn.strip()
@@ -1098,7 +1123,9 @@ def group_by_synonyms(
                     ay = ay[:-1].strip()
 
                 # Check that we have author + year
-                if not re.match(r"^[A-Za-z ]+ \d{4}$", ay.replace("-", " ").replace("&", " ")):
+                if not re.match(
+                    r"^[A-Za-z ]+ \d{4}$", ay.replace("-", " ").replace("&", " ")
+                ):
                     print(f"  Invalid author/year format: {ay}", flush=True)
                     continue
                 author_year_parsed.append(ay)
@@ -1280,8 +1307,10 @@ def group_by_hemilineage(
 
 
 def make_supertype_pages(
-    mcns_meta: pd.DataFrame, fw_meta: pd.DataFrame, skip_thumbnails: bool,
-    random_pages: int | None
+    mcns_meta: pd.DataFrame,
+    fw_meta: pd.DataFrame,
+    skip_thumbnails: bool,
+    random_pages: int | None,
 ) -> None:
     """Generate the individual summaries for each (dimorphic) supertype.
 
@@ -1373,7 +1402,9 @@ def make_supertype_pages(
 
     # Loop through each super type and generate a page for it
     if random_pages is not None:
-        supertypes_meta = random.sample(supertypes_meta, k=min(random_pages, len(supertypes_meta)))
+        supertypes_meta = random.sample(
+            supertypes_meta, k=min(random_pages, len(supertypes_meta))
+        )
     for record in supertypes_meta:
         if record["supertype"] == "N/A":
             continue
@@ -1422,8 +1453,10 @@ def make_supertype_pages(
 
 
 def make_synonyms_pages(
-    mcns_meta: pd.DataFrame, fw_meta: pd.DataFrame, skip_thumbnails: bool,
-    random_pages: int | None
+    mcns_meta: pd.DataFrame,
+    fw_meta: pd.DataFrame,
+    skip_thumbnails: bool,
+    random_pages: int | None,
 ) -> None:
     """Generate the individual summaries for each (dimorphic) synonym.
 
@@ -1574,7 +1607,11 @@ def make_synonyms_pages(
 
     # Loop through each synonym and generate a page for it
     if random_pages is not None:
-        synonyms_meta = dict(random.sample(list(synonyms_meta.items()), k=min(random_pages, len(synonyms_meta))))
+        synonyms_meta = dict(
+            random.sample(
+                list(synonyms_meta.items()), k=min(random_pages, len(synonyms_meta))
+            )
+        )
     for syn, record in synonyms_meta.items():
         print(
             f"  Generating summary page for synonym '{record['name']}'...",
@@ -2258,9 +2295,9 @@ def clear_build_directory():
 def clear_site_directory():
     """Clear the site directory"""
     if SITE_DIR.exists() and SITE_DIR.is_dir():
-         print("Clearing site directory...", flush=True)
-         shutil.rmtree(SITE_DIR)
-         print("Cleared site directory.", flush=True)
+        print("Clearing site directory...", flush=True)
+        shutil.rmtree(SITE_DIR)
+        print("Cleared site directory.", flush=True)
 
 
 def prep_scene(table):
@@ -2312,8 +2349,8 @@ def prep_scene(table):
         scene.layers["vnc-neuropil-shell"]["visible"] = False
 
     # Set colors for male and female neurons
-    scene.layers['cns-seg']["segmentDefaultColor"] = "#00e9e7"  # cyan
-    scene.layers['flywire-meshes']["segmentDefaultColor"] = "#e511d0"  # magenta
+    scene.layers["cns-seg"]["segmentDefaultColor"] = "#00e9e7"  # cyan
+    scene.layers["flywire-meshes"]["segmentDefaultColor"] = "#e511d0"  # magenta
 
     return scene
 
