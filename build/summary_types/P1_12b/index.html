@@ -699,11 +699,6 @@
     </div>
 </div>
 
-<div style="align-items: center; gap: 8px;">
-    <h2>Connectivity</h2>
-    <p style="text-align: left; margin-top: 10px;"><b>Note:</b> In the table below, cell count, synapse weight percentage, and cumulative percentage are calculated per source and for input and output (pre/post) separately.</p> 
-</div>
-
 <!-- script for tooltips -->
 <script>
     document.querySelectorAll('button').forEach(button => {
@@ -717,8 +712,22 @@
 </script>
 
 <div style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 20px;">
-    <embed type="text/html" src="../../tables/P1_12b_connections.html" width="100%" height="4000px" style="border:none;">
+    <embed type="text/html" src="../../tables/P1_12b_connections.html" width="100%" height="1000px" style="border:none;">
 </div>
+
+<details class="info">
+<summary>Notes on connectivity tables</summary>
+<p>Connections shown here are based on the cross-matched central brain graph. Because the FAFB/FlyWire volume does not contain
+the ventral nerve cord (VNC), we exclude connections made in the VNC part of the male CNS connectome.</p>
+<ul>
+<li><code>mapping</code> is a label that identifies this group of neurons across brains; it is chosen arbitrarily between the available male and female types in that group</li>
+<li><code>pre/post</code> indicates whether the given synaptic partner is up- (pre) or downstream (post) of the current type</li>
+<li><code>weight (M)</code> and <code>weight (F)</code> are the connection weights in the male CNS and FlyWire connectomes, respectively</li>
+<li><code>weight (M, scaled)</code> is the male CNS connection weight scaled by a factor of 0.581 to align it with weights in FlyWire (see the paper for details)</li>
+<li><code>dimorphism</code> indicates whether the type(s) are dimorphic, sex-specific or isomorphic</li>
+<li><code>nt (M)</code> and <code>nt (F)</code> are the predicted neurotransmitters from the male CNS and FlyWire connectomes, respectively</li>
+</ul>
+</details>
 
 
 
