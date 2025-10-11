@@ -15,7 +15,6 @@ from jinja2 import Environment, FileSystemLoader, select_autoescape
 FUTURE_SESSION = FuturesSession(max_workers=10)
 
 
-
 #####
 # Philipp's nglscenes library excludes archived layers; I need them;
 # reimplement a couple functions here until I have time to submit
@@ -31,6 +30,7 @@ from urllib.parse import urldefrag
 
 from nglscenes import utils
 from nglscenes.scenes import LAYER_FACTORY
+
 
 def parse_layers_with_archived(layer, skip_unknown=False):
     if isinstance(layer, list):
@@ -50,6 +50,7 @@ def parse_layers_with_archived(layer, skip_unknown=False):
         )
 
     return LAYER_FACTORY[ty](**layer)
+
 
 class SceneWithArchived(ngl.Scene):
     @classmethod
@@ -113,7 +114,9 @@ for scene in (NGL_BASE_SCENE, NGL_BASE_SCENE_VNC, NGL_BASE_SCENE_TOP):
 # print(f"Philipp's flywire source: {FLYWIRE_SOURCE}")
 # switched to hardcoded; the ng scene we use now has this info in an archived
 #   layer, and ngl.Scene.from_url() doesn't load them
-FLYWIRE_SOURCE = "precomputed://https://flyem.mrc-lmb.cam.ac.uk/flyconnectome/flywire2mcns/783_v2"
+FLYWIRE_SOURCE = (
+    "precomputed://https://flyem.mrc-lmb.cam.ac.uk/flyconnectome/flywire2mcns/783_v2"
+)
 
 # used to get DVID info from the NG scene, but that info is no longer there;
 #     now it's passed in via env var
@@ -146,8 +149,77 @@ MCNS_MANC_MAPPING_URL = (
 FW_EDGES_URL = "https://flyem.mrc-lmb.cam.ac.uk/flyconnectome/flywire_connectivity/connections_princeton_no_threshold.feather"
 # The FlyWire annotations
 FW_META_URL = "https://github.com/flyconnectome/flywire_annotations/raw/refs/heads/main/supplemental_files/Supplemental_file1_neuron_annotations.tsv"
+
 #####
-FW_EDGES_URL = "https://flyem.mrc-lmb.cam.ac.uk/flyconnectome/flywire_connectivity/proofread_connections_783_grouped.feather"
+# URLs for downloading data for the MCNS connectome
+#####
+# This edge list was compiled straight from neuPrint for all neurons with a superclass (320Mb)
+# Crucially it has the edges broken down by ROI which allows us to subset to connections within the brain
+MCNS_EDGES_URL = "https://flyem.mrc-lmb.cam.ac.uk/flyconnectome/flywire_connectivity/mcns_all_edges_by_roi_v0.9.feather"
+
+# VNC neuropils (we will use these to filter the MCNS edges)
+MCNS_VNC_NEUROPILS = [
+    "ANm",
+    "HTct(UTct-T3)(L)",
+    "HTct(UTct-T3)(R)",
+    "IntTct",
+    "LTct",
+    "LegNp(T1)(L)",
+    "LegNp(T1)(R)",
+    "LegNp(T2)(L)",
+    "LegNp(T2)(R)",
+    "LegNp(T3)(L)",
+    "LegNp(T3)(R)",
+    "NTct(UTct-T1)(L)",
+    "NTct(UTct-T1)(R)",
+    "Ov(L)",
+    "Ov(R)",
+    "WTct(UTct-T2)(L)",
+    "WTct(UTct-T2)(R)",
+    "mVAC(T1)(L)",
+    "mVAC(T1)(R)",
+    "mVAC(T2)(L)",
+    "mVAC(T2)(R)",
+    "mVAC(T3)(L)",
+    "mVAC(T3)(R)",
+    "ADMN(L)",
+    "ADMN(R)",
+    "AbN1(L)",
+    "AbN1(R)",
+    "AbN2(L)",
+    "AbN2(R)",
+    "AbN3(L)",
+    "AbN3(R)",
+    "AbN4(L)",
+    "AbN4(R)",
+    "AbNT(L)",
+    "AbNT(R)",
+    "CvN(L)",
+    "CvN(R)",
+    "DMetaN(L)",
+    "DMetaN(R)",
+    "DProN(L)",
+    "DProN(R)",
+    "MesoAN(L)",
+    "MesoAN(R)",
+    "MesoLN(L)",
+    "MesoLN(R)",
+    "MetaLN(L)",
+    "MetaLN(R)",
+    "PDMN(L)",
+    "PDMN(R)",
+    "PrN(L)",
+    "PrN(R)",
+    "ProAN(L)",
+    "ProAN(R)",
+    "ProCN(L)",
+    "ProCN(R)",
+    "ProLN(L)",
+    "ProLN(R)",
+    "VProN(L)",
+    "VProN(R)",
+    "VNC-unspecified",
+]
 
 #####
 # Various directories for the build / cache
