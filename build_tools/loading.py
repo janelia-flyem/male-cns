@@ -15,6 +15,7 @@ from .env import (
     MCNS_FW_MAPPING_URL,
     # MCNS_MANC_MAPPING_URL,
     FW_EDGES_URL,
+    FW_META_URL,
     MCNS_META_DATA_CACHE,
     MCNS_ROI_INFO_CACHE,
     FW_META_DATA_CACHE,
@@ -63,7 +64,7 @@ def load_cache_meta_data(force_update=False):
         )
     else:
         print("Loading FlyWire meta data from FlyTable...", flush=True, end="")
-        fw_data = cc.FlyWire(live_annot=True).get_annotations()
+        fw_data = pd.read_tsv(FW_META_URL, sep="\t")
 
         # Try to convert object columns to strings - otherwise loading the data becomes obscenely slow
         for col in fw_data.select_dtypes(include=["object"]).columns:
@@ -179,5 +180,9 @@ def load_cache_fw_edges(force_update=False):
         fw_edges = pd.read_feather(FW_EDGES_URL)
         fw_edges.to_feather(filepath)
         print("Done.", flush=True)
+
+    fw_edges = fw_edges.groupby(
+        ["pre_root_id", "post_root_id"], as_index=False
+    ).syn_count.sum()
 
     return fw_edges

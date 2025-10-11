@@ -138,8 +138,14 @@ MCNS_MANC_MAPPING_URL = (
 )
 
 #####
-# URL for downloading edges for the FlyWire connectome
+# URLs for downloading data for the FlyWire connectome
+#####
 # This file is the grouped edge list from https://zenodo.org/records/10676866
+# FW_EDGES_URL = "https://flyem.mrc-lmb.cam.ac.uk/flyconnectome/flywire_connectivity/proofread_connections_783_grouped.feather"
+# This file is the grouped edges list for the new Princeton synapse predictions
+FW_EDGES_URL = "https://flyem.mrc-lmb.cam.ac.uk/flyconnectome/flywire_connectivity/connections_princeton_no_threshold.feather"
+# The FlyWire annotations
+FW_META_URL = "https://github.com/flyconnectome/flywire_annotations/raw/refs/heads/main/supplemental_files/Supplemental_file1_neuron_annotations.tsv"
 #####
 FW_EDGES_URL = "https://flyem.mrc-lmb.cam.ac.uk/flyconnectome/flywire_connectivity/proofread_connections_783_grouped.feather"
 
