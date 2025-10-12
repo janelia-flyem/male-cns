@@ -1,5 +1,5 @@
 <!--| quarto-html-table-processing: none -->
-<table id="itables_6f5da058_d5ab_4157_a61b_bd9248b38ce6"><tbody><tr>
+<table id="itables_b902ff6f_094a_47fc_8915_eba2ab8bf7e5"><tbody><tr>
     <td style="vertical-align:middle; text-align:left">
     <a href=https://mwouts.github.io/itables/><svg class="main-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
 width="64" viewBox="0 0 500 400" style="font-family: 'Droid Sans', sans-serif;">
@@ -97,11 +97,11 @@ width="64" viewBox="0 0 500 400" style="font-family: 'Droid Sans', sans-serif;">
 <script type="module">
     const { ITable, jQuery: $ } = await import(window._datatables_src_for_itables_2_4_5);
 
-    document.querySelectorAll("#itables_6f5da058_d5ab_4157_a61b_bd9248b38ce6:not(.dataTable)").forEach(table => {
+    document.querySelectorAll("#itables_b902ff6f_094a_47fc_8915_eba2ab8bf7e5:not(.dataTable)").forEach(table => {
         if (!(table instanceof HTMLTableElement))
             return;
 
-        let dt_args = {"pageLength": 50, "lengthMenu": [10, 25, 50, 100, 250, 500], "layout": {"topStart": "buttons", "topEnd": "search", "bottomStart": "info", "bottomEnd": "paging", "top1": "searchPanes"}, "search": {"regex": true, "caseInsensitive": true}, "buttons": ["pageLength", "csvHtml5"], "searchPanes": {"layout": "columns-2", "cascadePanes": true, "columns": [1, 5], "initCollapsed": true, "collapse": true}, "text_in_header_can_be_selected": true, "classes": ["display", "nowrap"], "order": [], "style": {"table-layout": "auto", "width": "auto", "margin": "auto", "caption-side": "bottom"}, "table_html": "<table><thead>\n    <tr style=\"text-align: right;\">\n      \n      <th>mapping</th>\n      <th>pre/post</th>\n      <th>weight (M)</th>\n      <th>weight (M, scaled)</th>\n      <th>weight (F)</th>\n      <th>dimorphism</th>\n      <th>types (M)</th>\n      <th>types (F)</th>\n      <th>nt (M)</th>\n      <th>nt (F)</th>\n    </tr>\n  </thead></table>", "data_json": "[]"};
+        let dt_args = {"pageLength": 50, "lengthMenu": [10, 25, 50, 100, 250, 500], "layout": {"topStart": "buttons", "topEnd": "search", "bottomStart": "info", "bottomEnd": "paging", "top1": "searchPanes"}, "search": {"regex": true, "caseInsensitive": true}, "buttons": ["pageLength", "csvHtml5"], "searchPanes": {"layout": "columns-2", "cascadePanes": true, "columns": [1, 5], "initCollapsed": true, "collapse": true}, "order": [], "classes": ["display", "nowrap"], "text_in_header_can_be_selected": true, "style": {"table-layout": "auto", "width": "auto", "margin": "auto", "caption-side": "bottom"}, "table_html": "<table><thead>\n    <tr style=\"text-align: right;\">\n      \n      <th>mapping</th>\n      <th>pre/post</th>\n      <th>dimorphism</th>\n      <th>weight (M)</th>\n      <th>weight (M, scaled)</th>\n      <th>weight (F)</th>\n      <th>rank (M)</th>\n      <th>rank (F)</th>\n      <th>types (M)</th>\n      <th>types (F)</th>\n      <th>nt (M)</th>\n      <th>nt (F)</th>\n    </tr>\n  </thead></table>", "data_json": "[]"};
         new ITable(table, dt_args);
     });
 </script>
