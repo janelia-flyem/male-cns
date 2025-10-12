@@ -15,7 +15,6 @@ from jinja2 import Environment, FileSystemLoader, select_autoescape
 FUTURE_SESSION = FuturesSession(max_workers=10)
 
 
-
 #####
 # Philipp's nglscenes library excludes archived layers; I need them;
 # reimplement a couple functions here until I have time to submit
@@ -31,6 +30,7 @@ from urllib.parse import urldefrag
 
 from nglscenes import utils
 from nglscenes.scenes import LAYER_FACTORY
+
 
 def parse_layers_with_archived(layer, skip_unknown=False):
     if isinstance(layer, list):
@@ -50,6 +50,7 @@ def parse_layers_with_archived(layer, skip_unknown=False):
         )
 
     return LAYER_FACTORY[ty](**layer)
+
 
 class SceneWithArchived(ngl.Scene):
     @classmethod
@@ -89,10 +90,16 @@ NGL_BASE_SCENE_VNC = SceneWithArchived.from_url(NGL_BASE_URL_VNC)
 NGL_BASE_URL_TOP = "https://neuroglancer-demo.appspot.com/#!gs://flyem-user-links/short/MaleCNS-v0.9-brain+vnc.json"
 NGL_BASE_SCENE_TOP = SceneWithArchived.from_url(NGL_BASE_URL_TOP)
 
-# Make sure the segmentation layers are empty
+# Make sure the segmentation layers are empty and visible
 for scene in (NGL_BASE_SCENE, NGL_BASE_SCENE_VNC, NGL_BASE_SCENE_TOP):
-    for i in range(2):
-        scene.layers[i]['segments'] = []
+    for l in ("cns-seg", "flywire-meshes"):
+        # Remove any selected segments
+        scene.layers[l]["segments"] = []
+        # Make sure the layer is visible (and not archived)
+        if scene.layers[l].get("visible", True) is False:
+            scene.layers[l]["visible"] = True
+        if scene.layers[l].get("archived", False) is True:
+            scene.layers[l]["archived"] = False
 
 # Make backgrounds white
 # for scene in (NGL_BASE_SCENE, NGL_BASE_SCENE_VNC, NGL_BASE_SCENE_TOP):
@@ -107,7 +114,9 @@ for scene in (NGL_BASE_SCENE, NGL_BASE_SCENE_VNC, NGL_BASE_SCENE_TOP):
 # print(f"Philipp's flywire source: {FLYWIRE_SOURCE}")
 # switched to hardcoded; the ng scene we use now has this info in an archived
 #   layer, and ngl.Scene.from_url() doesn't load them
-FLYWIRE_SOURCE = "precomputed://https://flyem.mrc-lmb.cam.ac.uk/flyconnectome/flywire2mcns/783_v2"
+FLYWIRE_SOURCE = (
+    "precomputed://https://flyem.mrc-lmb.cam.ac.uk/flyconnectome/flywire2mcns/783_v2"
+)
 
 # used to get DVID info from the NG scene, but that info is no longer there;
 #     now it's passed in via env var
@@ -132,10 +141,85 @@ MCNS_MANC_MAPPING_URL = (
 )
 
 #####
-# URL for downloading edges for the FlyWire connectome
-# This file is the grouped edge list from https://zenodo.org/records/10676866
+# URLs for downloading data for the FlyWire connectome
 #####
-FW_EDGES_URL = "https://flyem.mrc-lmb.cam.ac.uk/flyconnectome/flywire_connectivity/proofread_connections_783_grouped.feather"
+# This file is the grouped edge list from https://zenodo.org/records/10676866
+# FW_EDGES_URL = "https://flyem.mrc-lmb.cam.ac.uk/flyconnectome/flywire_connectivity/proofread_connections_783_grouped.feather"
+# This file is the grouped edges list for the new Princeton synapse predictions
+FW_EDGES_URL = "https://flyem.mrc-lmb.cam.ac.uk/flyconnectome/flywire_connectivity/connections_princeton_no_threshold.feather"
+# The FlyWire annotations
+FW_META_URL = "https://github.com/flyconnectome/flywire_annotations/raw/refs/heads/main/supplemental_files/Supplemental_file1_neuron_annotations.tsv"
+
+#####
+# URLs for downloading data for the MCNS connectome
+#####
+# This edge list was compiled straight from neuPrint for all neurons with a superclass (320Mb)
+# Crucially it has the edges broken down by ROI which allows us to subset to connections within the brain
+MCNS_EDGES_URL = "https://flyem.mrc-lmb.cam.ac.uk/flyconnectome/flywire_connectivity/mcns_all_edges_by_roi_v0.9.feather"
+
+# VNC neuropils (we will use these to filter the MCNS edges)
+MCNS_VNC_NEUROPILS = [
+    "ANm",
+    "HTct(UTct-T3)(L)",
+    "HTct(UTct-T3)(R)",
+    "IntTct",
+    "LTct",
+    "LegNp(T1)(L)",
+    "LegNp(T1)(R)",
+    "LegNp(T2)(L)",
+    "LegNp(T2)(R)",
+    "LegNp(T3)(L)",
+    "LegNp(T3)(R)",
+    "NTct(UTct-T1)(L)",
+    "NTct(UTct-T1)(R)",
+    "Ov(L)",
+    "Ov(R)",
+    "WTct(UTct-T2)(L)",
+    "WTct(UTct-T2)(R)",
+    "mVAC(T1)(L)",
+    "mVAC(T1)(R)",
+    "mVAC(T2)(L)",
+    "mVAC(T2)(R)",
+    "mVAC(T3)(L)",
+    "mVAC(T3)(R)",
+    "ADMN(L)",
+    "ADMN(R)",
+    "AbN1(L)",
+    "AbN1(R)",
+    "AbN2(L)",
+    "AbN2(R)",
+    "AbN3(L)",
+    "AbN3(R)",
+    "AbN4(L)",
+    "AbN4(R)",
+    "AbNT(L)",
+    "AbNT(R)",
+    "CvN(L)",
+    "CvN(R)",
+    "DMetaN(L)",
+    "DMetaN(R)",
+    "DProN(L)",
+    "DProN(R)",
+    "MesoAN(L)",
+    "MesoAN(R)",
+    "MesoLN(L)",
+    "MesoLN(R)",
+    "MetaLN(L)",
+    "MetaLN(R)",
+    "PDMN(L)",
+    "PDMN(R)",
+    "PrN(L)",
+    "PrN(R)",
+    "ProAN(L)",
+    "ProAN(R)",
+    "ProCN(L)",
+    "ProCN(R)",
+    "ProLN(L)",
+    "ProLN(R)",
+    "VProN(L)",
+    "VProN(R)",
+    "VNC-unspecified",
+]
 
 #####
 # Various directories for the build / cache
@@ -193,16 +277,16 @@ JINJA_ENV = Environment(
 #####
 # A global neuprint client
 #####
-NEUPRINT_CLIENT = neu.Client(server="https://neuprint-cns.janelia.org", dataset="cns")
+NEUPRINT_CLIENT = neu.Client(
+    server="https://neuprint.janelia.org", dataset="male-cns:v0.9"
+)
 
 #####
 # Some BASE URLs for neuPrint
 #####
 
 # Basic neuPrint search
-NEUPRINT_SEARCH_URL = "https://neuprint-cns.janelia.org/results?dataset=cns&qt=findneurons&q=1&qr%5B0%5D%5Bcode%5D=fn&qr%5B0%5D%5Bds%5D=cns&qr%5B0%5D%5Bpm%5D%5Bdataset%5D=cns&qr%5B0%5D%5Bpm%5D%5BinputMatchAny%5D=false&qr%5B0%5D%5Bpm%5D%5BoutputMatchAny%5D=false&qr%5B0%5D%5Bpm%5D%5Ball_segments%5D=false&qr%5B0%5D%5Bpm%5D%5Benable_contains%5D=true&qr%5B0%5D%5Bpm%5D%5Bneuron_name%5D={neuron_name}&qr%5B0%5D%5BvisProps%5D%5BrowsPerPage%5D=25&tab=0"
+NEUPRINT_SEARCH_URL = "https://neuprint.janelia.org/results?dataset=male-cns%3Av0.9&qt=findneurons&q=1&qr%5B0%5D%5Bcode%5D=fn&qr%5B0%5D%5Bds%5D=male-cns%3Av0.9&qr%5B0%5D%5Bpm%5D%5Bdataset%5D=male-cns%3Av0.9&qr%5B0%5D%5Bpm%5D%5BinputMatchAny%5D=false&qr%5B0%5D%5Bpm%5D%5BoutputMatchAny%5D=false&qr%5B0%5D%5Bpm%5D%5Ball_segments%5D=false&qr%5B0%5D%5Bpm%5D%5Benable_contains%5D=true&qr%5B0%5D%5Bpm%5D%5Bneuron_name%5D={neuron_name}&qr%5B0%5D%5BvisProps%5D%5BrowsPerPage%5D=25&tab=0"
 
 # Connectivity search
-NEUPRINT_CONNECTIVITY_URL = "https://neuprint-cns.janelia.org/results?dataset=cns&qt=simpleconnection&q=1&qr%5B0%5D%5Bcode%5D=sc&qr%5B0%5D%5Bds%5D=cns&qr%5B0%5D%5Bpm%5D%5Bdataset%5D=cns&qr%5B0%5D%5Bpm%5D%5Benable_contains%5D=true&qr%5B0%5D%5Bpm%5D%5Bneuron_name%5D={neuron_name}&qr%5B0%5D%5Bpm%5D%5Bfind_inputs%5D=false&qr%5B0%5D%5BvisProps%5D%5BpaginateExpansion%5D=true&tab=0"
-
-
+NEUPRINT_CONNECTIVITY_URL = "https://neuprint.janelia.org/results?dataset=male-cns%3Av0.9&qt=simpleconnection&q=1&qr%5B0%5D%5Bcode%5D=sc&qr%5B0%5D%5Bds%5D=male-cns%3Av0.9&qr%5B0%5D%5Bpm%5D%5Bdataset%5D=male-cns%3Av0.9&qr%5B0%5D%5Bpm%5D%5Benable_contains%5D=true&qr%5B0%5D%5Bpm%5D%5Bneuron_name%5D={neuron_name}&qr%5B0%5D%5Bpm%5D%5Bfind_inputs%5D=false&qr%5B0%5D%5BvisProps%5D%5BpaginateExpansion%5D=true&tab=0"

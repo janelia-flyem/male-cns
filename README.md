@@ -78,5 +78,5 @@ GitHub Actions are not enabled in the Janelia Fly EM repo, and the necessary sec
 To manually deploy the website to GitHub pages, run:
 
 ```bash
-./deploy-gh-pages.sh
+uv run mkdocs gh-deploy --force
 ```

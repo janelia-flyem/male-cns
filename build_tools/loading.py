@@ -15,6 +15,9 @@ from .env import (
     MCNS_FW_MAPPING_URL,
     # MCNS_MANC_MAPPING_URL,
     FW_EDGES_URL,
+    FW_META_URL,
+    MCNS_EDGES_URL,
+    MCNS_VNC_NEUROPILS,
     MCNS_META_DATA_CACHE,
     MCNS_ROI_INFO_CACHE,
     FW_META_DATA_CACHE,
@@ -63,7 +66,7 @@ def load_cache_meta_data(force_update=False):
         )
     else:
         print("Loading FlyWire meta data from FlyTable...", flush=True, end="")
-        fw_data = cc.FlyWire(live_annot=True).get_annotations()
+        fw_data = pd.read_tsv(FW_META_URL, sep="\t")
 
         # Try to convert object columns to strings - otherwise loading the data becomes obscenely slow
         for col in fw_data.select_dtypes(include=["object"]).columns:
@@ -180,4 +183,51 @@ def load_cache_fw_edges(force_update=False):
         fw_edges.to_feather(filepath)
         print("Done.", flush=True)
 
+    fw_edges = fw_edges.groupby(
+        ["pre_root_id", "post_root_id"], as_index=False
+    ).syn_count.sum()
+
     return fw_edges
+
+
+def load_cache_mcns_edges(force_update=False):
+    """Load the (possibly cached) MCNS edges.
+
+    IMPORTANT: note that this function filters out all edges in the VNC!
+    """
+    filename = MCNS_EDGES_URL.split("/")[-1]
+    filepath = CACHE_DIR / filename
+
+    if filepath.exists() and not force_update:
+        mcns_edges = pd.read_feather(filepath)
+        print(
+            "Loaded MCNS edges from cache. Use the --update-metadata flag to force reloading.",
+            flush=True,
+        )
+    else:
+        print(
+            "Loading MaleCNS edges from flyem1...",
+            flush=True,
+            end="",
+        )
+        mcns_edges = pd.read_feather(MCNS_EDGES_URL)
+        mcns_edges.to_feather(filepath)
+        print("Done.", flush=True)
+
+    # Remove edges in the VNC
+    mcns_edges = (
+        mcns_edges[
+            ~mcns_edges.roi.isin(
+                MCNS_VNC_NEUROPILS,
+            )
+        ]
+        .groupby(["bodyId_pre", "bodyId_post"], as_index=False)
+        .weight.sum()
+    ).rename(
+        columns={
+            "bodyId_pre": "body_pre",
+            "bodyId_post": "body_post",
+        }
+    )
+
+    return mcns_edges

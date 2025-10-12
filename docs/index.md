@@ -4,6 +4,7 @@ hide:
     - navigation
     - toc
 icon: material/home
+glightbox: true
 ---
 
 <div style="text-align: center;">
@@ -16,7 +17,6 @@ icon: material/home
 </div>
 
 
-
 <div class="grid cards" markdown>
 
 -   :fontawesome-solid-images:{ .lg .middle } __Overview__
@@ -25,7 +25,9 @@ icon: material/home
 
     Read about the Fly EM Project's reconstruction of the connectome of the full _Drosophila_ male CNS.
 
-    [:octicons-arrow-right-24: Overview](https://www.janelia.org/project-team/flyem/male-cns-connectome)
+    [:octicons-arrow-right-24: Janelia Blog Post](https://www.janelia.org/project-team/flyem/male-cns-connectome)
+
+    [:octicons-arrow-right-24: BioRxiv Preprint](https://www.biorxiv.org/content/10.1101/2025.10.09.680999v1)
 
 -   :material-compass-outline:{ .lg .middle } __Explore__
 
@@ -34,12 +36,12 @@ icon: material/home
     Browse cell types, connectivity, and eyemaps for the full male CNS.
 
     [:octicons-arrow-right-24: Male CNS Cell Type Explorer](https://reiserlab.github.io/celltype-explorer-drosophila-male-cns)
- 
+
 -   :fontawesome-solid-circle-nodes:{ .lg .middle } __Query__
 
     ---
 
-    Interactively search cell-to-cell connectivity using neuPrint.  Or try Clio's annotation-focused view of the data to conveniently filter cells by type, hemilinege, etc.
+    Interactively search cell-to-cell connectivity using neuPrint.  Or try Clio's annotation-focused view of the data to conveniently filter cells by type, hemilineage, etc.
 
     [:octicons-arrow-right-24: NeuPrint](https://neuprint.janelia.org/?dataset=male-cns%3Av0.9&qt=findneurons)
 
@@ -52,13 +54,13 @@ icon: material/home
     Inspect differences between the male and female fly brain in the
     dimorphic neurons catalogue.
 
-    [:octicons-arrow-right-24: Dimorphism explorer](build/dimorphism_overview.md)
+    [:octicons-arrow-right-24: Dimorphism Explorer](build/dimorphism_overview.md)
 
 -   :material-cloud-download-outline:{ .lg .middle } __Download__
 
     ---
 
-    Download the data: images, annotations, synapses, skeletons, etc.
+    Download or programmatically query the data: images, annotations, synapses, skeletons, etc.
 
     [:octicons-arrow-right-24: Downloads](download.md)
 
@@ -73,5 +75,17 @@ icon: material/home
 </div>
 
 <div style="text-align: center;">
-    <p>The Male CNS is <a href="https://creativecommons.org/licenses/by/4.0/">licensed under CC-BY</a>.</p>
+    <p>This project is a collaboration between FlyEM (HHMI Janelia), the University of Cambridge (Dept. of Zoology) and the MRC Laboratory of Molecular Biology.</p>
+</div>
+
+<div style="display: flex; justify-content: center; align-items: center; gap: 32px; flex-wrap: nowrap;">
+    <img src="assets/flyem_logo_black.svg#only-light" alt="FlyEM Logo" style="height: 60px;">
+    <img src="assets/flyem_logo_white.svg#only-dark" alt="FlyEM Logo" style="height: 60px;">
+    <img src="assets/ucam-logo-white-text-colour-coat-of-arms.png#only-dark" alt="Cambridge Logo" style="height: 60px;">
+    <img src="assets/ucam-logo-colour-preferred.png#only-light" alt="Cambridge Logo" style="height: 60px;">
+    <img src="assets/MRC_LMB.png" alt="MRC LMB Logo" style="height: 60px;">
+</div>
+
+<div style="text-align: center;">
+    <p>The Male CNS dataset is <a href="https://creativecommons.org/licenses/by/4.0/">licensed under CC-BY.</a></p>
 </div>

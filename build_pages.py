@@ -101,6 +101,7 @@ if __name__ == "__main__":
     # mcns_meta["type"] = mcns_meta.type.fillna(mcns_meta.flywireType).fillna("unknown")
     mappings = loading.load_cache_mapping(force_update=args.update_metadata)
     fw_edges = loading.load_cache_fw_edges(force_update=args.update_metadata)
+    mcns_edges = loading.load_cache_mcns_edges(force_update=args.update_metadata)
 
     # Add MCNS <-> FlyWire mapping to the meta data
     mcns_meta["mapping"] = mcns_meta["bodyId"].map(mappings)
@@ -139,6 +140,7 @@ if __name__ == "__main__":
     building.make_dimorphism_pages(
         mcns_meta,
         fw_meta,
+        mcns_edges,
         fw_edges,
         mcns_roi_info,
         fw_roi_info,

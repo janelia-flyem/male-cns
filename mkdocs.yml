@@ -1,12 +1,15 @@
 site_name: MaleCNS connectome
 site_description: Project website for the MaleCNS connectome
-site_url: https://janelia-flyem.github.io/male-cns/
+site_url: http://male-cns.janelia.org
 # copyright: Copyright &copy; 2025, Howard Hughes Medical Institute
 
 
 plugins:
   - tags
   - search
+  - glightbox:
+      auto_themed: true
+      manual: true
 
 extra:
   generator: false
@@ -26,6 +29,7 @@ nav:
       - Overview: explore/index.md
   - Dimorphism: build/dimorphism_overview.md
   - Download: download.md
+  - Gallery: media.md
 
 theme:
   name: material
@@ -58,6 +62,7 @@ markdown_extensions:
   - tables
   - pymdownx.superfences
   - footnotes
+  - admonition
   - pymdownx.tabbed:
       alternate_style: true
   - pymdownx.emoji:

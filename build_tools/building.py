@@ -67,6 +67,7 @@ navis.patch_cloudvolume()
 def make_dimorphism_pages(
     mcns_meta: pd.DataFrame,
     fw_meta: pd.DataFrame,
+    mcns_edges: pd.DataFrame,
     fw_edges: pd.DataFrame,
     mcns_roi_info: pd.DataFrame,
     fw_roi_info: pd.DataFrame,
@@ -83,6 +84,8 @@ def make_dimorphism_pages(
                 The meta data for MaleCNS neurons as returned from neuPrint.
     fw_meta :   pd.DataFrame
                 The meta data for FlyWire neurons as returned from FlyTable.
+    mcns_edges : pd.DataFrame
+                Edge list for MaleCNS neurons.
     fw_edges :  pd.DataFrame
                 Edge list for FlyWire neurons.
     mcns_roi_info : pd.DataFrame
@@ -168,7 +171,9 @@ def make_dimorphism_pages(
     # Loop through each dimorphic cell type and generate a page for it
     individual_template = JINJA_ENV.get_template("dimorphism_individual.md")
     if random_pages is not None:
-        dimorphic_meta = random.sample(dimorphic_meta, k=min(random_pages, len(dimorphic_meta)))
+        dimorphic_meta = random.sample(
+            dimorphic_meta, k=min(random_pages, len(dimorphic_meta))
+        )
     for record in dimorphic_meta:
         print(
             f"  Generating summary page for type {record['type']} (dimorphic)...",
@@ -204,15 +209,21 @@ def make_dimorphism_pages(
                     mcns_meta,
                     fw_meta,
                     fw_edges,
-                    )
+                    mcns_edges,
+                )
             except Exception as e:
-                print(f"  Failed to generate connections table for {record['type']}: {e}", flush=True)
-        record["connections_file_rel"] = f"../../tables/{record['type']}_connections.html"
+                print(
+                    f"  Failed to generate connections table for {record['type']}: {e}",
+                    flush=True,
+                )
+        record["connections_file_rel"] = (
+            f"../../tables/{record['type']}_connections.html"
+        )
 
         if not skip_thumbnails:
             # Generate the thumbnail
             try:
-                    generate_thumbnail(
+                generate_thumbnail(
                     mcns_meta[mcns_meta["mapping"] == record["mapping"]],
                     fw_meta[fw_meta["mapping"] == record["mapping"]],
                     THUMBNAILS_DIR / f"{record['type_file']}.png",
@@ -268,10 +279,16 @@ def make_dimorphism_pages(
                     mcns_meta,
                     fw_meta,
                     fw_edges,
-                    )
+                    mcns_edges,
+                )
             except Exception as e:
-                print(f"  Failed to generate connections table for {record['type']}: {e}", flush=True)
-        record["connections_file_rel"] = f"../../tables/{record['type']}_connections.html"
+                print(
+                    f"  Failed to generate connections table for {record['type']}: {e}",
+                    flush=True,
+                )
+        record["connections_file_rel"] = (
+            f"../../tables/{record['type']}_connections.html"
+        )
 
         if not skip_thumbnails:
             # Generate the thumbnail
@@ -330,10 +347,16 @@ def make_dimorphism_pages(
                     mcns_meta,
                     fw_meta,
                     fw_edges,
-                    )
+                    mcns_edges,
+                )
             except Exception as e:
-                print(f"  Failed to generate connections table for {record['type']}: {e}", flush=True)
-        record["connections_file_rel"] = f"../../tables/{record['type']}_connections.html"
+                print(
+                    f"  Failed to generate connections table for {record['type']}: {e}",
+                    flush=True,
+                )
+        record["connections_file_rel"] = (
+            f"../../tables/{record['type']}_connections.html"
+        )
 
         if not skip_thumbnails:
             # Generate the thumbnail
@@ -359,7 +382,11 @@ def make_dimorphism_pages(
     # Loop through each isomorphic cell type that contributes to a synonym
     individual_template = JINJA_ENV.get_template("isomorphism_individual.md")
     if random_pages is not None:
-        by_synonyms = dict(random.sample(list(by_synonyms.items()), k=min(random_pages, len(by_synonyms))))
+        by_synonyms = dict(
+            random.sample(
+                list(by_synonyms.items()), k=min(random_pages, len(by_synonyms))
+            )
+        )
     for name, syn in by_synonyms.items():
         for record in syn["types_iso"]:
             print(
@@ -380,7 +407,8 @@ def make_dimorphism_pages(
                     )
                 except Exception as e:
                     print(
-                        f"  Failed to generate graph for {record['type']}: {e}", flush=True
+                        f"  Failed to generate graph for {record['type']}: {e}",
+                        flush=True,
                     )
 
             record["graph_file_fw"] = (
@@ -498,7 +526,7 @@ def extract_type_data(mcns_meta, fw_meta):
 
         # Get a neuroglancer scene to populate
         scene = prep_scene(table)
-        scene.layers[1]["segments"] = table["bodyId"].values
+        scene.layers["cns-seg"]["segments"] = table["bodyId"].values
 
         # Grab the corresponding type in FlyWire
         table_fw = fw_meta_grp.get(t, pd.DataFrame([]))
@@ -524,7 +552,7 @@ def extract_type_data(mcns_meta, fw_meta):
             dimorphic_meta[-1]["n_fwr"] = counts.get("right", 0)
             dimorphic_meta[-1]["n_fwl"] = counts.get("left", 0)
 
-            scene.layers[2]["segments"] = table_fw["root_id"].values
+            scene.layers["flywire-meshes"]["segments"] = table_fw["root_id"].values
 
         dimorphic_meta[-1]["url"] = scene.url
 
@@ -592,7 +620,7 @@ def extract_type_data(mcns_meta, fw_meta):
 
         # Get a neuroglancer scene to populate
         scene = prep_scene(table)
-        scene.layers[1]["segments"] = table["bodyId"].values
+        scene.layers["cns-seg"]["segments"] = table["bodyId"].values
         male_meta[-1]["url"] = scene.url
 
         # For male-specific neurons we should always have a `type`
@@ -641,7 +669,7 @@ def extract_type_data(mcns_meta, fw_meta):
 
         # Get a neuroglancer scene to populate
         scene = prep_scene(table_fw)
-        scene.layers[2]["segments"] = table_fw["root_id"].values
+        scene.layers["flywire-meshes"]["segments"] = table_fw["root_id"].values
 
         female_meta[-1]["url"] = scene.url
 
@@ -698,7 +726,7 @@ def extract_type_data(mcns_meta, fw_meta):
 
         # Get a neuroglancer scene to populate
         scene = prep_scene(table)
-        scene.layers[1]["segments"] = table["bodyId"].values
+        scene.layers["cns-seg"]["segments"] = table["bodyId"].values
 
         # Grab the corresponding type in FlyWire
         table_fw = fw_meta_grp.get(t, pd.DataFrame([]))
@@ -724,7 +752,7 @@ def extract_type_data(mcns_meta, fw_meta):
             iso_meta[-1]["n_fwr"] = counts.get("right", 0)
             iso_meta[-1]["n_fwl"] = counts.get("left", 0)
 
-            scene.layers[2]["segments"] = table_fw["root_id"].values
+            scene.layers["flywire-meshes"]["segments"] = table_fw["root_id"].values
 
         iso_meta[-1]["url"] = scene.url
 
@@ -763,7 +791,10 @@ def extract_type_data(mcns_meta, fw_meta):
                 author_year, syn = syn.split(":")
             except ValueError:
                 # replace this with a warning for now
-                print(f"  WARNING: Failed to parse synonym: {syn} in type {record['type']}", flush=True)
+                print(
+                    f"  WARNING: Failed to parse synonym: {syn} in type {record['type']}",
+                    flush=True,
+                )
                 continue
                 # raise ValueError(f"  Failed to parse synonym: {syn} in type {record['type']}")
             author_year, syn = author_year.strip(), syn.strip()
@@ -1075,17 +1106,26 @@ def group_by_synonyms(
                 author_year, syn = syn.split(":")
             except ValueError:
                 # replace this with a warning for now
-                print(f"  WARNING: Failed to parse synonym: {syn} in type {record['type']}", flush=True)
+                print(
+                    f"  WARNING: Failed to parse synonym: {syn} in type {record['type']}",
+                    flush=True,
+                )
                 continue
                 # raise ValueError(f"  Failed to parse synonym: {syn}")
             author_year = author_year.strip()
             syn = syn.strip()
             # We might have multiple authors/years, "Author1 Year1, Author2 Year2: Synonym"
             author_year_parsed = []
-            for ay in author_year.split(";"):
+            for ay in author_year.split(","):
                 ay = ay.strip()
+
+                if ay[-1] in ("a", "b"):
+                    ay = ay[:-1].strip()
+
                 # Check that we have author + year
-                if not re.match(r"^[A-Za-z ]+ \d{4}$", ay):
+                if not re.match(
+                    r"^[A-Za-z ]+ \d{4}$", ay.replace("-", " ").replace("&", " ")
+                ):
                     print(f"  Invalid author/year format: {ay}", flush=True)
                     continue
                 author_year_parsed.append(ay)
@@ -1138,8 +1178,8 @@ def group_by_synonyms(
             if len(syn["body_ids"]) > 0
             else fw_meta[fw_meta.root_id.isin(syn["root_ids"])]
         )
-        scene.layers[1]["segments"] = syn["body_ids"]
-        scene.layers[2]["segments"] = syn["root_ids"]
+        scene.layers["cns-seg"]["segments"] = syn["body_ids"]
+        scene.layers["flywire-meshes"]["segments"] = syn["root_ids"]
         syn["url"] = scene.url
 
     return by_synonyms
@@ -1253,8 +1293,8 @@ def group_by_hemilineage(
 
         # Generate a neuroglancer URL
         scene = prep_scene(hl_mcns)
-        scene.layers[1]["segments"] = hl_mcns["bodyId"].values
-        scene.layers[2]["segments"] = hl_fw["root_id"].values
+        scene.layers["cns-seg"]["segments"] = hl_mcns["bodyId"].values
+        scene.layers["flywire-meshes"]["segments"] = hl_fw["root_id"].values
 
         # Add the URL to the hemilineage
         by_hemilineage[hl]["url"] = scene.url
@@ -1267,8 +1307,10 @@ def group_by_hemilineage(
 
 
 def make_supertype_pages(
-    mcns_meta: pd.DataFrame, fw_meta: pd.DataFrame, skip_thumbnails: bool,
-    random_pages: int | None
+    mcns_meta: pd.DataFrame,
+    fw_meta: pd.DataFrame,
+    skip_thumbnails: bool,
+    random_pages: int | None,
 ) -> None:
     """Generate the individual summaries for each (dimorphic) supertype.
 
@@ -1348,8 +1390,8 @@ def make_supertype_pages(
 
         # Get a neuroglancer scene to populate
         scene = prep_scene(table_mcns if not table_mcns.empty else table_fw)
-        scene.layers[1]["segments"] = table_mcns["bodyId"].values
-        scene.layers[2]["segments"] = table_fw["root_id"].values
+        scene.layers["cns-seg"]["segments"] = table_mcns["bodyId"].values
+        scene.layers["flywire-meshes"]["segments"] = table_fw["root_id"].values
 
         supertypes_meta[-1]["url"] = scene.url
 
@@ -1360,7 +1402,9 @@ def make_supertype_pages(
 
     # Loop through each super type and generate a page for it
     if random_pages is not None:
-        supertypes_meta = random.sample(supertypes_meta, k=min(random_pages, len(supertypes_meta)))
+        supertypes_meta = random.sample(
+            supertypes_meta, k=min(random_pages, len(supertypes_meta))
+        )
     for record in supertypes_meta:
         if record["supertype"] == "N/A":
             continue
@@ -1409,8 +1453,10 @@ def make_supertype_pages(
 
 
 def make_synonyms_pages(
-    mcns_meta: pd.DataFrame, fw_meta: pd.DataFrame, skip_thumbnails: bool,
-    random_pages: int | None
+    mcns_meta: pd.DataFrame,
+    fw_meta: pd.DataFrame,
+    skip_thumbnails: bool,
+    random_pages: int | None,
 ) -> None:
     """Generate the individual summaries for each (dimorphic) synonym.
 
@@ -1476,11 +1522,20 @@ def make_synonyms_pages(
                 author_year, syn = author_year.strip(), syn.strip()
                 # We might have multiple authors/years, "Author1 Year1, Author2 Year2: Synonym"
                 author_year_parsed = []
-                for ay in author_year.split(";"):
+                for ay in author_year.split(","):
                     ay = ay.strip()
-                    # Check that we have author + year
-                    if not re.match(r"^[A-Za-z ]+ \d{4}$", ay):
-                        print(f"  Invalid author/year format: {ay}", flush=True)
+
+                    # There are one or two cases where the year is "2020a" or "2020b", so we just remove
+                    # the trailing letter for now
+                    if ay[-1] in ("a", "b"):
+                        ay = ay[:-1]
+
+                    # Check that we have author + year (note that we're temporarily replacing & and - with spaces
+                    # to make the regex easier)
+                    if not re.match(
+                        r"^[A-Za-z ]+ \d{4}$", ay.replace("&", " ").replace("-", " ")
+                    ):
+                        print(f"  Invalid author/year format: {ay} ({syn})", flush=True)
                         continue
                     author_year_parsed.append(ay)
                 if not author_year_parsed:
@@ -1488,7 +1543,10 @@ def make_synonyms_pages(
                     continue
                 author_year_str = ", ".join(author_year_parsed)
             except ValueError as e:
-                print(f"  WARNING: Failed to parse synonym: {string} in {synonyms}", flush=True)
+                print(
+                    f"  WARNING: Failed to parse synonym: {string} in {synonyms}",
+                    flush=True,
+                )
                 author_year_str = ""
                 continue
 
@@ -1536,8 +1594,8 @@ def make_synonyms_pages(
             if len(syn["body_ids"]) > 0
             else fw_meta[fw_meta.root_id.isin(syn["root_ids"])]
         )
-        scene.layers[1]["segments"] = syn["body_ids"]
-        scene.layers[2]["segments"] = syn["root_ids"]
+        scene.layers["cns-seg"]["segments"] = syn["body_ids"]
+        scene.layers["flywire-meshes"]["segments"] = syn["root_ids"]
         syn["url"] = scene.url
 
         # Get the dimorphic types for this synonym
@@ -1549,7 +1607,11 @@ def make_synonyms_pages(
 
     # Loop through each synonym and generate a page for it
     if random_pages is not None:
-        synonyms_meta = dict(random.sample(list(synonyms_meta.items()), k=min(random_pages, len(synonyms_meta))))
+        synonyms_meta = dict(
+            random.sample(
+                list(synonyms_meta.items()), k=min(random_pages, len(synonyms_meta))
+            )
+        )
     for syn, record in synonyms_meta.items():
         print(
             f"  Generating summary page for synonym '{record['name']}'...",
@@ -1635,7 +1697,7 @@ def make_hemilineage_pages(mcns_meta, fw_meta, random_pages: int | None) -> None
 
             # Get a neuroglancer scene to populate
             scene = prep_scene(table)
-            scene.layers[1]["segments"] = table["bodyId"].values
+            scene.layers["cns-seg"]["segments"] = table["bodyId"].values
 
             # Grab the corresponding hemilineage in FlyWire
             table_fw = fw_meta[fw_meta.ito_lee_hemilineage == t]
@@ -1653,7 +1715,7 @@ def make_hemilineage_pages(mcns_meta, fw_meta, random_pages: int | None) -> None
                 hemilineages_meta[-1]["n_types_fwr"] = type_counts.get("right", 0)
                 hemilineages_meta[-1]["n_types_fwl"] = type_counts.get("left", 0)
 
-                scene.layers[2]["segments"] = table_fw["root_id"].values
+                scene.layers["flywire-meshes"]["segments"] = table_fw["root_id"].values
                 scene.layers[2]["segmentDefaultColor"] = "#e511d0"
 
             hemilineages_meta[-1]["url"] = scene.url
@@ -1662,7 +1724,9 @@ def make_hemilineage_pages(mcns_meta, fw_meta, random_pages: int | None) -> None
 
     # Loop through each super type and generate a page for it
     if random_pages is not None:
-        hemilineages_meta = random.sample(hemilineages_meta, k=min(random_pages, len(hemilineages_meta)))
+        hemilineages_meta = random.sample(
+            hemilineages_meta, k=min(random_pages, len(hemilineages_meta))
+        )
     for record in hemilineages_meta:
         print(
             f"  Generating summary page for hemilineage '{record['hemilineage']}'...",
@@ -1864,6 +1928,7 @@ def generate_connections_tables(
     mcns_meta_full: pd.DataFrame,
     fw_meta_full: pd.DataFrame,
     fw_edges: pd.DataFrame,
+    mcns_edges: pd.DataFrame,
 ) -> None:
     """Generate connections tables for the given neurons.
 
@@ -1880,6 +1945,9 @@ def generate_connections_tables(
     fw_edges :  pd.DataFrame
                 The edges for the FlyWire neurons. See
                 loading.py for the function that loads this data.
+    mcns_edges : pd.DataFrame
+                The edges for the MaleCNS neurons. See
+                loading.py for the function that loads this data.
 
     Returns
     -------
@@ -1890,44 +1958,132 @@ def generate_connections_tables(
     type_name = record["type"]
     mapping_name = record["mapping"]
 
-    print(f"  Generating connections table for {type_name}...", flush=True)
+    print(f"  Generating connections table for {type_name}...", flush=True, end="")
 
     type_meta_mcns = mcns_meta_full[mcns_meta_full["mapping"] == mapping_name]
     type_meta_fw = fw_meta_full[fw_meta_full["mapping"] == mapping_name]
 
     mcns_mapping = mcns_meta_full.set_index("bodyId").mapping.to_dict()
     fw_mapping = fw_meta_full.set_index("root_id").mapping.to_dict()
-    fw_meta_full = fw_meta_full.drop_duplicates("root_id")
     fw_edges = fw_edges.rename(columns={"syn_count": "weight"})
+
+    # Minimal columns for the connections table
+    cols = [
+        "type",
+        "pre-post",
+        "weight",
+        "count",
+        "nt",
+    ]
 
     # MCNS neurons
     if not type_meta_mcns.empty:
-        df_mcns = get_mcns_connections(type_meta_mcns, mcns_mapping)
-        mcns_connections = _split_reformat_connections(df_mcns, mapping_name)
-        mcns_connections = add_nt_cns(mcns_connections, mcns_meta_full)
+        df_mcns = get_mcns_connections(type_meta_mcns, mcns_edges, mcns_mapping)
+        mcns_connections = split_reformat_connections(df_mcns, mapping_name)
+        mcns_connections["nt"] = map_column_values(
+            mcns_connections, mcns_meta_full, "consensusNt"
+        )
         mcns_connections["source"] = "CNS (M)"
+
+        # Add a column with the scaled weights (see paper)
+        mcns_connections.insert(3, "weight (M, scaled)", mcns_connections.weight * 0.581)
     else:
-        mcns_connections = pd.DataFrame()
+        mcns_connections = pd.DataFrame(columns=cols + ["weight (M, scaled)"])
 
     # FlyWire
     if not type_meta_fw.empty:
         df_fw = get_fw_connections(type_meta_fw, fw_edges, fw_mapping)
-        fw_connections = _split_reformat_connections(df_fw, mapping_name)
-        fw_connections = add_nt_fw(fw_connections, fw_meta_full)
+        fw_connections = split_reformat_connections(df_fw, mapping_name)
+        fw_connections["nt"] = map_column_values(fw_connections, fw_meta_full, "top_nt")
         fw_connections["source"] = "FlyWire (F)"
     else:
-        fw_connections = pd.DataFrame()
+        fw_connections = pd.DataFrame(columns=cols)
 
     # create the table; handle possibly not having one or the other df
 
-    # for now, assume we have both, and do the easy case:
-    connections = pd.concat([mcns_connections, fw_connections], ignore_index=True)
+    # Merge male and female connection tables
+    connections = pd.merge(
+        mcns_connections,
+        fw_connections,
+        how="outer",
+        left_on=["type", "pre-post"],
+        right_on=["type", "pre-post"],
+        suffixes=(" (M)", " (F)"),
+    )
 
+    # Drop connections below noise threshold (see paper)
+    connections = connections[
+        (connections["weight (M)"].fillna(0) > 10)
+        | (connections["weight (F)"].fillna(0) > 8)
+    ].copy()
+
+    # Add dimorphism columns
+    connections["dimorphism"] = map_column_values(
+        connections, mcns_meta_full, "dimorphism"
+    )
+    connections.loc[connections.dimorphism == "", "dimorphism"] = np.nan
+    connections["dimorphism"] = connections["dimorphism"].fillna(
+        map_column_values(connections, fw_meta_full, "dimorphism")
+    )
+    connections.loc[connections.dimorphism == "", "dimorphism"] = "isomorphic"
+
+    # Add male and female types for a given mapping
+    connections["types (M)"] = map_column_values(
+        connections, mcns_meta_full, "type"
+    )
+    connections["types (F)"] = map_column_values(
+        connections, fw_meta_full, "type"
+    )
+
+    # Rename type -> mapping
+    connections = connections.rename(columns={"type": "mapping"})
+
+    # Sort columns
+    connections = connections[
+        [
+            "mapping",
+            "pre-post",
+            "weight (M)",
+            "weight (M, scaled)",
+            "weight (F)",
+            "dimorphism",
+            "count (M)",
+            "count (F)",
+            "types (M)",
+            "types (F)",
+            "nt (M)",
+            "nt (F)",
+        ]
+    ]
+
+    # Fill numeric columns
+    for col in ["weight (M)", "weight (F)", "count (M)", "count (F)"]:
+        if col in connections.columns:
+            connections[col] = connections[col].fillna(0).astype(int)
+    for col in ["weight (M, scaled)"]:
+        if col in connections.columns:
+            connections[col] = connections[col].fillna(0).round(2)
+
+    # Sort
+    connections.sort_values(
+        by=["pre-post", "weight (M)", "weight (F)"],
+        ascending=[True, False, False],
+        inplace=True,
+    )
+
+    # Note: "count (M)" and "count (F)" are added by get_mcns_connections and get_fw_connections, respectively.
+    # These numbers represent the number of unitary connections between the pre- and post-synaptic neurons
+    # before grouping by mapping/type. While I think this is generally interesting, it needs a lot of explanation
+    # and more data than we're currently showing - will drop these columns here for now.
+    connections = connections.drop(columns=["count (M)", "count (F)"], errors='ignore')
+
+    # Reset index
+    connections.reset_index(drop=True, inplace=True)
 
     if len(connections) == 0:
-        print(f"  No connections found for {type_name}, skipping...", flush=True)
+        print("  no connections found - skipping.", flush=True)
     else:
-        print(f"  Found {len(connections)} connections for {type_name}")
+        print(f"  found {len(connections)} connections.", flush=True)
 
     # and save the actual table:
     create_connection_table(connections, TABLES_DIR / f"{type_name}_connections.html")
@@ -1935,25 +2091,21 @@ def generate_connections_tables(
 
 def get_fw_connections(type_meta_fw: pd.DataFrame, fw_edges: pd.DataFrame, fw_mapping):
     # Subset the edges to the ones that are in the meta data
-    down = fw_edges[
-        fw_edges.pre_pt_root_id.isin(type_meta_fw["root_id"].values)
-    ].copy()
-    up = fw_edges[
-        fw_edges.post_pt_root_id.isin(type_meta_fw["root_id"].values)
-    ].copy()
+    down = fw_edges[fw_edges.pre_root_id.isin(type_meta_fw["root_id"].values)].copy()
+    up = fw_edges[fw_edges.post_root_id.isin(type_meta_fw["root_id"].values)].copy()
 
     # Add type information
-    down["pre_type"] = down.pre_pt_root_id.map(fw_mapping)
-    down["post_type"] = down.post_pt_root_id.map(fw_mapping)
-    up["pre_type"] = up.pre_pt_root_id.map(fw_mapping)
-    up["post_type"] = up.post_pt_root_id.map(fw_mapping)
+    down["pre_type"] = down.pre_root_id.map(fw_mapping)
+    down["post_type"] = down.post_root_id.map(fw_mapping)
+    up["pre_type"] = up.pre_root_id.map(fw_mapping)
+    up["post_type"] = up.post_root_id.map(fw_mapping)
 
     # get cell counts
-    down_counts = down.groupby(["post_type"]).post_pt_root_id.nunique().reset_index()
-    down_counts = down_counts.rename(columns={"post_pt_root_id": "count"})
+    down_counts = down.groupby(["post_type"]).post_root_id.nunique().reset_index()
+    down_counts = down_counts.rename(columns={"post_root_id": "count"})
 
-    up_counts = up.groupby(["pre_type"]).pre_pt_root_id.nunique().reset_index()
-    up_counts = up_counts.rename(columns={"pre_pt_root_id": "count"})
+    up_counts = up.groupby(["pre_type"]).pre_root_id.nunique().reset_index()
+    up_counts = up_counts.rename(columns={"pre_root_id": "count"})
 
     # Group by pre- and post-synaptic types
     down = (
@@ -1980,20 +2132,25 @@ def get_fw_connections(type_meta_fw: pd.DataFrame, fw_edges: pd.DataFrame, fw_ma
     return pd.concat([down, up], axis=0).drop_duplicates().reset_index(drop=True)
 
 
-def get_mcns_connections(type_meta_mcns: pd.DataFrame, mcns_mapping):
-    # Fetch downstream partners (ignore userwarnings)
-    with warnings.catch_warnings(action="ignore"):
-        ann, down = neu.fetch_adjacencies(
-            sources=neu.NeuronCriteria(bodyId=type_meta_mcns["bodyId"].values),
-        )
+def get_mcns_connections(
+    type_meta_mcns: pd.DataFrame, mcns_edges: pd.DataFrame, mcns_mapping
+):
+    # Subset the edges to the ones that are in the meta data
+    down = mcns_edges[mcns_edges.body_pre.isin(type_meta_mcns["bodyId"].values)].copy()
+    up = mcns_edges[mcns_edges.body_post.isin(type_meta_mcns["bodyId"].values)].copy()
 
     # Add type information
-    down["pre_type"] = down.bodyId_pre.map(mcns_mapping)
-    down["post_type"] = down.bodyId_post.map(mcns_mapping)
+    down["pre_type"] = down.body_pre.map(mcns_mapping)
+    down["post_type"] = down.body_post.map(mcns_mapping)
+    up["pre_type"] = up.body_pre.map(mcns_mapping)
+    up["post_type"] = up.body_post.map(mcns_mapping)
 
     # get cell counts
-    down_counts = down.groupby(["post_type"]).bodyId_post.nunique().reset_index()
-    down_counts = down_counts.rename(columns={"bodyId_post": "count"})
+    down_counts = down.groupby(["post_type"]).body_post.nunique().reset_index()
+    down_counts = down_counts.rename(columns={"body_post": "count"})
+
+    up_counts = up.groupby(["pre_type"]).body_pre.nunique().reset_index()
+    up_counts = up_counts.rename(columns={"body_pre": "count"})
 
     # Group by pre- and post-synaptic types
     down = (
@@ -2001,36 +2158,23 @@ def get_mcns_connections(type_meta_mcns: pd.DataFrame, mcns_mapping):
         .weight.sum()
         .sort_values("weight", ascending=False)
     )
-    # Remove self-loops
-    down = down[down.pre_type != down.post_type]
-    # Remove unknown types
-    down = down[down.pre_type.notnull() & down.post_type.notnull()]
-
-    down = down.merge(down_counts)
-
-    # Same for upstream partners
-    with warnings.catch_warnings(action="ignore"):
-        ann, up = neu.fetch_adjacencies(
-            targets=neu.NeuronCriteria(bodyId=type_meta_mcns["bodyId"].values),
-        )
-    up["pre_type"] = up.bodyId_pre.map(mcns_mapping)
-    up["post_type"] = up.bodyId_post.map(mcns_mapping)
-
-    # count cells
-    up_counts = up.groupby(["pre_type"]).bodyId_pre.nunique().reset_index()
-    up_counts = up_counts.rename(columns={"bodyId_pre": "count"})
-
     up = (
         up.groupby(["pre_type", "post_type"], as_index=False)
         .weight.sum()
         .sort_values("weight", ascending=False)
     )
-    up = up[up.pre_type != up.post_type]
-    up = up[up.pre_type.notnull() & up.post_type.notnull()]
+    # Remove self-loops
+    up = up[(up.pre_type != up.post_type)]
+    down = down[(down.pre_type != down.post_type)]
 
+    # Remove unknown types
+    up = up[up.pre_type.notnull() & up.post_type.notnull()]
+    down = down[down.pre_type.notnull() & down.post_type.notnull()]
+
+    down = down.merge(down_counts)
     up = up.merge(up_counts)
 
-    # Combine but keep only the top N in- and out-edges
+    # Combine
     return pd.concat([down, up], axis=0).drop_duplicates().reset_index(drop=True)
 
 
@@ -2151,9 +2295,9 @@ def clear_build_directory():
 def clear_site_directory():
     """Clear the site directory"""
     if SITE_DIR.exists() and SITE_DIR.is_dir():
-         print("Clearing site directory...", flush=True)
-         shutil.rmtree(SITE_DIR)
-         print("Cleared site directory.", flush=True)
+        print("Clearing site directory...", flush=True)
+        shutil.rmtree(SITE_DIR)
+        print("Cleared site directory.", flush=True)
 
 
 def prep_scene(table):
@@ -2177,8 +2321,16 @@ def prep_scene(table):
     has_descending = ("descending_neuron" in table[sc_col].values) or (
         "descending" in table[sc_col].values
     )
-    has_central = ("cb_intrinsic" in table[sc_col].values) or (
-        "central" in table[sc_col].values
+    has_central = any(
+        c in table[sc_col].values
+        for c in [
+            "cb_intrinsic",
+            "central",
+            "ol_intrinsic",
+            "optic",
+            "visual_projection",
+            "visual_centrifugal",
+        ]
     )
     has_vnc = "vnc_intrinsic" in table[sc_col].values
 
@@ -2196,8 +2348,9 @@ def prep_scene(table):
     if not has_descending and not has_ascending and not has_vnc:
         scene.layers["vnc-neuropil-shell"]["visible"] = False
 
-    scene.layers[1]["segmentDefaultColor"] = "#00e9e7"
-    scene.layers[2]["segmentDefaultColor"] = "#e511d0"
+    # Set colors for male and female neurons
+    scene.layers["cns-seg"]["segmentDefaultColor"] = "#00e9e7"  # cyan
+    scene.layers["flywire-meshes"]["segmentDefaultColor"] = "#e511d0"  # magenta
 
     return scene
 
@@ -2219,18 +2372,19 @@ def _get_ids_from_record(record):
 
     return body_ids, root_ids
 
-def _split_reformat_connections(df, mapping_name):
+
+def split_reformat_connections(df, mapping_name):
     pre_df = pd.DataFrame()
     pre_df["type"] = df.query("pre_type == @mapping_name")["post_type"]
     pre_df["count"] = df.query("pre_type == @mapping_name")["count"]
     pre_df["weight"] = df.query("pre_type == @mapping_name")["weight"]
-    pre_df["pre-post"] = "pre"
+    pre_df["pre-post"] = "post"
 
     post_df = pd.DataFrame()
     post_df["type"] = df.query("post_type == @mapping_name")["pre_type"]
     post_df["count"] = df.query("post_type == @mapping_name")["count"]
     post_df["weight"] = df.query("post_type == @mapping_name")["weight"]
-    post_df["pre-post"] = "post"
+    post_df["pre-post"] = "pre"
 
     total = pre_df.weight.sum()
     pre_df["percent"] = pre_df.weight / total
@@ -2242,102 +2396,99 @@ def _split_reformat_connections(df, mapping_name):
 
     return pd.concat([pre_df, post_df])
 
+
+def map_column_values(df, meta, col_to_map):
+    """Collect all values for a given mapping and map them to the connections table."""
+
+    def f(items):
+        temp = [item for item in items if pd.notna(item)]
+        if temp:
+            return ",".join(set(temp))
+        else:
+            return ""
+
+    vals = meta.groupby("mapping", dropna=True)[col_to_map].apply(f)
+    return df["type"].map(vals).fillna("")
+
+
 def add_nt_cns(df, mcns_meta):
     # add nt column to MCNS connections table
     def f(items):
         temp = [item for item in items if pd.notna(item)]
         if temp:
-            return ','.join(set(temp))
+            return ",".join(set(temp))
         else:
             return ""
-    nt_df = mcns_meta.groupby("type", dropna=True)["consensusNt"].apply(f).reset_index()
-    df = df.merge(nt_df, how='left', on="type")
-    df["consensusNt"] = df["consensusNt"].fillna("")
-    df = df.rename(columns={"consensusNt": "nt"})
+
+    nt_df = mcns_meta.groupby("mapping", dropna=True)["consensusNt"].apply(f)
+    df["nt"] = df.type.map(nt_df).fillna("")
     return df
+
 
 def add_nt_fw(df, fw_meta):
     # add nt column to FlyWire connections table
     def f(items):
         temp = [item for item in items if pd.notna(item)]
         if temp:
-            return ','.join(set(temp))
+            return ",".join(set(temp))
         else:
             return ""
-    nt_df = fw_meta.groupby("type", dropna=True)["top_nt"].apply(f).reset_index()
-    df = df.merge(nt_df, how='left', on="type")
-    df["top_nt"] = df["top_nt"].fillna("")
-    df = df.rename(columns={"top_nt": "nt"})
+
+    nt_df = fw_meta.groupby("mapping", dropna=True)["top_nt"].apply(f)
+    df["nt"] = df.type.map(nt_df).fillna("")
     return df
+
 
 @functools.cache
 def get_itables_common_html():
-    return itables.javascript.generate_init_offline_itables_html(itables.options.dt_bundle)
+    return itables.javascript.generate_init_offline_itables_html(
+        itables.options.dt_bundle
+    )
+
 
 def create_connection_table(df, filepath):
-    # reorder the columns
-    df = df[["type", "source", "pre-post", "nt", "count", "weight", "percent", "cumulative"]]
-
     # final name adjustment:
-    df = df.rename(columns={
-        "pre-post": "pre/post",
-        "percent": "% of total",
-        "cumulative": "cumulative %",
-    })
+    df = df.rename(
+        columns={
+            "pre-post": "pre/post",
+            "percent": "% of total",
+            "cumulative": "cumulative %",
+        }
+    )
 
-
-    # M/F specific cells don't need to filter on the "source" column
-    if df['source'].nunique() == 1:
-        filter_columns = [2, 3]
-        filter_layout = "columns-2"
-    else:
-        filter_columns = [1, 2, 3]
-        filter_layout = "columns-3"
+    # Specific columns to filter on
+    filter_columns = [1, 5]
+    filter_layout = "columns-2"
 
     common_html = get_itables_common_html()
 
     # can factor this styling out at some point
     format_dict = {
-        "weight": '{:,.0f}',
-        "count": '{:,.0f}',
-        "% of total": '{:,.1%}',
-        "cumulative %": '{:,.1%}',
+        "weight (M)": "{:,.0f}",
+        "weight (M, scaled)": "{:,.2f}",
+        "weight (f)": "{:,.0f}",
+        "count (M)": "{:,.0f}",
+        "count (F)": "{:,.0f}",
     }
 
-    def apply_styling(styler):
-        styler.format(format_dict)
-        # OL input colors:
-        # styler.bar(color="#fee395", subset=['% of total'], vmax=1, height=95)
-        # styler.bar(color="#fed76a", subset=['cumulative %'], height=95)
-        # OL output colors:
-        styler.bar(color="#69d0e4", subset=['% of total'], vmax=1, height=95)
-        styler.bar(color="#9bdfed", subset=['cumulative %'], height=95)
-
-        # you can get a lot more detailed and specific with this
-        # (in progress, not fully working)
-        # styler.set_table_styles(
-        #     [
-        #         # the main connections table
-        #         {"selector": "table",
-        #          "props": [("font-family", "sans-serif"), ("font-size", "16px")]},
-        #
-        #     ]
-        # )
-
-        return styler
-
-    html = itables.to_html_datatable(df.style.pipe(apply_styling),
+    html = itables.to_html_datatable(
+        df.reset_index(drop=True),
         connected=False,
         allow_html=True,
-        pageLength=100,
+        showIndex=False,
+        pageLength=50,
         lengthMenu=[10, 25, 50, 100, 250, 500],
         layout={"top1": "searchPanes"},
-        searchPanes={"layout": filter_layout, "cascadePanes": True, "columns": filter_columns},
-        )
+        search={"regex": True, "caseInsensitive": True},
+        buttons=["pageLength", "csvHtml5"],
+        searchPanes={
+            "layout": filter_layout,
+            "cascadePanes": True,
+            "columns": filter_columns,
+            "initCollapsed": True,
+            "collapse": True,  # start with panes collapsed
+        },
+    )
 
-    with open(filepath, 'wt') as f:
+    with open(filepath, "wt") as f:
         f.write(f"{html}\n{common_html}")
-
-
-
-
