@@ -165,12 +165,13 @@ tags:
 
 
 ??? info "Notes on connectivity tables"
-    Connections shown here are based on the cross-matched central brain graph. Because the FAFB/FlyWire volume does not contain
+    Connections shown here are based on the cross-matched brain graph. Because the FAFB/FlyWire volume does not contain
     the ventral nerve cord (VNC), we exclude connections made in the VNC part of the male CNS connectome.
 
      - `mapping` is a label that identifies this group of neurons across brains; it is chosen arbitrarily between the available male and female types in that group
      - `pre/post` indicates whether the given synaptic partner is up- (pre) or downstream (post) of the current type
      - `weight (M)` and `weight (F)` are the connection weights in the male CNS and FlyWire connectomes, respectively
      - `weight (M, scaled)` is the male CNS connection weight scaled by a factor of 0.581 to align it with weights in FlyWire (see the paper for details)
+     - `rank (M)` and `rank (F)` are the ranks (up- and downstream separately) of the connection weights in male and female, respectively
      - `dimorphism` indicates whether the type(s) are dimorphic, sex-specific or isomorphic
      - `nt (M)` and `nt (F)` are the predicted neurotransmitters from the male CNS and FlyWire connectomes, respectively

@@ -1974,32 +1974,35 @@ def generate_connections_tables(
         "weight",
         "count",
         "nt",
+        "rank",
     ]
 
     # MCNS neurons
     if not type_meta_mcns.empty:
-        df_mcns = get_mcns_connections(type_meta_mcns, mcns_edges, mcns_mapping)
-        mcns_connections = split_reformat_connections(df_mcns, mapping_name)
+        mcns_connections = get_mcns_connections(
+            type_meta_mcns, mcns_edges, mcns_mapping
+        )
+        # mcns_connections = split_reformat_connections(df_mcns, mapping_name)
         mcns_connections["nt"] = map_column_values(
             mcns_connections, mcns_meta_full, "consensusNt"
         )
         mcns_connections["source"] = "CNS (M)"
 
         # Add a column with the scaled weights (see paper)
-        mcns_connections.insert(3, "weight (M, scaled)", mcns_connections.weight * 0.581)
+        mcns_connections.insert(
+            3, "weight (M, scaled)", mcns_connections.weight * 0.581
+        )
     else:
         mcns_connections = pd.DataFrame(columns=cols + ["weight (M, scaled)"])
 
     # FlyWire
     if not type_meta_fw.empty:
-        df_fw = get_fw_connections(type_meta_fw, fw_edges, fw_mapping)
-        fw_connections = split_reformat_connections(df_fw, mapping_name)
+        fw_connections = get_fw_connections(type_meta_fw, fw_edges, fw_mapping)
+        # fw_connections = split_reformat_connections(df_fw, mapping_name)
         fw_connections["nt"] = map_column_values(fw_connections, fw_meta_full, "top_nt")
         fw_connections["source"] = "FlyWire (F)"
     else:
         fw_connections = pd.DataFrame(columns=cols)
-
-    # create the table; handle possibly not having one or the other df
 
     # Merge male and female connection tables
     connections = pd.merge(
@@ -2028,12 +2031,8 @@ def generate_connections_tables(
     connections.loc[connections.dimorphism == "", "dimorphism"] = "isomorphic"
 
     # Add male and female types for a given mapping
-    connections["types (M)"] = map_column_values(
-        connections, mcns_meta_full, "type"
-    )
-    connections["types (F)"] = map_column_values(
-        connections, fw_meta_full, "type"
-    )
+    connections["types (M)"] = map_column_values(connections, mcns_meta_full, "type")
+    connections["types (F)"] = map_column_values(connections, fw_meta_full, "type")
 
     # Rename type -> mapping
     connections = connections.rename(columns={"type": "mapping"})
@@ -2043,12 +2042,12 @@ def generate_connections_tables(
         [
             "mapping",
             "pre-post",
+            "dimorphism",
             "weight (M)",
             "weight (M, scaled)",
             "weight (F)",
-            "dimorphism",
-            "count (M)",
-            "count (F)",
+            "rank (M)",
+            "rank (F)",
             "types (M)",
             "types (F)",
             "nt (M)",
@@ -2075,7 +2074,7 @@ def generate_connections_tables(
     # These numbers represent the number of unitary connections between the pre- and post-synaptic neurons
     # before grouping by mapping/type. While I think this is generally interesting, it needs a lot of explanation
     # and more data than we're currently showing - will drop these columns here for now.
-    connections = connections.drop(columns=["count (M)", "count (F)"], errors='ignore')
+    connections = connections.drop(columns=["count (M)", "count (F)"], errors="ignore")
 
     # Reset index
     connections.reset_index(drop=True, inplace=True)
@@ -2091,91 +2090,96 @@ def generate_connections_tables(
 
 def get_fw_connections(type_meta_fw: pd.DataFrame, fw_edges: pd.DataFrame, fw_mapping):
     # Subset the edges to the ones that are in the meta data
-    down = fw_edges[fw_edges.pre_root_id.isin(type_meta_fw["root_id"].values)].copy()
-    up = fw_edges[fw_edges.post_root_id.isin(type_meta_fw["root_id"].values)].copy()
+    down = fw_edges.loc[
+        fw_edges.pre_root_id.isin(type_meta_fw["root_id"].values),
+        ["post_root_id", "weight"],
+    ]
+    up = fw_edges.loc[
+        fw_edges.post_root_id.isin(type_meta_fw["root_id"].values),
+        ["pre_root_id", "weight"],
+    ]
+
+    # Remove self-loops
+    up = up[~up.pre_root_id.isin(type_meta_fw["root_id"].values)].copy()
+    down = down[~down.post_root_id.isin(type_meta_fw["root_id"].values)].copy()
 
     # Add type information
-    down["pre_type"] = down.pre_root_id.map(fw_mapping)
-    down["post_type"] = down.post_root_id.map(fw_mapping)
-    up["pre_type"] = up.pre_root_id.map(fw_mapping)
-    up["post_type"] = up.post_root_id.map(fw_mapping)
-
-    # get cell counts
-    down_counts = down.groupby(["post_type"]).post_root_id.nunique().reset_index()
-    down_counts = down_counts.rename(columns={"post_root_id": "count"})
-
-    up_counts = up.groupby(["pre_type"]).pre_root_id.nunique().reset_index()
-    up_counts = up_counts.rename(columns={"pre_root_id": "count"})
+    down["type"] = down.post_root_id.map(fw_mapping)
+    up["type"] = up.pre_root_id.map(fw_mapping)
 
     # Group by pre- and post-synaptic types
     down = (
-        down.groupby(["pre_type", "post_type"], as_index=False)
+        down.groupby(["type"], as_index=False)
         .weight.sum()
         .sort_values("weight", ascending=False)
     )
     up = (
-        up.groupby(["pre_type", "post_type"], as_index=False)
+        up.groupby(["type"], as_index=False)
         .weight.sum()
         .sort_values("weight", ascending=False)
     )
-    # Remove self-loops
-    up = up[(up.pre_type != up.post_type)]
-    down = down[(down.pre_type != down.post_type)]
-    # Remove unknown types
-    up = up[up.pre_type.notnull() & up.post_type.notnull()]
-    down = down[down.pre_type.notnull() & down.post_type.notnull()]
 
-    down = down.merge(down_counts)
-    up = up.merge(up_counts)
+    # Remove unknown types
+    up = up[up.type.notnull()]
+    down = down[down.type.notnull()]
+
+    down["pre-post"] = "post"
+    up["pre-post"] = "pre"
+
+    # Add ranks
+    down["rank"] = down.weight.rank(method="min", ascending=False).astype(int)
+    up["rank"] = up.weight.rank(method="min", ascending=False).astype(int)
 
     # Combine
-    return pd.concat([down, up], axis=0).drop_duplicates().reset_index(drop=True)
+    return pd.concat([down, up], axis=0).reset_index(drop=True)
 
 
 def get_mcns_connections(
     type_meta_mcns: pd.DataFrame, mcns_edges: pd.DataFrame, mcns_mapping
 ):
     # Subset the edges to the ones that are in the meta data
-    down = mcns_edges[mcns_edges.body_pre.isin(type_meta_mcns["bodyId"].values)].copy()
-    up = mcns_edges[mcns_edges.body_post.isin(type_meta_mcns["bodyId"].values)].copy()
+    down = mcns_edges.loc[
+        mcns_edges.body_pre.isin(type_meta_mcns["bodyId"].values),
+        ["body_post", "weight"],
+    ]
+    up = mcns_edges.loc[
+        mcns_edges.body_post.isin(type_meta_mcns["bodyId"].values),
+        ["body_pre", "weight"],
+    ]
+
+    # Remove self-loops
+    up = up[~up.body_pre.isin(type_meta_mcns["bodyId"].values)].copy()
+    down = down[~down.body_post.isin(type_meta_mcns["bodyId"].values)].copy()
 
     # Add type information
-    down["pre_type"] = down.body_pre.map(mcns_mapping)
-    down["post_type"] = down.body_post.map(mcns_mapping)
-    up["pre_type"] = up.body_pre.map(mcns_mapping)
-    up["post_type"] = up.body_post.map(mcns_mapping)
-
-    # get cell counts
-    down_counts = down.groupby(["post_type"]).body_post.nunique().reset_index()
-    down_counts = down_counts.rename(columns={"body_post": "count"})
-
-    up_counts = up.groupby(["pre_type"]).body_pre.nunique().reset_index()
-    up_counts = up_counts.rename(columns={"body_pre": "count"})
+    down["type"] = down.body_post.map(mcns_mapping)
+    up["type"] = up.body_pre.map(mcns_mapping)
 
     # Group by pre- and post-synaptic types
     down = (
-        down.groupby(["pre_type", "post_type"], as_index=False)
+        down.groupby(["type"], as_index=False)
         .weight.sum()
         .sort_values("weight", ascending=False)
     )
     up = (
-        up.groupby(["pre_type", "post_type"], as_index=False)
+        up.groupby(["type"], as_index=False)
         .weight.sum()
         .sort_values("weight", ascending=False)
     )
-    # Remove self-loops
-    up = up[(up.pre_type != up.post_type)]
-    down = down[(down.pre_type != down.post_type)]
 
     # Remove unknown types
-    up = up[up.pre_type.notnull() & up.post_type.notnull()]
-    down = down[down.pre_type.notnull() & down.post_type.notnull()]
+    up = up[up.type.notnull()]
+    down = down[down.type.notnull()]
 
-    down = down.merge(down_counts)
-    up = up.merge(up_counts)
+    down["pre-post"] = "post"
+    up["pre-post"] = "pre"
+
+    # Add ranks
+    down["rank"] = down.weight.rank(method="min", ascending=False).astype(int)
+    up["rank"] = up.weight.rank(method="min", ascending=False).astype(int)
 
     # Combine
-    return pd.concat([down, up], axis=0).drop_duplicates().reset_index(drop=True)
+    return pd.concat([down, up], axis=0).reset_index(drop=True)
 
 
 def generate_graphs(
@@ -2457,7 +2461,9 @@ def create_connection_table(df, filepath):
     )
 
     # Specific columns to filter on
-    filter_columns = [1, 5]
+    filter_columns = [
+        df.columns.values.tolist().index(c) for c in ("pre/post", "dimorphism")
+    ]
     filter_layout = "columns-2"
 
     common_html = get_itables_common_html()
