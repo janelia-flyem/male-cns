@@ -103,7 +103,6 @@ glightbox: true
 === "Download raw data"
 
     All connectome data is available for bulk download, suitable for analyses or ingestion into alternative databases.
-    The following files are stored under `gs://flyem-male-cns/v0.9/connectome-data/flat-connectome/`.
 
     === "Volumes"
 
