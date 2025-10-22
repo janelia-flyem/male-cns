@@ -132,6 +132,11 @@ glightbox: true
             - The `v0.9` nuclear segmentation.  Not filtered to exclude glia, noise, etc.  These served as the basis for our cell body annotations, which were manually reviewed.
             - 16nm isotropic resolution.
             - Voxel datatype is `uint64`.
+        - `gs://flyem-male-cns/malecns-semantic-masks`
+            - Voxelwise semantic class predictions (neuropil, nucleus, glia, etc.).
+            - Separate models were used in the brain vs. VNC, so some classes may be found only in one portion of the image or the other.
+            - 16nm isotropic resolution.
+            - Voxels are stored as `uint32`, but max value is `8`.
         - `gs://flyem-male-cns/rois/fullbrain-roi-v4`
             - Brain neuropil compartment segmentation, initialized via transfer from ROIs in JRC2018M and refined manually.
             - 256nm isotropic resolution
@@ -140,9 +145,17 @@ glightbox: true
             - VNC neuropil compartment segmentation, refined manually.
             - 256nm isotropic resolution
             - Voxels are stored as `uint64`, but max value is `27`.
+        - `gs://flyem-male-cns/rois/`
+            - Various low-resolution segmentation volumes representing regions of interest in the Male CNS.
+            - Separate volumes are given for brain/VNC neuropil compartments and nerves.
+            - Various other masks are provided in separate volumes, including a mask of the overall tissue, synaptic pointcloud shells, large defects, and the region encompassing the previously released optic lobe dataset.
+        - `gs://flyem-male-cns/micro-ct/`
+            - MicroCT image stack of the Male CNS sample obtained before hot-knife sectioning.
+            - Also included is a [summary movie of the slice data][micro-ct-movie].
 
         [n5]: https://github.com/saalfeldlab/n5
         [em-raw]: https://neuroglancer-demo.appspot.com/#!gs://flyem-user-links/short/male-cns-aligned-em-uncompressed-n5.json
+        [micro-ct-movie]: https://storage.googleapis.com/flyem-male-cns/micro-ct/Z0720-07%20luz%20g-_AllTiffs.avi
 
         Example code for reading the EM image data using Python and [`cloud-volume`][cloud-volume]:
 
@@ -242,9 +255,18 @@ glightbox: true
         [ng-skeleton]: https://github.com/google/neuroglancer/blob/master/src/datasource/precomputed/skeletons.md
         [flybrains]: https://github.com/navis-org/navis-flybrains
 
-        <div style="text-align: center;">
-            <p>The Male CNS is <a href="https://creativecommons.org/licenses/by/4.0/">licensed under CC-BY</a>.</p>
-        </div>
+    === "Transformed Meshes"
+
+        Volumetric meshes for the main neuron segmentation and various ROI volumes listed in earlier sections are bundled with the corresponding image volumes.
+        The following collections of meshes have been transformed from other samples and transformed to the Male CNS coordinate space.
+
+        - `gs://flyem-male-cns/flywire2mcns_meshes/`
+            - FlyWire/FAFB v783 neuron meshes transformed to Male CNS coordinate space.
+            - Stored in [neuroglancer single-resolution format][single-res].
+        - `gs://flyem-male-cns/hemibrain2mcns_meshes/v1.2`
+            - Hemibrain v1.2 neuron meshes transformed to Male CNS coordinate space in [neuroglancer single-resolution format][single-res].
+
+        [single-res]: https://github.com/google/neuroglancer/blob/master/src/datasource/precomputed/meshes.md#legacy-single-resolution-mesh-format
 
     === "Neuprint Database"
 
