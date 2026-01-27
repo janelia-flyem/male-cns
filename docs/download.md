@@ -264,7 +264,7 @@ glightbox: true
 ------------------------------------------------------------------
 
 <div style="text-align: center;">
-    <p>This project is a collaboration between FlyEM (HHMI Janelia), the University of Cambridge (Dept. of Zoology) and the MRC Laboratory of Molecular Biology.</p>
+    <p>This project is a collaboration between FlyEM (HHMI Janelia), the University of Cambridge (Dept. of Zoology), the MRC Laboratory of Molecular Biology, and Google Research.</p>
 </div>
 
 <div style="display: flex; justify-content: center; align-items: center; gap: 32px; flex-wrap: nowrap;">
@@ -273,6 +273,7 @@ glightbox: true
     <img src="../assets/ucam-logo-white-text-colour-coat-of-arms.png#only-dark" alt="Cambridge Logo" style="height: 60px;">
     <img src="../assets/ucam-logo-colour-preferred.png#only-light" alt="Cambridge Logo" style="height: 60px;">
     <img src="../assets/MRC_LMB.png" alt="MRC LMB Logo" style="height: 60px;">
+    <img src="../assets/Google_2015_logo.svg" alt="Google Logo" style="height: 60px;">
 </div>
 
 <div style="text-align: center;">
