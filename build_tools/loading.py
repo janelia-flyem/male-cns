@@ -66,7 +66,7 @@ def load_cache_meta_data(force_update=False):
         )
     else:
         print("Loading FlyWire meta data from FlyTable...", flush=True, end="")
-        fw_data = pd.read_tsv(FW_META_URL, sep="\t")
+        fw_data = pd.read_csv(FW_META_URL, sep="\t")
 
         # Try to convert object columns to strings - otherwise loading the data becomes obscenely slow
         for col in fw_data.select_dtypes(include=["object"]).columns:
