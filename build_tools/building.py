@@ -636,12 +636,13 @@ def extract_type_data(mcns_meta, fw_meta):
         fw_meta.dimorphism.str.contains("female-specific", na=False)
     ].copy()
 
-    female_types["type"] = (
-        female_types.cell_type.fillna(female_types.malecns_type).fillna(
-            female_types.hemibrain_type
-        )
-        # .fillna("unknown")
+    female_types["type"] = female_types.cell_type.fillna(
+        female_types.hemibrain_type
     )
+    if "malecns_type" in female_types.columns:
+        female_types["type"] = female_types["type"].fillna(
+            female_types.malecns_type
+        )
     female_meta = []
     for t, table_fw in female_types.groupby("type"):
         female_meta.append({})

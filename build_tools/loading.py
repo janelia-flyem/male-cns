@@ -75,12 +75,20 @@ def load_cache_meta_data(force_update=False):
             except Exception as e:
                 print(f"Failed to convert column {col}: {e}", flush=True)
 
+        # supertype loads as float64 (numeric IDs like 12693.0), so above
+        #   loop won't convert it; convert explicitly to int then string (to
+        #    prevent '.0' in the string), _if_ its dtype is float
+        # this prevents a type mis-match later on
+        # TIL: pandas has a nullable int type to handle NaNs
+        if "supertype" in fw_data.columns:
+            if fw_data.supertype.dtype == 'float64':
+                fw_data["supertype"] = fw_data["supertype"].astype('Int64').astype(str)
         fw_data.to_feather(FW_META_DATA_CACHE)
         print(f"Done. Found {len(fw_data):,} FlyWire neurons.", flush=True)
 
-    fw_data["type"] = fw_data.cell_type.fillna(fw_data.hemibrain_type).fillna(
-        fw_data.malecns_type
-    )
+    fw_data["type"] = fw_data.cell_type.fillna(fw_data.hemibrain_type)
+    if "malecns_type" in fw_data.columns:
+        fw_data["type"] = fw_data["type"].fillna(fw_data.malecns_type)
 
     if FW_ROI_INFO_CACHE.exists():
         fw_roi_info = pd.read_feather(FW_ROI_INFO_CACHE)
