@@ -1767,6 +1767,10 @@ def generate_thumbnail(
         print(f"  Thumbnail {outfile.name} already exists, skipping...", flush=True)
         return
 
+    # these don't exist, not sure how they got back in:
+    if outfile.name == "<NA>.png":
+        return
+
     print(f"  Generating thumbnail {outfile.name}...", flush=True)
     global MESH_BRAIN, MESH_VNC, FLYWIRE_CLOUDVOL, OC_VIEWER
     # Load the mesh if it is not already loaded
