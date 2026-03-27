@@ -217,7 +217,7 @@ def make_dimorphism_pages(
                     flush=True,
                 )
         record["connections_file_rel"] = (
-            f"../../tables/{record['type']}_connections.html"
+            f"../../tables/{record['type_file']}_connections.html"
         )
 
         if not skip_thumbnails:
@@ -287,7 +287,7 @@ def make_dimorphism_pages(
                     flush=True,
                 )
         record["connections_file_rel"] = (
-            f"../../tables/{record['type']}_connections.html"
+            f"../../tables/{record['type_file']}_connections.html"
         )
 
         if not skip_thumbnails:
@@ -355,7 +355,7 @@ def make_dimorphism_pages(
                     flush=True,
                 )
         record["connections_file_rel"] = (
-            f"../../tables/{record['type']}_connections.html"
+            f"../../tables/{record['type_file']}_connections.html"
         )
 
         if not skip_thumbnails:
@@ -1957,7 +1957,7 @@ def generate_connections_tables(
     Returns
     -------
     None
-                The tables will be written to `TABLES_DIR / f"{type_name}_connections.html"`.
+                The tables will be written to `TABLES_DIR / f"{record['type_file']}_connections.html"`.
 
     """
     type_name = record["type"]
@@ -2091,7 +2091,7 @@ def generate_connections_tables(
         print(f"  found {len(connections)} connections.", flush=True)
 
     # and save the actual table:
-    create_connection_table(connections, TABLES_DIR / f"{type_name}_connections.html")
+    create_connection_table(connections, TABLES_DIR / f"{record['type_file']}_connections.html")
 
 
 def get_fw_connections(type_meta_fw: pd.DataFrame, fw_edges: pd.DataFrame, fw_mapping):
