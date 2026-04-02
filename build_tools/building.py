@@ -1024,6 +1024,11 @@ def group_by_supertype(
         # We're assuming that types with no supertype are their own supertypes
         # N.B. that currently types can be split across multiple supertypes
         supertypes = record.get("supertype", None)
+
+        # don't include explicit "N/A" or "NA" supertypes:
+        if supertypes in ("N/A", "<N/A>", "NA", "<NA>", "None"):
+            continue
+
         if not supertypes:
             supertypes = str(np.append(body_ids, root_ids).min())
 
