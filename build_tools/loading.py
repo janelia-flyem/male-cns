@@ -222,6 +222,15 @@ def load_cache_mcns_edges(force_update=False):
         mcns_edges.to_feather(filepath)
         print("Done.", flush=True)
 
+    # rename new file's columns to old file's; yes, we'll then rename 
+    #   a couple of them straight back...
+    mcns_edges = mcns_edges.rename(columns={
+            'body_pre': 'bodyId_pre', 
+            'body_post': 'bodyId_post', 
+            'primary_post': 'roi', 
+            'size': 'weight', 
+        })
+
     # Remove edges in the VNC
     mcns_edges = (
         mcns_edges[

@@ -82,13 +82,23 @@ class SceneWithArchived(ngl.Scene):
 
 #####
 # A basic Neuroglancer scene to use as a base for the visualisation
+#
+# these scenes are based on Stuart's public release scene, with the viewpoint
+#   copied into it from Philipp's original scene, save manually by me (Don)
 #####
-NGL_BASE_URL = "https://neuroglancer-demo.appspot.com/#!gs://flyem-user-links/short/MaleCNS-v0.9-brain.json"
+# for each region, old v0.9 commented out, new v1.0 link added
+# NGL_BASE_URL = "https://neuroglancer-demo.appspot.com/#!gs://flyem-user-links/short/MaleCNS-v0.9-brain.json"
+NGL_BASE_URL = "https://neuroglancer-demo.appspot.com/#!gs://flyem-user-links/short/MaleCNS-v1.0-brain.json"
 NGL_BASE_SCENE = SceneWithArchived.from_url(NGL_BASE_URL)
-NGL_BASE_URL_VNC = "https://neuroglancer-demo.appspot.com/#!gs://flyem-user-links/short/MaleCNS-v0.9-vnc.json"
+# NGL_BASE_URL_VNC = "https://neuroglancer-demo.appspot.com/#!gs://flyem-user-links/short/MaleCNS-v0.9-vnc.json"
+NGL_BASE_URL_VNC = "https://neuroglancer-demo.appspot.com/#!gs://flyem-user-links/short/MaleCNS-v1.0-vnc.json"
 NGL_BASE_SCENE_VNC = SceneWithArchived.from_url(NGL_BASE_URL_VNC)
-NGL_BASE_URL_TOP = "https://neuroglancer-demo.appspot.com/#!gs://flyem-user-links/short/MaleCNS-v0.9-brain+vnc.json"
+# NGL_BASE_URL_TOP = "https://neuroglancer-demo.appspot.com/#!gs://flyem-user-links/short/MaleCNS-v0.9-brain+vnc.json"
+NGL_BASE_URL_TOP = "https://neuroglancer-demo.appspot.com/#!gs://flyem-user-links/short/MaleCNS-v1.0-brain+vnc.json"
 NGL_BASE_SCENE_TOP = SceneWithArchived.from_url(NGL_BASE_URL_TOP)
+
+
+
 
 # Make sure the segmentation layers are empty and visible
 for scene in (NGL_BASE_SCENE, NGL_BASE_SCENE_VNC, NGL_BASE_SCENE_TOP):
@@ -131,14 +141,22 @@ print(f"Using DVID node: {DVID_NODE}")
 
 #####
 # Mappings between MCNS -> FlyWire/MANC
-# These mappings are re-generated on a 30-minute CRON job on the server
 #####
+# These mappings are re-generated on a 30-minute CRON job on the server
+# MCNS_FW_MAPPING_URL = (
+#     "https://flyem.mrc-lmb.cam.ac.uk/flyconnectome/mappings/mcns_fw_mapping.json"
+# )
+# MCNS_MANC_MAPPING_URL = (
+#     "https://flyem.mrc-lmb.cam.ac.uk/flyconnectome/mappings/mcns_manc_mapping.json"
+# )
+# static mappings for 0.13 = 1.0 release
 MCNS_FW_MAPPING_URL = (
-    "https://flyem.mrc-lmb.cam.ac.uk/flyconnectome/mappings/mcns_fw_mapping.json"
+    "https://flyem.mrc-lmb.cam.ac.uk/flyconnectome/mappings/mcns0.13_fw_mapping.json"
 )
 MCNS_MANC_MAPPING_URL = (
-    "https://flyem.mrc-lmb.cam.ac.uk/flyconnectome/mappings/mcns_manc_mapping.json"
+    "https://flyem.mrc-lmb.cam.ac.uk/flyconnectome/mappings/mcns0.13_manc_mapping.json"
 )
+
 
 #####
 # URLs for downloading data for the FlyWire connectome
@@ -148,14 +166,20 @@ MCNS_MANC_MAPPING_URL = (
 # This file is the grouped edges list for the new Princeton synapse predictions
 FW_EDGES_URL = "https://flyem.mrc-lmb.cam.ac.uk/flyconnectome/flywire_connectivity/connections_princeton_no_threshold.feather"
 # The FlyWire annotations
-FW_META_URL = "https://github.com/flyconnectome/flywire_annotations/raw/refs/heads/main/supplemental_files/Supplemental_file1_neuron_annotations.tsv"
+# v0.9
+# FW_META_URL = "https://github.com/flyconnectome/flywire_annotations/raw/refs/heads/main/supplemental_files/Supplemental_file1_neuron_annotations.tsv"
+# preliminary v1.0, not released yet:
+FW_META_URL = "https://github.com/flyconnectome/flywire_annotations/raw/refs/heads/staging3/supplemental_files/Supplemental_file1_neuron_annotations.tsv"
 
 #####
 # URLs for downloading data for the MCNS connectome
 #####
 # This edge list was compiled straight from neuPrint for all neurons with a superclass (320Mb)
 # Crucially it has the edges broken down by ROI which allows us to subset to connections within the brain
-MCNS_EDGES_URL = "https://flyem.mrc-lmb.cam.ac.uk/flyconnectome/flywire_connectivity/mcns_all_edges_by_roi_v0.9.feather"
+# v0.9
+# MCNS_EDGES_URL = "https://flyem.mrc-lmb.cam.ac.uk/flyconnectome/flywire_connectivity/mcns_all_edges_by_roi_v0.9.feather"
+# v0.13 == v1.0
+MCNS_EDGES_URL = "https://flyem.mrc-lmb.cam.ac.uk/flyconnectome/flywire_connectivity/connectome-weights-male-cns-v0.13-minconf-0.5-with_rois.feather"
 
 # VNC neuropils (we will use these to filter the MCNS edges)
 MCNS_VNC_NEUROPILS = [
@@ -286,7 +310,13 @@ NEUPRINT_CLIENT = neu.Client(
 #####
 
 # Basic neuPrint search
-NEUPRINT_SEARCH_URL = "https://neuprint.janelia.org/results?dataset=male-cns%3Av0.9&qt=findneurons&q=1&qr%5B0%5D%5Bcode%5D=fn&qr%5B0%5D%5Bds%5D=male-cns%3Av0.9&qr%5B0%5D%5Bpm%5D%5Bdataset%5D=male-cns%3Av0.9&qr%5B0%5D%5Bpm%5D%5BinputMatchAny%5D=false&qr%5B0%5D%5Bpm%5D%5BoutputMatchAny%5D=false&qr%5B0%5D%5Bpm%5D%5Ball_segments%5D=false&qr%5B0%5D%5Bpm%5D%5Benable_contains%5D=true&qr%5B0%5D%5Bpm%5D%5Bneuron_name%5D={neuron_name}&qr%5B0%5D%5BvisProps%5D%5BrowsPerPage%5D=25&tab=0"
+# v0.9
+# NEUPRINT_SEARCH_URL = "https://neuprint.janelia.org/results?dataset=male-cns%3Av0.9&qt=findneurons&q=1&qr%5B0%5D%5Bcode%5D=fn&qr%5B0%5D%5Bds%5D=male-cns%3Av0.9&qr%5B0%5D%5Bpm%5D%5Bdataset%5D=male-cns%3Av0.9&qr%5B0%5D%5Bpm%5D%5BinputMatchAny%5D=false&qr%5B0%5D%5Bpm%5D%5BoutputMatchAny%5D=false&qr%5B0%5D%5Bpm%5D%5Ball_segments%5D=false&qr%5B0%5D%5Bpm%5D%5Benable_contains%5D=true&qr%5B0%5D%5Bpm%5D%5Bneuron_name%5D={neuron_name}&qr%5B0%5D%5BvisProps%5D%5BrowsPerPage%5D=25&tab=0"
+# v1.0 (just replace version number)
+NEUPRINT_SEARCH_URL = "https://neuprint.janelia.org/results?dataset=male-cns%3Av1.0&qt=findneurons&q=1&qr%5B0%5D%5Bcode%5D=fn&qr%5B0%5D%5Bds%5D=male-cns%3Av1.0&qr%5B0%5D%5Bpm%5D%5Bdataset%5D=male-cns%3Av1.0&qr%5B0%5D%5Bpm%5D%5BinputMatchAny%5D=false&qr%5B0%5D%5Bpm%5D%5BoutputMatchAny%5D=false&qr%5B0%5D%5Bpm%5D%5Ball_segments%5D=false&qr%5B0%5D%5Bpm%5D%5Benable_contains%5D=true&qr%5B0%5D%5Bpm%5D%5Bneuron_name%5D={neuron_name}&qr%5B0%5D%5BvisProps%5D%5BrowsPerPage%5D=25&tab=0"
 
+# v0.9
 # Connectivity search
-NEUPRINT_CONNECTIVITY_URL = "https://neuprint.janelia.org/results?dataset=male-cns%3Av0.9&qt=simpleconnection&q=1&qr%5B0%5D%5Bcode%5D=sc&qr%5B0%5D%5Bds%5D=male-cns%3Av0.9&qr%5B0%5D%5Bpm%5D%5Bdataset%5D=male-cns%3Av0.9&qr%5B0%5D%5Bpm%5D%5Benable_contains%5D=true&qr%5B0%5D%5Bpm%5D%5Bneuron_name%5D={neuron_name}&qr%5B0%5D%5Bpm%5D%5Bfind_inputs%5D=false&qr%5B0%5D%5BvisProps%5D%5BpaginateExpansion%5D=true&tab=0"
+# NEUPRINT_CONNECTIVITY_URL = "https://neuprint.janelia.org/results?dataset=male-cns%3Av0.9&qt=simpleconnection&q=1&qr%5B0%5D%5Bcode%5D=sc&qr%5B0%5D%5Bds%5D=male-cns%3Av0.9&qr%5B0%5D%5Bpm%5D%5Bdataset%5D=male-cns%3Av0.9&qr%5B0%5D%5Bpm%5D%5Benable_contains%5D=true&qr%5B0%5D%5Bpm%5D%5Bneuron_name%5D={neuron_name}&qr%5B0%5D%5Bpm%5D%5Bfind_inputs%5D=false&qr%5B0%5D%5BvisProps%5D%5BpaginateExpansion%5D=true&tab=0"
+# v1.0 (just replace version number)
+NEUPRINT_CONNECTIVITY_URL = "https://neuprint.janelia.org/results?dataset=male-cns%3Av1.0&qt=simpleconnection&q=1&qr%5B0%5D%5Bcode%5D=sc&qr%5B0%5D%5Bds%5D=male-cns%3Av1.0&qr%5B0%5D%5Bpm%5D%5Bdataset%5D=male-cns%3Av1.0&qr%5B0%5D%5Bpm%5D%5Benable_contains%5D=true&qr%5B0%5D%5Bpm%5D%5Bneuron_name%5D={neuron_name}&qr%5B0%5D%5Bpm%5D%5Bfind_inputs%5D=false&qr%5B0%5D%5BvisProps%5D%5BpaginateExpansion%5D=true&tab=0"
