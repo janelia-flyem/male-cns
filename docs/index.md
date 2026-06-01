@@ -27,7 +27,7 @@ glightbox: true
 
     [:octicons-arrow-right-24: Janelia Blog Post](https://www.janelia.org/project-team/flyem/male-cns-connectome)
 
-    [:octicons-arrow-right-24: BioRxiv Preprint](https://www.biorxiv.org/content/10.1101/2025.10.09.680999v1)
+    [:octicons-arrow-right-24: BioRxiv Preprint](https://www.biorxiv.org/content/10.1101/2025.10.09.680999v2)
 
 -   :material-compass-outline:{ .lg .middle } __Explore__
 
