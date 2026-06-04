@@ -27,12 +27,16 @@
 
 The website is build using `mkdocs` and `jinja2` templates. Dependencies are managed using `uv`.
 
-In addition, you need to set the following environment variables to set up for fetching meta data:
-- `NEUPRINT_APPLICATION_CREDENTIALS`: A neuPrint API token
+In addition, you need to set a number of environment variables to set up for fetching meta data. They are either secrets (credentials) for accessing data, or they are servers whose internal names we don't want to make public. 
+
+They are:
 - `CAVE_SECRET`: API token for CAVE (FlyWire); this should not be needed, and I will remove it in the future
 - `SEATABLE_SERVER`: URL for our FlyTable instance
 - `SEATABLE_TOKEN`: API token for FlyTable
 - `DVID_SERVER`, `DVID_NODE`: URL and UUID for DVID for accessing meshes for generating thumbnails
+- `NEUPRINT_SERVER`: URL for accessing neuron connectivity, etc.
+- `NEUPRINT_APPLICATION_CREDENTIALS`: A neuPrint API token
+
 These variables are only required for the first step of the build, when the `.md` pages are built from the gatherered data. They are not required for the `mkdocs` step that builds the `.html` files from the `.md` files.
 
 To build the website locally, run:

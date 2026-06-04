@@ -129,7 +129,8 @@ FLYWIRE_SOURCE = (
 )
 
 # used to get DVID info from the NG scene, but that info is no longer there;
-#     now it's passed in via env var
+#   now it's passed in via env var, as we might use an internal server
+#   whose name we don't want to commit  
 # MCNS_SOURCE = NGL_BASE_SCENE.layers["maleCNS"]["source"]["url"]  # DVID layer
 # DVID_SERVER = "https://" + MCNS_SOURCE.replace("dvid://https://", "").split("/")[0]
 # DVID_NODE = MCNS_SOURCE.replace("dvid://https://", "").split("/")[1]
@@ -301,9 +302,11 @@ JINJA_ENV = Environment(
 #####
 # A global neuprint client
 #####
-NEUPRINT_CLIENT = neu.Client(
-    server="https://neuprint.janelia.org", dataset="male-cns:v0.9"
-)
+# v0.9:
+# NEUPRINT_CLIENT = neu.Client(server="https://neuprint.janelia.org", dataset="male-cns:v0.9")
+# v1.0, internal server:
+NEUPRINT_SERVER = os.environ["NEUPRINT_SERVER"]
+NEUPRINT_CLIENT = neu.Client(server=NEUPRINT_SERVER, dataset="male-cns:v1.0")
 
 #####
 # Some BASE URLs for neuPrint
