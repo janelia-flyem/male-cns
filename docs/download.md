@@ -103,7 +103,7 @@ glightbox: true
 === "Download raw data"
 
     All connectome data is available for bulk download, suitable for analyses or ingestion into alternative databases.
-    The following files are stored under `gs://flyem-male-cns/v0.9/connectome-data/flat-connectome/`.
+    The following files are stored under `gs://flyem-male-cns/v1.0/connectome-data/flat-connectome/`.
 
     === "Volumes"
 
@@ -114,7 +114,7 @@ glightbox: true
         [precomputed]: https://github.com/google/neuroglancer/tree/master/src/datasource/precomputed
         [tensorstore]: https://google.github.io/tensorstore/index.html
         [cloud-volume]: https://github.com/seung-lab/cloud-volume
-        [scene]: https://neuroglancer-demo.appspot.com/#!gs://flyem-male-cns/v0.9/male-cns-v0.9.json
+        [scene]: https://neuroglancer-demo.appspot.com/#!gs://flyem-male-cns/v1.0/male-cns-v1.0.json
 
         - `gs://flyem_cns_z0720_07m_dvidcoords_n5`
             - The aligned EM volume, uncompressed and without CLAHE normalization, in [N5 format][n5] (supported by tensorstore).
@@ -125,12 +125,12 @@ glightbox: true
             - The aligned EM volume, contrast-adjusted with CLAHE normalization and JPEG-encoded.
             - Ideal for interactive browsing.
             - Data type `uint8`
-        - `gs://flyem-male-cns/v0.9/segmentation`
-            - The `v0.9` proofread neuron segmentation.
+        - `gs://flyem-male-cns/v1.0/segmentation`
+            - The `v1.0` proofread neuron segmentation.
             - 8nm isotropic resolution.
             - Voxels are stored as `uint64`, but the upper 32 bits are never used.
-        - `gs://flyem-male-cns/v0.9/malecns-v0.9-nuclei-seg-16nm`
-            - The `v0.9` nuclear segmentation.  Not filtered to exclude glia, noise, etc.  These served as the basis for our cell body annotations, which were manually reviewed.
+        - `gs://flyem-male-cns/v1.0/malecns-v1.0-nuclei-seg-16nm`
+            - The `v1.0` nuclear segmentation.  Not filtered to exclude glia, noise, etc.  These served as the basis for our cell body annotations, which were manually reviewed.
             - 16nm isotropic resolution.
             - Voxel datatype is `uint64`.
         - `gs://flyem-male-cns/rois/fullbrain-roi-v4`
@@ -174,19 +174,19 @@ glightbox: true
         [pandas]: https://pandas.pydata.org
         [arrow]: https://arrow.apache.org/docs/r/
 
-        - [body-annotations-male-cns-v0.9-minconf-0.5.feather][body-ann]
+        - [body-annotations-male-cns-v1.0-minconf-0.5.feather][body-ann]
             - Curated neuron annotations (classes, types, sides, etc.), excluding neurotransmitter properties.
             - 13 MB
-        - [body-neurotransmitters-male-cns-v0.9.feather][body-nt]
+        - [body-neurotransmitters-male-cns-v1.0.feather][body-nt]
             - Aggregate neurotransmitter predictions for each neuron.  See manuscript methods section for details.
             - 42 MB
-        - [body-stats-male-cns-v0.9-minconf-0.5.feather][body-stats]
+        - [body-stats-male-cns-v1.0-minconf-0.5.feather][body-stats]
             - summary statistics (synapse counts) of all segments in the dataset (excluding those with no synapses)
             - 780 MB
 
-        [body-ann]: https://storage.googleapis.com/flyem-male-cns/v0.9/connectome-data/flat-connectome/body-annotations-male-cns-v0.9-minconf-0.5.feather
-        [body-nt]: https://storage.googleapis.com/flyem-male-cns/v0.9/connectome-data/flat-connectome/body-neurotransmitters-male-cns-v0.9.feather
-        [body-stats]: https://storage.googleapis.com/flyem-male-cns/v0.9/connectome-data/flat-connectome/body-stats-male-cns-v0.9-minconf-0.5.feather
+        [body-ann]: https://storage.googleapis.com/flyem-male-cns/v1.0/connectome-data/flat-connectome/body-annotations-male-cns-v1.0-minconf-0.5.feather
+        [body-nt]: https://storage.googleapis.com/flyem-male-cns/v1.0/connectome-data/flat-connectome/body-neurotransmitters-male-cns-v1.0.feather
+        [body-stats]: https://storage.googleapis.com/flyem-male-cns/v1.0/connectome-data/flat-connectome/body-stats-male-cns-v1.0-minconf-0.5.feather
 
         For updated annotations for the female brain "FlyWire" connectome, please see the [flyconnectome/flywire_annotations](https://github.com/flyconnectome/flywire_annotations) Github repository.
 
@@ -194,47 +194,47 @@ glightbox: true
 
         We provide several tables describing synaptic connectivity in the MaleCNS dataset:
 
-        - [connectome-weights-male-cns-v0.9-minconf-0.5.feather][weights]
+        - [connectome-weights-male-cns-v1.0-minconf-0.5.feather][weights]
             - segment-to-segment connection strengths for all segments in the dataset (excluding those with no synapses)
             - This is the full connection graph.
             - 1.1 GB
-        - [syn-points-male-cns-v0.9-minconf-0.5.feather][syn-points]
+        - [syn-points-male-cns-v1.0-minconf-0.5.feather][syn-points]
             - Pre-synapse and post-synapse locations, body (segment) ID, and encompassing ROIs
             - Pre-synapses and post-synapses are listed in separate rows.  The 'kind' column indicates whether the point is `PreSyn` or `PostSyn`.
             - Pre-synapses and post-synapses are uniquely identified by their `x,y,z` locations (expressed in voxel units, i.e. 8nm).
             - In the partner table (below), a single pre-synapse may connect to multiple post-synapses.  In this table, each unique pre-synaptic location is listed only once.
             - 12.7 GB
-        - [syn-partners-male-cns-v0.9-minconf-0.5.feather][syn-partners]
+        - [syn-partners-male-cns-v1.0-minconf-0.5.feather][syn-partners]
             - Synaptic partner pairs, along with their associated body IDs and primary neuropil.
             - Columns: `'x_pre', 'y_pre', 'z_pre', 'body_pre', 'conf_pre', 'x_post', 'y_post', 'z_post', 'body_post', 'conf_post', 'primary_post'`
             - 6.8 GB
-        - [tbar-neurotransmitters-male-cns-v0.9.feather][tbar-nt]
+        - [tbar-neurotransmitters-male-cns-v1.0.feather][tbar-nt]
             - Neurotransmitter prediction probabilities for each pre-synapse
             - 2.7 GB
 
-        [weights]: https://storage.googleapis.com/flyem-male-cns/v0.9/connectome-data/flat-connectome/connectome-weights-male-cns-v0.9-minconf-0.5.feather
-        [syn-partners]: https://storage.googleapis.com/flyem-male-cns/v0.9/connectome-data/flat-connectome/syn-partners-male-cns-v0.9-minconf-0.5.feather
-        [syn-points]: https://storage.googleapis.com/flyem-male-cns/v0.9/connectome-data/flat-connectome/syn-points-male-cns-v0.9-minconf-0.5.feather
-        [tbar-nt]: https://storage.googleapis.com/flyem-male-cns/v0.9/connectome-data/flat-connectome/tbar-neurotransmitters-male-cns-v0.9.feather
+        [weights]: https://storage.googleapis.com/flyem-male-cns/v1.0/connectome-data/flat-connectome/connectome-weights-male-cns-v1.0-minconf-0.5.feather
+        [syn-partners]: https://storage.googleapis.com/flyem-male-cns/v1.0/connectome-data/flat-connectome/syn-partners-male-cns-v1.0-minconf-0.5.feather
+        [syn-points]: https://storage.googleapis.com/flyem-male-cns/v1.0/connectome-data/flat-connectome/syn-points-male-cns-v1.0-minconf-0.5.feather
+        [tbar-nt]: https://storage.googleapis.com/flyem-male-cns/v1.0/connectome-data/flat-connectome/tbar-neurotransmitters-male-cns-v1.0.feather
 
     === "Skeletons"
 
         Centerline skeletons for all neurons can be downloaded in several formats and coordinate spaces:
 
-        - `gs://flyem-male-cns/v0.9/segmentation/skeletons-malecns/skeletons-swc/`
+        - `gs://flyem-male-cns/v1.0/segmentation/skeletons-malecns/skeletons-swc/`
             - Directory of neuron skeletons in [SWC format][swc], with names such as `12781.swc`.
             - Male CNS EM coordinate space, with coordinates specified in 8nm units.
-        - `gs://flyem-male-cns/v0.9/segmentation/skeletons-malecns/skeletons-precomputed/`
+        - `gs://flyem-male-cns/v1.0/segmentation/skeletons-malecns/skeletons-precomputed/`
             - Same as above, but in [neuroglancer's `precomputed` skeleton format][ng-skeleton] (unsharded).
             - Male CNS EM coordinate space, coordinates in 1 nm units.
-        - `gs://flyem-male-cns/v0.9/segmentation/skeletons-malecns-mirrored/skeletons-swc/`
+        - `gs://flyem-male-cns/v1.0/segmentation/skeletons-malecns-mirrored/skeletons-swc/`
             - Directory of **mirrored** neuron skeletons in [SWC format][swc], with names such as `12781.swc`.
             - Mirrored using a transform available via [`navis-flybrains`][flybrains].
             - 8nm units
-        - `gs://flyem-male-cns/v0.9/segmentation/skeletons-malecns-mirrored/skeletons-precomputed/`
+        - `gs://flyem-male-cns/v1.0/segmentation/skeletons-malecns-mirrored/skeletons-precomputed/`
             - Same as above, but in [neuroglancer's `precomputed` skeleton format][ng-skeleton] (unsharded).
             - 1nm units
-        - `gs://flyem-male-cns/v0.9/segmentation/skeletons-unisex-template/`
+        - `gs://flyem-male-cns/v1.0/segmentation/skeletons-unisex-template/`
             - Directory of MaleCNS skeletons transformed to JRC2018 unisex template space.
             - Transform available via [`navis-flybrains`][flybrains].
             - 1um (micron) units
@@ -252,11 +252,11 @@ glightbox: true
         If you want to setup your own neuprint instance or explore the data using neo4j directly, you can download the neo4j
         database and input CSV files used to construct it:
 
-        - `gs://flyem-male-cns/v0.9/database/neo4j`
-            - The complete neo4j database backing the `male-cns:v0.9` neuprint dataset hosted on neuprint.janelia.org
+        - `gs://flyem-male-cns/v1.0/database/neo4j`
+            - The complete neo4j database backing the `male-cns:v1.0` neuprint dataset hosted on neuprint.janelia.org
             - Built for neo4j v4.4.16
             - Constructed using [`flyem-snapshot`][flyem-snapshot]
-        - `gs://flyem-male-cns/v0.9/database/neuprint-inputs`
+        - `gs://flyem-male-cns/v1.0/database/neuprint-inputs`
             - The input CSV files used to construct the neo4j database.
 
         [flyem-snapshot]: https://github.com/janelia-flyem/flyem-snapshot/
