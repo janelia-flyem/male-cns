@@ -326,6 +326,25 @@
   
 
       
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../release/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Release Notes
+
+      </a>
+    </li>
+  
+
+      
     </ul>
   </div>
 </nav>
@@ -559,6 +578,28 @@
   
 
     
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../release/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Release Notes
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
   </ul>
 </nav>
                   </div>
@@ -673,11 +714,12 @@ for getting your API token.</p>
 </div>
 </div>
 <div class="tabbed-block">
-<p>All connectome data is available for bulk download, suitable for analyses or ingestion into alternative databases.</p>
+<p>All connectome data is available for bulk download, suitable for analyses or ingestion into alternative databases.
+The following files are stored under <code>gs://flyem-male-cns/v1.0/connectome-data/flat-connectome/</code>.</p>
 <div class="tabbed-set tabbed-alternate" data-tabs="3:5"><input checked="checked" id="__tabbed_3_1" name="__tabbed_3" type="radio"><input id="__tabbed_3_2" name="__tabbed_3" type="radio"><input id="__tabbed_3_3" name="__tabbed_3" type="radio"><input id="__tabbed_3_4" name="__tabbed_3" type="radio"><input id="__tabbed_3_5" name="__tabbed_3" type="radio"><div class="tabbed-labels"><label for="__tabbed_3_1">Volumes</label><label for="__tabbed_3_2">Annotations</label><label for="__tabbed_3_3">Connectivity</label><label for="__tabbed_3_4">Skeletons</label><label for="__tabbed_3_5">Neuprint Database</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
-<p>Selected image and segmentation volumes are described below. Please inspect the data source URLs in the MaleCNS <a href="https://neuroglancer-demo.appspot.com/#!gs://flyem-male-cns/v0.9/male-cns-v0.9.json">neuroglancer scene</a> for related volumes.</p>
+<p>Selected image and segmentation volumes are described below. Please inspect the data source URLs in the MaleCNS <a href="https://neuroglancer-demo.appspot.com/#!gs://flyem-male-cns/v1.0/male-cns-v1.0.json">neuroglancer scene</a> for related volumes.</p>
 <p>Except where noted, the data is available in <a href="https://github.com/google/neuroglancer/tree/master/src/datasource/precomputed">neuroglancer precomputed format</a>, readable with <a href="https://google.github.io/tensorstore/index.html"><code>tensorstore</code></a> or <a href="https://github.com/seung-lab/cloud-volume"><code>cloud-volume</code></a>. Links beginning with <code>gs://</code> refer to Google Storage Bucket locations.</p>
 <ul>
 <li><code>gs://flyem_cns_z0720_07m_dvidcoords_n5</code><ul>
@@ -693,14 +735,14 @@ for getting your API token.</p>
 <li>Data type <code>uint8</code></li>
 </ul>
 </li>
-<li><code>gs://flyem-male-cns/v0.9/segmentation</code><ul>
-<li>The <code>v0.9</code> proofread neuron segmentation.</li>
+<li><code>gs://flyem-male-cns/v1.0/segmentation</code><ul>
+<li>The <code>v1.0</code> proofread neuron segmentation.</li>
 <li>8nm isotropic resolution.</li>
 <li>Voxels are stored as <code>uint64</code>, but the upper 32 bits are never used.</li>
 </ul>
 </li>
-<li><code>gs://flyem-male-cns/v0.9/malecns-v0.9-nuclei-seg-16nm</code><ul>
-<li>The <code>v0.9</code> nuclear segmentation.  Not filtered to exclude glia, noise, etc.  These served as the basis for our cell body annotations, which were manually reviewed.</li>
+<li><code>gs://flyem-male-cns/v1.0/malecns-v1.0-nuclei-seg-16nm</code><ul>
+<li>The <code>v1.0</code> nuclear segmentation.  Not filtered to exclude glia, noise, etc.  These served as the basis for our cell body annotations, which were manually reviewed.</li>
 <li>16nm isotropic resolution.</li>
 <li>Voxel datatype is <code>uint64</code>.</li>
 </ul>
@@ -738,17 +780,17 @@ for getting your API token.</p>
 <p>Neuron-level annotations are provided in <a href="https://arrow.apache.org/docs/python/feather.html">Apache Arrow Feather</a> file format, which can be read
 using e.g. <a href="https://arrow.apache.org/docs/python/index.html"><code>pyarrow</code></a> (Python), <a href="https://pandas.pydata.org"><code>pandas</code></a> (Python) or the <a href="https://arrow.apache.org/docs/r/"><code>arrow</code></a> package (R).</p>
 <ul>
-<li><a href="https://storage.googleapis.com/flyem-male-cns/v0.9/connectome-data/flat-connectome/body-annotations-male-cns-v0.9-minconf-0.5.feather">body-annotations-male-cns-v0.9-minconf-0.5.feather</a><ul>
+<li><a href="https://storage.googleapis.com/flyem-male-cns/v1.0/connectome-data/flat-connectome/body-annotations-male-cns-v1.0-minconf-0.5.feather">body-annotations-male-cns-v1.0-minconf-0.5.feather</a><ul>
 <li>Curated neuron annotations (classes, types, sides, etc.), excluding neurotransmitter properties.</li>
 <li>13 MB</li>
 </ul>
 </li>
-<li><a href="https://storage.googleapis.com/flyem-male-cns/v0.9/connectome-data/flat-connectome/body-neurotransmitters-male-cns-v0.9.feather">body-neurotransmitters-male-cns-v0.9.feather</a><ul>
+<li><a href="https://storage.googleapis.com/flyem-male-cns/v1.0/connectome-data/flat-connectome/body-neurotransmitters-male-cns-v1.0.feather">body-neurotransmitters-male-cns-v1.0.feather</a><ul>
 <li>Aggregate neurotransmitter predictions for each neuron.  See manuscript methods section for details.</li>
 <li>42 MB</li>
 </ul>
 </li>
-<li><a href="https://storage.googleapis.com/flyem-male-cns/v0.9/connectome-data/flat-connectome/body-stats-male-cns-v0.9-minconf-0.5.feather">body-stats-male-cns-v0.9-minconf-0.5.feather</a><ul>
+<li><a href="https://storage.googleapis.com/flyem-male-cns/v1.0/connectome-data/flat-connectome/body-stats-male-cns-v1.0-minconf-0.5.feather">body-stats-male-cns-v1.0-minconf-0.5.feather</a><ul>
 <li>summary statistics (synapse counts) of all segments in the dataset (excluding those with no synapses)</li>
 <li>780 MB</li>
 </ul>
@@ -759,13 +801,13 @@ using e.g. <a href="https://arrow.apache.org/docs/python/index.html"><code>pyarr
 <div class="tabbed-block">
 <p>We provide several tables describing synaptic connectivity in the MaleCNS dataset:</p>
 <ul>
-<li><a href="https://storage.googleapis.com/flyem-male-cns/v0.9/connectome-data/flat-connectome/connectome-weights-male-cns-v0.9-minconf-0.5.feather">connectome-weights-male-cns-v0.9-minconf-0.5.feather</a><ul>
+<li><a href="https://storage.googleapis.com/flyem-male-cns/v1.0/connectome-data/flat-connectome/connectome-weights-male-cns-v1.0-minconf-0.5.feather">connectome-weights-male-cns-v1.0-minconf-0.5.feather</a><ul>
 <li>segment-to-segment connection strengths for all segments in the dataset (excluding those with no synapses)</li>
 <li>This is the full connection graph.</li>
 <li>1.1 GB</li>
 </ul>
 </li>
-<li><a href="https://storage.googleapis.com/flyem-male-cns/v0.9/connectome-data/flat-connectome/syn-points-male-cns-v0.9-minconf-0.5.feather">syn-points-male-cns-v0.9-minconf-0.5.feather</a><ul>
+<li><a href="https://storage.googleapis.com/flyem-male-cns/v1.0/connectome-data/flat-connectome/syn-points-male-cns-v1.0-minconf-0.5.feather">syn-points-male-cns-v1.0-minconf-0.5.feather</a><ul>
 <li>Pre-synapse and post-synapse locations, body (segment) ID, and encompassing ROIs</li>
 <li>Pre-synapses and post-synapses are listed in separate rows.  The 'kind' column indicates whether the point is <code>PreSyn</code> or <code>PostSyn</code>.</li>
 <li>Pre-synapses and post-synapses are uniquely identified by their <code>x,y,z</code> locations (expressed in voxel units, i.e. 8nm).</li>
@@ -773,13 +815,13 @@ using e.g. <a href="https://arrow.apache.org/docs/python/index.html"><code>pyarr
 <li>12.7 GB</li>
 </ul>
 </li>
-<li><a href="https://storage.googleapis.com/flyem-male-cns/v0.9/connectome-data/flat-connectome/syn-partners-male-cns-v0.9-minconf-0.5.feather">syn-partners-male-cns-v0.9-minconf-0.5.feather</a><ul>
+<li><a href="https://storage.googleapis.com/flyem-male-cns/v1.0/connectome-data/flat-connectome/syn-partners-male-cns-v1.0-minconf-0.5.feather">syn-partners-male-cns-v1.0-minconf-0.5.feather</a><ul>
 <li>Synaptic partner pairs, along with their associated body IDs and primary neuropil.</li>
 <li>Columns: <code>'x_pre', 'y_pre', 'z_pre', 'body_pre', 'conf_pre', 'x_post', 'y_post', 'z_post', 'body_post', 'conf_post', 'primary_post'</code></li>
 <li>6.8 GB</li>
 </ul>
 </li>
-<li><a href="https://storage.googleapis.com/flyem-male-cns/v0.9/connectome-data/flat-connectome/tbar-neurotransmitters-male-cns-v0.9.feather">tbar-neurotransmitters-male-cns-v0.9.feather</a><ul>
+<li><a href="https://storage.googleapis.com/flyem-male-cns/v1.0/connectome-data/flat-connectome/tbar-neurotransmitters-male-cns-v1.0.feather">tbar-neurotransmitters-male-cns-v1.0.feather</a><ul>
 <li>Neurotransmitter prediction probabilities for each pre-synapse</li>
 <li>2.7 GB</li>
 </ul>
@@ -789,28 +831,28 @@ using e.g. <a href="https://arrow.apache.org/docs/python/index.html"><code>pyarr
 <div class="tabbed-block">
 <p>Centerline skeletons for all neurons can be downloaded in several formats and coordinate spaces:</p>
 <ul>
-<li><code>gs://flyem-male-cns/v0.9/segmentation/skeletons-malecns/skeletons-swc/</code><ul>
+<li><code>gs://flyem-male-cns/v1.0/segmentation/skeletons-malecns/skeletons-swc/</code><ul>
 <li>Directory of neuron skeletons in <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC10654402">SWC format</a>, with names such as <code>12781.swc</code>.</li>
 <li>Male CNS EM coordinate space, with coordinates specified in 8nm units.</li>
 </ul>
 </li>
-<li><code>gs://flyem-male-cns/v0.9/segmentation/skeletons-malecns/skeletons-precomputed/</code><ul>
+<li><code>gs://flyem-male-cns/v1.0/segmentation/skeletons-malecns/skeletons-precomputed/</code><ul>
 <li>Same as above, but in <a href="https://github.com/google/neuroglancer/blob/master/src/datasource/precomputed/skeletons.md">neuroglancer's <code>precomputed</code> skeleton format</a> (unsharded).</li>
 <li>Male CNS EM coordinate space, coordinates in 1 nm units.</li>
 </ul>
 </li>
-<li><code>gs://flyem-male-cns/v0.9/segmentation/skeletons-malecns-mirrored/skeletons-swc/</code><ul>
+<li><code>gs://flyem-male-cns/v1.0/segmentation/skeletons-malecns-mirrored/skeletons-swc/</code><ul>
 <li>Directory of <strong>mirrored</strong> neuron skeletons in <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC10654402">SWC format</a>, with names such as <code>12781.swc</code>.</li>
 <li>Mirrored using a transform available via <a href="https://github.com/navis-org/navis-flybrains"><code>navis-flybrains</code></a>.</li>
 <li>8nm units</li>
 </ul>
 </li>
-<li><code>gs://flyem-male-cns/v0.9/segmentation/skeletons-malecns-mirrored/skeletons-precomputed/</code><ul>
+<li><code>gs://flyem-male-cns/v1.0/segmentation/skeletons-malecns-mirrored/skeletons-precomputed/</code><ul>
 <li>Same as above, but in <a href="https://github.com/google/neuroglancer/blob/master/src/datasource/precomputed/skeletons.md">neuroglancer's <code>precomputed</code> skeleton format</a> (unsharded).</li>
 <li>1nm units</li>
 </ul>
 </li>
-<li><code>gs://flyem-male-cns/v0.9/segmentation/skeletons-unisex-template/</code><ul>
+<li><code>gs://flyem-male-cns/v1.0/segmentation/skeletons-unisex-template/</code><ul>
 <li>Directory of MaleCNS skeletons transformed to JRC2018 unisex template space.</li>
 <li>Transform available via <a href="https://github.com/navis-org/navis-flybrains"><code>navis-flybrains</code></a>.</li>
 <li>1um (micron) units</li>
@@ -825,13 +867,13 @@ using e.g. <a href="https://arrow.apache.org/docs/python/index.html"><code>pyarr
 <p>If you want to setup your own neuprint instance or explore the data using neo4j directly, you can download the neo4j
 database and input CSV files used to construct it:</p>
 <ul>
-<li><code>gs://flyem-male-cns/v0.9/database/neo4j</code><ul>
-<li>The complete neo4j database backing the <code>male-cns:v0.9</code> neuprint dataset hosted on neuprint.janelia.org</li>
+<li><code>gs://flyem-male-cns/v1.0/database/neo4j</code><ul>
+<li>The complete neo4j database backing the <code>male-cns:v1.0</code> neuprint dataset hosted on neuprint.janelia.org</li>
 <li>Built for neo4j v4.4.16</li>
 <li>Constructed using <a href="https://github.com/janelia-flyem/flyem-snapshot/"><code>flyem-snapshot</code></a></li>
 </ul>
 </li>
-<li><code>gs://flyem-male-cns/v0.9/database/neuprint-inputs</code><ul>
+<li><code>gs://flyem-male-cns/v1.0/database/neuprint-inputs</code><ul>
 <li>The input CSV files used to construct the neo4j database.</li>
 </ul>
 </li>
