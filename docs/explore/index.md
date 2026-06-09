@@ -18,16 +18,16 @@ You have multiple options to interactively explore the dataset:
     interactively exploring connectome data. You can search for neurons,
     visualize their morphology, and analyze their connectivity.
 
-    [Go to NeuPrint](https://neuprint.janelia.org/?dataset=male-cns%3Av0.9&qt=findneurons){ .md-button }
+    [Go to NeuPrint](https://neuprint.janelia.org/?dataset=male-cns%3Av1.0&qt=findneurons){ .md-button }
 
 === "Neuroglancer"
 
     <!-- This is the container for the neuroglancer frame -->
     <div style="text-align: center; flex: .7; min-width: 300px;">
         <div style="text-align: center;">
-            <iframe src="https://neuroglancer-demo.appspot.com/#!gs://flyem-user-links/short/2025-10-07.053121.364023.json" width="100%" height="500px" style="border:none;"></iframe>
+            <iframe src="https://neuroglancer-demo.appspot.com/#!gs://flyem-male-cns/v1.0/male-cns-v1.0.json" width="100%" height="500px" style="border:none;"></iframe>
             <br>
-            <a href="https://neuroglancer-demo.appspot.com/#!gs://flyem-user-links/short/2025-10-07.053121.364023.json" target="_blank">Open in new tab</a>
+            <a href="https://neuroglancer-demo.appspot.com/#!gs://flyem-male-cns/v1.0/male-cns-v1.0.json" target="_blank">Open in new tab</a>
         </div>
     </div>
 
@@ -54,6 +54,13 @@ You have multiple options to interactively explore the dataset:
     please visit our Dimorphism Explorer.
 
     [Go to Dimorphism Explorer](../build/dimorphism_overview.md){ .md-button }
+
+
+=== "Cell Type Explorer"
+
+    Browse cell types, connectivity, and eyemaps for the full male CNS.
+    
+    [Go to Cell Type Explorer](https://reiserlab.github.io/celltype-explorer-drosophila-male-cns){ .md-button }
 
 ------------------------------------------------------------------
 

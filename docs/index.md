@@ -37,16 +37,17 @@ glightbox: true
 
     ---
 
-    - **2025-10-03** - [MaleCNS v0.9 released](release.md)!
-    - **2025-10-30** - [Preprint v2](https://www.biorxiv.org/content/10.1101/2025.10.09.680999v2) available on bioRxiv!
+    - **2026-06-08** - [MaleCNS v1.0 released](release.md)!
     - **2025-11-07** - [NeuronBridge](https://neuronbridge.janelia.org/) now provides matches for the MaleCNS!
+    - **2025-10-30** - [Preprint v2](https://www.biorxiv.org/content/10.1101/2025.10.09.680999v2) available on bioRxiv!
+    - **2025-10-03** - [MaleCNS v0.9 released](release.md)!
 
 </div>
 
 <div class="grid cards" markdown>
 
 
--   :material-compass-outline:{ .lg .middle } __Explore__
+-   :material-compass-outline:{ .lg .middle } __Explore cell types__
 
     ---
 
@@ -69,7 +70,7 @@ glightbox: true
 
     Interactively search cell-to-cell connectivity using neuPrint.  Or try Clio's annotation-focused view of the data to conveniently filter cells by type, hemilineage, etc.
 
-    [:octicons-arrow-right-24: NeuPrint](https://neuprint.janelia.org/?dataset=male-cns%3Av0.9&qt=findneurons)
+    [:octicons-arrow-right-24: NeuPrint](https://neuprint.janelia.org/?dataset=male-cns%3Av1.0&qt=findneurons)
 
     [:octicons-arrow-right-24: Clio](https://clio.janelia.org/ws/annotate?dataset=male-cns:v0.9-v0.9&tab=bodies)
 

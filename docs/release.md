@@ -10,12 +10,14 @@ glightbox: true
 
 The following releases have been released and are available as releases.
 
-**October 2025**
+**v1.0 (June 8, 2026)**
 
-This is some placeholder text, which will be repeated several times. This is some placeholder text, which will be repeated several times. This is some placeholder text, which will be repeated several times. This is some placeholder text, which will be repeated several times. This is some placeholder text, which will be repeated several times. This is some placeholder text, which will be repeated several times. This is some placeholder text, which will be repeated several times. This is some placeholder text, which will be repeated several times. 
+- Minor proofreading changes
+- Refinement of neuron annotations
 
-This is some placeholder text, which will be repeated several times. This is some placeholder text, which will be repeated several times. This is some placeholder text, which will be repeated several times. This is some placeholder text, which will be repeated several times. This is some placeholder text, which will be repeated several times. This is some placeholder text, which will be repeated several times. This is some placeholder text, which will be repeated several times. This is some placeholder text, which will be repeated several times. 
+**v0.9 (October 5, 2025)**
 
+- Initial release of male CNS connectome
 
 ------------------------------------------------------------------
 
