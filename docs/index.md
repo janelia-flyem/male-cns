@@ -72,7 +72,7 @@ glightbox: true
 
     [:octicons-arrow-right-24: NeuPrint](https://neuprint.janelia.org/?dataset=male-cns%3Av1.0&qt=findneurons)
 
-    [:octicons-arrow-right-24: Clio](https://clio.janelia.org/ws/annotate?dataset=male-cns:v0.9-v0.9&tab=bodies)
+    [:octicons-arrow-right-24: Clio](https://clio.janelia.org/ws/annotate?dataset=male-cns:v1.0-v1.0&tab=bodies)
 
 -   :material-cloud-download-outline:{ .lg .middle } __Download__
 
