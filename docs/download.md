@@ -27,7 +27,7 @@ glightbox: true
 
         ```python
         from neuprint import Client
-        client = Client("https://neuprint.janelia.org", api_token="<your_token>")
+        client = Client("https://neuprint.janelia.org", dataset='male-cns:v1.0', token=token)
 
         # Get neuron annotations and neuropil innervation
         from neuprint import fetch_neurons
