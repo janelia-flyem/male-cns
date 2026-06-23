@@ -8,8 +8,6 @@ glightbox: true
 
 # :fontawesome-solid-list: Release notes
 
-The following releases have been released and are available as releases.
-
 **v1.0 (June 8, 2026)**
 
 - Minor proofreading changes
