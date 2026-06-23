@@ -54,7 +54,7 @@ glightbox: true
         ```python
         >>> import navis
         >>> import navis.interfaces.neuprint as neu
-        >>> client = Client("https://neuprint.janelia.org", api_token="<your_token>")
+        >>> client = Client("https://neuprint.janelia.org", dataset='male-cns:v1.0', token=token)
 
         >>> skels = neu.fetch_skeletons(neu.NeuronCriteria(type="DNge104"))
         >>> skels
