@@ -655,7 +655,7 @@ interface to the neuPrint API.</p>
 <a href="https://connectome-neuprint.github.io/neuprint-python/docs/quickstart.html#client-and-authorization-token">these instructions</a>
 for getting your API token.</p>
 <div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">neuprint</span><span class="w"> </span><span class="kn">import</span> <span class="n">Client</span>
-<span class="n">client</span> <span class="o">=</span> <span class="n">Client</span><span class="p">(</span><span class="s2">"https://neuprint.janelia.org"</span><span class="p">,</span> <span class="n">api_token</span><span class="o">=</span><span class="s2">"&lt;your_token&gt;"</span><span class="p">)</span>
+<span class="n">client</span> <span class="o">=</span> <span class="n">Client</span><span class="p">(</span><span class="s2">"https://neuprint.janelia.org"</span><span class="p">,</span> <span class="n">dataset</span><span class="o">=</span><span class="s1">'male-cns:v1.0'</span><span class="p">,</span> <span class="n">token</span><span class="o">=</span><span class="n">token</span><span class="p">)</span>
 
 <span class="c1"># Get neuron annotations and neuropil innervation</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">neuprint</span><span class="w"> </span><span class="kn">import</span> <span class="n">fetch_neurons</span>
@@ -675,7 +675,7 @@ you can then use for visualization and analysis:</p>
 </code></pre></div>
 <div class="highlight"><pre><span></span><code><span class="o">&gt;&gt;&gt;</span> <span class="kn">import</span><span class="w"> </span><span class="nn">navis</span>
 <span class="o">&gt;&gt;&gt;</span> <span class="kn">import</span><span class="w"> </span><span class="nn">navis.interfaces.neuprint</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">neu</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">client</span> <span class="o">=</span> <span class="n">Client</span><span class="p">(</span><span class="s2">"https://neuprint.janelia.org"</span><span class="p">,</span> <span class="n">api_token</span><span class="o">=</span><span class="s2">"&lt;your_token&gt;"</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">client</span> <span class="o">=</span> <span class="n">Client</span><span class="p">(</span><span class="s2">"https://neuprint.janelia.org"</span><span class="p">,</span> <span class="n">dataset</span><span class="o">=</span><span class="s1">'male-cns:v1.0'</span><span class="p">,</span> <span class="n">token</span><span class="o">=</span><span class="n">token</span><span class="p">)</span>
 
 <span class="o">&gt;&gt;&gt;</span> <span class="n">skels</span> <span class="o">=</span> <span class="n">neu</span><span class="o">.</span><span class="n">fetch_skeletons</span><span class="p">(</span><span class="n">neu</span><span class="o">.</span><span class="n">NeuronCriteria</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="s2">"DNge104"</span><span class="p">))</span>
 <span class="o">&gt;&gt;&gt;</span> <span class="n">skels</span>
