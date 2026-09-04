@@ -28,6 +28,14 @@ glightbox: true
 
   <figure>
     <div class="video-container">
+      <iframe src="https://www.youtube.com/embed/XqrmATUvHac" title="YouTube video XqrmATUvHac" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
+    </div>
+    <figcaption style="font-size:0.85em;">
+    The male CNS connectome will allow researchers to compare male and female brains and understand complex social behaviors — like mating and aggression — that can vary by sex. Data acquired and analyzed by the FlyEM Project Team at HHMI’s Janelia Research Campus, the Cambridge Connectomics Group, and Google Research. <i>Video by Philip Hubbard</i></figcaption>
+  </figure>
+
+  <figure>
+    <div class="video-container">
       <iframe src="https://www.youtube.com/embed/NFeNxwjzueg" title="YouTube video NFeNxwjzueg" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
     </div>
     <figcaption style="font-size:0.85em;">

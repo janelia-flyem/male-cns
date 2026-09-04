@@ -37,6 +37,7 @@ glightbox: true
 
     ---
 
+    - **2026-09-03** - [MaleCNS paper published](https://www.cell.com/cell/fulltext/S0092-8674(26)00942-6)!
     - **2026-06-08** - [MaleCNS v1.0 released](release.md)!
     - **2025-11-07** - [NeuronBridge](https://neuronbridge.janelia.org/) now provides matches for the MaleCNS!
     - **2025-10-30** - [Preprint v2](https://www.biorxiv.org/content/10.1101/2025.10.09.680999v2) available on bioRxiv!
