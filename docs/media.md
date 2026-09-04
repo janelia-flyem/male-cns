@@ -64,6 +64,26 @@ glightbox: true
   </figure>
 
   <figure>
+    <img src="../_static/mcns_all_neurons_tilt_frontal-1.png" alt="mcns_all_neurons_tilt_frontal-1.png" loading="lazy" style="height: 190px; width: auto;"/>
+    <figcaption style="font-size:0.85em;">All neurons of the male CNS.</figcaption>
+  </figure>
+
+  <figure>
+    <img src="../_static/mcns_all_neurons_tilt_lateral.png" alt="mcns_all_neurons_tilt_lateral.png" loading="lazy" style="height: 190px; width: auto;"/>
+    <figcaption style="font-size:0.85em;">All neurons of the male CNS.</figcaption>
+  </figure>
+
+<figure>
+    <img src="../_static/mcns_all_neurons2_dorsal.png" alt="mcns_all_neurons2_dorsal.png" loading="lazy" />
+    <figcaption style="font-size:0.85em;">All neurons of the male CNS.</figcaption>
+  </figure>
+
+<figure>
+    <img src="../_static/mcns_all_neurons2_lateral.png" alt="mcns_all_neurons2_lateral.png" loading="lazy" />
+    <figcaption style="font-size:0.85em;">All neurons of the male CNS.</figcaption>
+  </figure>
+
+  <figure>
     <img src="../_static/mcns-median-size-per-type-40-0482-3840x2160-white.png" alt="mcns-median-size-per-type-40-0482-3840x2160-white" loading="lazy" />
     <figcaption style="font-size:0.85em;">A small subset of the cells in the Male CNS.</figcaption>
   </figure>
