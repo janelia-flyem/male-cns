@@ -59,17 +59,20 @@ glightbox: true
   </figure>
 
   <figure>
-    <img src="../_static/mcns-median-size-per-type-40-0482-3840x2160-white.png" alt="mcns-median-size-per-type-40-0482-3840x2160-white" loading="lazy" />
+    <img src="../_static/mcns-median-size-per-type-40-0482-3840x2160-white.png#only-light" alt="mcns-median-size-per-type-40-0482-3840x2160-white" loading="lazy" />
+    <img src="../_static/mcns-median-size-per-type-40-0482-3840x2160.png#only-dark" alt="mcns-median-size-per-type-40-0482-3840x2160" loading="lazy" />
     <figcaption style="font-size:0.85em;">A small subset of the cells in the Male CNS.</figcaption>
   </figure>
 
   <figure>
-    <img src="../_static/mcns-median-size-per-type-40-0626-3840x2160-white.png" alt="mcns-median-size-per-type-40-0626-3840x2160-white" loading="lazy" />
+    <img src="../_static/mcns-median-size-per-type-40-0626-3840x2160-white.png#only-light" alt="mcns-median-size-per-type-40-0626-3840x2160-white" loading="lazy" />
+    <img src="../_static/mcns-median-size-per-type-40-0626-3840x2160.png#only-dark" alt="mcns-median-size-per-type-40-0626-3840x2160" loading="lazy" />
     <figcaption style="font-size:0.85em;">A small subset of the cells in the Male CNS.</figcaption>
   </figure>
 
   <figure>
-    <img src="../_static/mcns-median-size-per-type-40-0672-3840x2160-white.png" alt="mcns-median-size-per-type-40-0672-3840x2160-white" loading="lazy" />
+    <img src="../_static/mcns-median-size-per-type-40-0672-3840x2160-white.png#only-light" alt="mcns-median-size-per-type-40-0672-3840x2160-white" loading="lazy" />
+    <img src="../_static/mcns-median-size-per-type-40-0672-3840x2160.png#only-dark" alt="mcns-median-size-per-type-40-0672-3840x2160" loading="lazy" />
     <figcaption style="font-size:0.85em;">A small subset of the cells in the Male CNS.</figcaption>
   </figure>
 
