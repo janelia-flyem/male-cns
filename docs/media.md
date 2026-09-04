@@ -14,7 +14,14 @@ glightbox: true
 .video-container { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; }
 .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
 .gallery img { width: 100%; height: auto; display: block; }
-figcaption { margin-top: 0.5rem; font-size: 0.9rem; opacity: 0.8; }
+.md-typeset figcaption {
+  margin-top: 0.5rem;
+  font-size: 0.9rem;
+  opacity: 0.8;
+  font-style: normal;
+  text-align: left;
+  max-width: none;
+}
 </style>
 
 <div class="gallery">
