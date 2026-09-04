@@ -65,12 +65,12 @@ glightbox: true
 
   <figure>
     <img src="../_static/mcns_all_neurons_tilt_frontal-1.png" alt="mcns_all_neurons_tilt_frontal-1.png" loading="lazy" style="height: 190px; width: auto;"/>
-    <figcaption style="font-size:0.85em;">All neurons of the male CNS.</figcaption>
+    <figcaption style="font-size:0.85em;">All neurons of the male CNS. The VNC has been artificially pivoted down to make it easier to visualize both brain and VNC from a single viewpoint.</figcaption>
   </figure>
 
   <figure>
     <img src="../_static/mcns_all_neurons_tilt_lateral.png" alt="mcns_all_neurons_tilt_lateral.png" loading="lazy" style="height: 190px; width: auto;"/>
-    <figcaption style="font-size:0.85em;">All neurons of the male CNS.</figcaption>
+    <figcaption style="font-size:0.85em;">All neurons of the male CNS. The VNC has been artificially pivoted down to make it easier to visualize both brain and VNC from a single viewpoint.</figcaption>
   </figure>
 
 <figure>
