@@ -60,7 +60,7 @@ glightbox: true
 
   <figure>
     <img src="../_static/dimorphic-brain-only.png" alt="dimorphic-brain-only.png" loading="lazy" />
-    <figcaption style="font-size:0.85em;">A small subset of the cells in the Male fly brain. Blue neurons are male-specific. Orange neurons are dimorphic.</figcaption>
+    <figcaption style="font-size:0.85em;">A small subset of the cells in the Male fly brain. Blue neurons are male-specific. Orange neurons are sexually dimorphic.</figcaption>
   </figure>
 
   <figure>
@@ -85,32 +85,32 @@ glightbox: true
 
   <figure>
     <img src="../_static/mcns-median-size-per-type-40-0482-3840x2160-white.png" alt="mcns-median-size-per-type-40-0482-3840x2160-white" loading="lazy" />
-    <figcaption style="font-size:0.85em;">A small subset of the cells in the Male CNS.</figcaption>
+    <figcaption style="font-size:0.85em;">A single representative cell from each of the 11,710 neuron types in the dataset, which contains 166,700 neurons in total.</figcaption>
   </figure>
 
 <figure>
     <img src="../_static/mcns-median-size-per-type-40-0482-3840x2160.png" alt="mcns-median-size-per-type-40-0482-3840x2160" loading="lazy" />
-    <figcaption style="font-size:0.85em;">A small subset of the cells in the Male CNS.</figcaption>
+    <figcaption style="font-size:0.85em;">A single representative cell from each of the 11,710 neuron types in the dataset, which contains 166,700 neurons in total.</figcaption>
   </figure>
 
   <figure>
     <img src="../_static/mcns-median-size-per-type-40-0626-3840x2160-white.png" alt="mcns-median-size-per-type-40-0626-3840x2160-white" loading="lazy" />
-    <figcaption style="font-size:0.85em;">A small subset of the cells in the Male CNS.</figcaption>
+    <figcaption style="font-size:0.85em;">A single representative cell from each of the 11,710 neuron types in the dataset, which contains 166,700 neurons in total.</figcaption>
   </figure>
 
   <figure>
     <img src="../_static/mcns-median-size-per-type-40-0626-3840x2160.png" alt="mcns-median-size-per-type-40-0626-3840x2160" loading="lazy" />
-    <figcaption style="font-size:0.85em;">A small subset of the cells in the Male CNS.</figcaption>
+    <figcaption style="font-size:0.85em;">A single representative cell from each of the 11,710 neuron types in the dataset, which contains 166,700 neurons in total.</figcaption>
   </figure>
 
   <figure>
     <img src="../_static/mcns-median-size-per-type-40-0672-3840x2160-white.png" alt="mcns-median-size-per-type-40-0672-3840x2160-white" loading="lazy" />
-    <figcaption style="font-size:0.85em;">A small subset of the cells in the Male CNS.</figcaption>
+    <figcaption style="font-size:0.85em;">A single representative cell from each of the 11,710 neuron types in the dataset, which contains 166,700 neurons in total.</figcaption>
   </figure>
 
   <figure>
     <img src="../_static/mcns-median-size-per-type-40-0672-3840x2160.png" alt="mcns-median-size-per-type-40-0672-3840x2160" loading="lazy" />
-    <figcaption style="font-size:0.85em;">A small subset of the cells in the Male CNS.</figcaption>
+    <figcaption style="font-size:0.85em;">A single representative cell from each of the 11,710 neuron types in the dataset, which contains 166,700 neurons in total.</figcaption>
   </figure>
 
 </div>
